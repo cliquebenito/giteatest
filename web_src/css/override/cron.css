@@ -1,0 +1,130 @@
+.override .admin-setting-content .cron-table {
+  padding: 12px;
+}
+.override .admin-setting-content .cron-table .cron-status-process  svg {
+  fill: #D1D9E0;
+}
+.override .admin-setting-content .cron-table .cron-status-finished  svg {
+  fill: #53C679;
+}
+
+.override .admin-setting-content .cron-table .cron-status-error  svg {
+  fill: #E63C1A;
+}
+
+.override .admin-setting-content .cron-table .cron-status-cancelled  svg {
+  fill: #E67300;
+}
+
+.override .admin-setting-content .cron-table .cron-status-registered  svg {
+  fill: #707D8F;
+}
+.override .admin-setting-content .cron-table .cron-table__cell {
+  color: #737B8C
+}
+.override .admin-setting-content .cron-table .cron-table__cell_name {
+  color: #2E3038;
+}
+.override .admin-setting-content .cron-table .cron-table__cell_name span:nth-child(2) {
+  width: 180px;
+}
+.override .admin-setting-content .cron-table .cron-table__flex {
+  display: flex;
+  gap: 10px;
+}
+.override .admin-setting-content .cron-table th,
+.override .admin-setting-content .cron-table .cron-table__cell_schedule {
+  white-space: nowrap;
+}
+
+.override .admin-setting-content .cron-table  .cron-table__cell_status_cancelled {
+  color: #E67300;
+}
+
+.override .admin-setting-content .cron-table  .cron-table__cell_status_error {
+  color: #E63C1A;
+}
+
+
+
+.override .admin-setting-content .cron-table .button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #363B49;
+  align-self: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.override .admin-setting-content .cron-table .cron-alert {
+  padding: 16px;
+  background: #FFD24C;
+  color: #2E3038;
+  max-width: 480px;
+  position: relative;
+  border-radius: 8px;
+}
+.override .admin-setting-content .cron-table .cron-alert .cron-alert__time {
+  font-weight: bold;
+}
+
+.override .admin-setting-content .cron-table__buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  column-gap: 4px;
+}
+
+.override .admin-setting-content .cron-table__cell_alert {
+  background: transparent!important;
+  border: none;
+}
+
+.override .admin-setting-content .button svg {
+  color: #363B49
+}
+
+.override .admin-setting-content .cron-table .button:disabled {
+  background-color: #fbfbfb;
+  border-radius: 4px;
+  cursor: not-allowed;
+}
+
+.override .admin-setting-content .cron-table .button:disabled svg {
+  color: #eee;
+}
+
+.override .admin-setting-content .cron-table .button:not(:disabled):hover {
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.override .admin-setting-content .cron-table .cron-alert::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 20px;
+  height: 10px;
+  width: 16px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: none;
+  border-bottom: 10px solid #FFD24C;
+}
+
+
+.override .admin-setting-content .cron-table__row_alert {
+  display: none;
+}
+.override .admin-setting-content .cron-table__row_alert.active {
+  display: table-row;
+  background: transparent!important;
+}
+
+.override .admin-setting-content .cron-table__chevron-alert.active {
+  transform: rotate(180deg);
+}

@@ -1,0 +1,468 @@
+.override .page-content {
+    margin-top: 0;
+}
+
+.override body {
+    font-size: 16px;
+}
+
+
+/* TABS (SECONDARY POINTING MENU) */
+/* .override .ui.tabular.menu.navbar,
+.override .ui.secondary.pointing.menu {
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 24px!important;
+    background: transparent;
+    border-bottom: 0.5px solid rgb(185, 189, 198)!important;
+}
+
+.override .ui.secondary.pointing.menu .active.item,
+.override .ui.secondary.pointing.menu .active.item:hover {
+    border-color: var(--nav-item-active-background);
+}
+
+.override .ui.tabs.container:not(.fluid) {
+    max-width: 1024px;
+    width: auto;
+}
+
+.override .ui.secondary.pointing.menu .ui.small.label {
+    min-width: 24px;
+    height: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background: #4799EB;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+} */
+
+
+/* .override .ui.secondary.tabular.menu .item,
+.override .ui.secondary.pointing.menu .item {
+    margin-bottom: -0.5px;
+} */
+
+
+/* .override .ui.tabular.menu .item {
+    border: none;
+    padding: 16px 18px;
+}
+.override .ui.tabular.menu .item.active {
+    border-bottom: 3px solid #4799EB;
+    border-color: var(--nav-item-active-background);
+} */
+
+/* LABELED BUTTON */
+
+.override .ui.labeled.button {
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(185, 189, 198);
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: stretch;
+    height: 36px;
+    box-sizing: border-box;
+    padding: 1px!important;
+    font-weight: 500;
+}
+
+.override .ui.labeled.button .ui.basic.small.compact.button {
+    border-radius: 0;
+    min-height: 0;
+}
+
+.override .ui.labeled.button svg {
+    display: none;
+}
+
+.override .ui.labeled.button > button,
+.override .ui.labeled.button > a {
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.override .ui.labeled.button > button:first-child,
+.override .ui.labeled.button > a:first-child {
+    border-right: 1px solid rgb(213, 217, 221)!important;
+}
+
+.override .ui.compact.menu {
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(185, 189, 198);
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: stretch;
+    height: 36px;
+    box-sizing: border-box;
+    padding: 1px;
+    column-gap: 3px;
+}
+
+.override .ui.compact.menu .item {
+    border-radius: 4px!important;
+    color: #2E3038;
+    font-weight: 500;
+    position: relative;
+}
+
+.override .ui.menu .item::before,
+.override .ui.menu::after {
+    content: none;
+}
+.override .ui.compact.menu .item:not(:last-child)::after {
+    content: '';
+    height: 100%;
+    width: 1px;
+    background-color: rgb(213, 217, 221);
+    position: absolute;
+    top: 0;
+    right: -2px;
+}
+
+.override .ui.compact.menu .item.active {
+    background-color: #737B8C;
+    color: #fff;
+}
+
+.override .ui.compact.menu .item svg {
+    display: none;
+}
+
+
+/* BUTTONS */
+.override .ui.button {
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+.override .ui.compact.basic.button {
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(213, 217, 221);
+    border-radius: 4px;
+    color: rgb(46, 48, 56);
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 16px;
+    column-gap: 8px;
+}
+
+.override .ui.small.button {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    color: rgb(46, 48, 56);
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(213, 217, 221);
+}
+
+.override .ui.small.button:hover {
+    border-color: #B9BDC6
+}
+.override .ui.small.button:active {
+    background: rgb(213, 217, 221);
+    border: 1px solid rgb(185, 189, 198);
+}
+.override .ui.small.button:disabled {
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(213, 217, 221);
+    color: #B9BDC6
+}
+
+.override .ui.button.simple {
+    background-color: #F1F2F4;
+    font-weight: 500!important;
+    color: #2E3038;
+}
+
+.override .ui.primary.button,
+.override .ui.primary.buttons .button {
+    background-color: #1A5EE6;
+    border-radius: 8px;
+    color: #fff;
+}
+
+
+.override .ui.primary.button:hover,
+.override .ui.primary.buttons .button:hover {
+    background-color: #4799EB;
+}
+
+.override .ui.primary.button:active,
+.override .ui.primary.buttons .button:active {
+    background-color: #144BB8;
+}
+
+.override .ui.primary.button:disabled,
+.override .ui.primary.buttons .button:disabled {
+    /*background-color: #F1F2F4;*/
+    border: 1px solid #D5D9DD;
+}
+
+.override .ui.button.red {
+    color: #E63C1A;
+    background-color: transparent;
+    border-color: transparent;
+}
+.override .ui.button.red:hover {
+    background-color: var(--color-error-bg);
+}
+
+/* FORM */
+.override .ui.form input {
+    background: transparent;
+    border: 1px solid rgb(185, 189, 198);
+    border-radius: 8px;
+    padding: 0px 16px 0px 16px;
+    outline: none;
+    min-height: 40px;
+    color: #2E3038;
+}
+
+.override .ui.form input:focus {
+    border: 2px solid rgb(26, 94, 230);
+    border-radius: 8px;
+}
+
+.override .ui.form input:disabled {
+    border-color: #F1F2F4;
+    color: #B9BDC6;
+}
+
+.override .ui.form input::placeholder {
+    color: #B9BDC6
+}
+
+/* checkbox */
+
+.override .ui.checkbox {
+    min-height: 20px;
+ }
+
+.override .ui.checkbox label {
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    color: #2E3038!important;
+    padding-left: 28px;
+}
+
+.override .ui.checkbox label strong {
+    font-weight: 400;
+}
+
+.override .ui.checkbox label:before {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(185, 189, 198);
+    border-radius: 4px;
+    background-color: #fff;
+}
+.override .ui.checkbox label:after {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.override .ui.checkbox input:disabled + label:before {
+  background: rgb(241, 242, 244);
+}
+.override .ui.checkbox input:checked ~ label::before,
+.override .ui.checkbox input:checked:focus ~ label::before {
+    background: rgb(26, 94, 230);
+    color: #fff;
+}
+.override .ui.checkbox input:focus:checked ~ label::after,
+.override .ui.checkbox input:checked ~ label::after {
+    color: #fff;
+}
+
+
+.override .ui.radio.checkbox label::before {
+    border-radius: 50%;
+}
+
+.override .ui.radio.checkbox input:checked ~ label::before,
+.override .ui.radio.checkbox label::before {
+    background: #fff;
+}
+.override .ui.radio.checkbox label::before {
+    border: 1px solid rgb(185, 189, 198)
+}
+
+.override .ui.radio.checkbox input:checked ~ label::before {
+    transition: none;
+    border: 6px solid #1A5EE6;
+}
+
+.override .ui.radio.checkbox label::after,
+.override .ui.radio.checkbox input:checked label::after {
+    content: none;
+    display: none;
+}
+
+.override .ui.radio.checkbox.checked label::after,
+.override .ui.radio.checkbox input[type="radio"]:checked label::after {
+    background-color: #fff;
+}
+
+.override .ui.toggle.checkbox label:before {
+    border: 1px solid rgb(185, 189, 198);
+    background-color: #fff;
+    width: 40px;
+    height: 20px;
+    border-radius: 500rem;
+}
+
+.override .ui.toggle.checkbox input:checked ~ label:after {
+    left: 20px;
+}
+
+.override .ui.toggle.checkbox input:checked ~ label:before {
+    background: rgb(26, 94, 230)!important;
+}
+
+.override .ui.checkbox:not(.toggle) input:checked ~ .box:after,
+.override .ui.checkbox:not(.toggle) input:checked ~ label:after {
+  content: ' ';
+  color: var(--color-primary)!important;
+  background: url('../../svg/checkbox-checked.svg');
+  background-size: contain;
+}
+
+.override .ui.form input[type="file"] {
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(213, 217, 221);
+    padding: 18px 24px;
+}
+.override .ui.form input[type="file"] {
+    color: #737B8C;
+}
+
+.override .ui.selection.type.dropdown {
+    border-radius: 8px;
+}
+.override .ui.selection.type.dropdown:focus {
+    /* border: 2px solid rgb(26, 94, 230); */
+    border-radius: 8px;
+}
+
+
+/* LAYOUT */
+/* .override .ui.attached.header {
+    border: none;
+    background: transparent;
+    font-family: var(--fonts-monospace);
+    color: #2E3038;
+    font-size: 20px;
+} */
+
+/* .override .ui.segment, .ui.segments,
+.override .ui.attached.segment {
+    border: none;
+} */
+
+
+/* VERTICAL MENU */
+
+.override .ui .vertical.menu {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}
+
+.override .ui.vertical.menu .item {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 15px;
+    border-radius: 8px!important;
+    color: #2E3038;
+    width: 100%;
+    margin: 0;
+    line-height: 1.3em;
+}
+
+.override .ui.vertical.menu .item.item-submenu {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.override .ui.vertical.menu .ui.basic.primary.button.item,
+.override .ui.vertical.menu .item.active {
+    background: rgb(26, 94, 230);
+    color: #fff;
+    border-radius: 8px;
+}
+
+
+.repo-clone-hint {
+    font-size: 15px;
+    color: #737B8C;
+}
+
+.markup .highlight pre,
+.markup pre {
+    background-color: #F1F2F4;
+}
+
+
+/* TITLES */
+h3 {
+    font-size: 20px;
+    color: #2E3038;
+    font-weight: 500;
+    font-family: var(--fonts-monospace);
+}
+
+
+
+.override .ui.multiple.dropdown > .label {
+    border-radius: 24px;
+    box-shadow: none;
+    color: rgb(51, 102, 153)
+}
+
+.override .ui.message {
+    border-radius: 8px;
+    border-color: transparent;
+}
+
+/* .override .ui.top.attached.header {
+    padding: 12px!important;
+    border-radius: 8px;
+    margin: 0!important;
+} */
+
+/* .override .ui.top.attached.header.error {
+    background-color: transparent!important;
+} */
+
+
+.override .status-page-500,
+.override .container_404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 52px - 30px);
+  padding: 30px 30px;
+  justify-content: center;
+}

@@ -1,0 +1,4 @@
+package: generic
+output: models/events/v2/generic/meta.gen.go
+generate:
+  models: true

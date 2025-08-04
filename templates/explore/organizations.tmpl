@@ -1,0 +1,49 @@
+{{template "base/head" .}}
+<div role="main" aria-label="{{.Title}}" class="page-content explore users">
+	{{template "explore/navbar" .}}
+	<div class="ui container">
+		{{template "explore/search" .}}
+
+		<div class="sc-table-list">
+			{{range .Users}}
+				<div class="sc-table-list__item">
+					<div class="sc-project-card">
+						<div class="sc-project-card__image">
+							{{avatar $.Context . 48 48}}
+						</div>
+						<div class="sc-project-card-content">
+							<span class="sc-project-card-header">
+								<a class="sc-project-card__name" href="{{.HomeLink}}">{{.Name}}</a>
+								<span class="sc-project-card__fullname">{{.FullName}}</span>
+								{{if .Visibility.IsPrivate}}
+									<span class="sc-project-card__badge sc-badge sc-badge_outlined">{{$.locale.Tr "repo.desc.private"}}</span>
+								{{end}}
+							</span>
+							<div class="sc-project-card-description">
+								<div class="sc-project-card__location">
+									{{if .Location}}
+										{{svg "octicon-location"}} {{.Location}}
+									{{end}}
+								</div>
+								<div class="sc-project__website">
+								{{if and .Website}}
+									{{svg "octicon-link"}}
+									<a href="{{.Website}}" rel="nofollow">{{.Website}}</a>
+								{{end}}
+								</div>
+								<div class="sc-project-card__created">	
+									{{svg "octicon-clock"}} {{$.locale.Tr "user.joined_on" (DateTime "short" .CreatedUnix) | Safe}}
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			{{else}}
+				<div>{{$.locale.Tr "explore.org_no_results"}}</div>
+			{{end}}
+		</div>
+
+		{{template "base/paginate" .}}
+	</div>
+</div>
+{{template "base/footer" .}}

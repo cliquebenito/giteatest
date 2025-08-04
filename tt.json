@@ -1,0 +1,337 @@
+APP_NAME = SourceControl: SC-IFT4
+RUN_USER = git-sc-ift4
+RUN_MODE = prod
+WORK_PATH = /u01/sc-ift4
+
+[database]
+DB_TYPE = postgres
+HOST = vm-gitt-ws-psql-50119.vdc01.ws.dev.sbt:5432
+NAME = sc_ift4_db
+USER = sc_ift4_user
+PASSWD = H8TmYnpDT3VvDRCH6cTsj87Ls
+SCHEMA = sc_ift4_schema
+SSL_MODE = disable
+LOG_SQL = true
+
+[repository]
+ROOT = %(WORK_PATH)s/git/repos
+USE_COMPAT_SSH_URI = True
+DISABLED_REPO_UNITS = repo.issues,repo.ext_issues,repo.projects
+
+[server]
+DOMAIN = ift.pd10.pvw.sbt
+PROTOCOL = http
+HTTP_PORT = 3024
+HTTP_ADDR = 0.0.0.0
+ROOT_URL = https://ift.pd10.pvw.sbt/ssd/tools/sc-ift4/
+USE_PROXY_PROTOCOL = False
+PROXY_PROTOCOL_TLS_BRIDGING = False
+APP_DATA_PATH = %(WORK_PATH)s/data
+DISABLE_SSH = False
+START_SSH_SERVER = True
+BUILTIN_SSH_SERVER_USER = %(RUN_USER)s
+SSH_USER = %(BUILTIN_SSH_SERVER_USER)s
+SSH_LISTEN_HOST = 0.0.0.0
+SSH_LISTEN_PORT = %(SSH_PORT)s
+SSH_SERVER_USE_PROXY_PROTOCOL = False
+SSH_DOMAIN = %(DOMAIN)s
+SSH_PORT = 7024
+OFFLINE_MODE = True
+LANDING_PAGE = home
+LFS_JWT_SECRET = x6s1QAk1cpxU1K-3wPv3ODWaQ8Y17vYfyfmFWN_IQwI
+LFS_START_SERVER = True
+USE_SUB_URL_PATH = true
+
+[storage]
+STORAGE_TYPE = local
+MINIO_ENDPOINT =
+MINIO_ACCESS_KEY_ID = UOIj9mOejTNrJYz675RU
+MINIO_SECRET_ACCESS_KEY = DejOWCwa79KbzQHrNvbiZttpW1PLlkFFLIntW4Av
+MINIO_BUCKET =
+MINIO_LOCATION =
+MINIO_USE_SSL = False
+MINIO_INSECURE_SKIP_VERIFY = False
+
+[mailer]
+ENABLED = false
+
+[metrics]
+ENABLED = True
+TOKEN =
+
+[service]
+REGISTER_EMAIL_CONFIRM = false
+ENABLE_NOTIFY_MAIL = false
+DISABLE_REGISTRATION = false
+ALLOW_ONLY_EXTERNAL_REGISTRATION = true
+ENABLE_CAPTCHA = false
+REQUIRE_SIGNIN_VIEW = false
+DEFAULT_KEEP_EMAIL_PRIVATE = false
+DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+DEFAULT_ENABLE_TIMETRACKING = true
+SHOW_REGISTRATION_BUTTON = false
+NO_REPLY_ADDRESS = noreply.localhost
+
+[service.explore]
+REQUIRE_SIGNIN_VIEW = false
+DISABLE_USERS_PAGE = true
+
+[openid]
+ENABLE_OPENID_SIGNIN = false
+ENABLE_OPENID_SIGNUP = true
+WHITELISTED_URIS = vm-works-ws-nosw-50008.vdc01.ws.dev.sbt:8080
+
+[cron.update_checker]
+ENABLED = false
+
+[cors]
+ENABLED = true
+SCHEME = http
+ALLOW_DOMAIN = $(ROOT_URL)s
+ALLOW_SUBDOMAIN = true
+METHODS = GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS
+ALLOW_CREDENTIALS = true
+HEADERS = Content-Type,User-Agent
+X_FRAME_OPTIONS = SAMEORIGIN
+MAX_AGE = 10m
+
+[queue]
+TYPE = channel
+LENGTH = 1000
+CONN_STR =
+QUEUE_NAME = _queue
+SET_NAME = _unique
+MAX_WORKERS = 10
+
+[cache]
+ENABLED = true
+ADAPTER = memory
+INTERVAL = 60
+HOST =
+ITEM_TTL = 16h
+
+[session]
+PROVIDER = db
+PROVIDER_CONFIG =
+
+[picture]
+DISABLE_GRAVATAR = True
+
+[log]
+ROOT_PATH = /var/log/sc-ift4
+FILE_NAME = sc.log
+FLAGS = utc,date,time,microseconds,shortfile,shortfuncname,level
+LEVEL = info
+MODE = file
+ENABLE_SSH_LOG = true
+logger.access.MODE = access-file
+logger.router.MODE = router-file
+logger.xorm.MODE = xorm-file
+
+[log.access-file]
+MODE = file
+LEVEL = info
+FILE_NAME = access.log
+
+[log.router-file]
+MODE = file
+LEVEL = info
+FILE_NAME = router.log
+
+[log.xorm-file]
+MODE = file
+LEVEL = warn
+FILE_NAME = xorm.log
+
+[repository.pull-request]
+DEFAULT_MERGE_STYLE = merge
+
+[repository.signing]
+DEFAULT_TRUST_MODEL = committer
+
+[security]
+INSTALL_LOCK = true
+INTERNAL_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2OTUxMzMxMjB9.dJuS4yhYDQpRfWR7oy8jFaqo9PlGAQezIQyC4mRW9c8
+PASSWORD_HASH_ALGO = pbkdf2
+MIN_PASSWORD_LENGTH = 8
+PASSWORD_COMPLEXITY = lower,upper,digit,spec
+
+[i18n]
+LANGS = ru-RU,en-US
+NAMES = Русский,English
+
+[oauth2]
+JWT_SECRET = KoJlnnO_dkbU60sUG3CdUnaY9KEkYl-uLcHJNzgIu3c
+
+[oauth2_client]
+ENABLE_AUTO_REGISTRATION = true
+OPENID_CONNECT_SCOPES =
+USERNAME = nickname
+UPDATE_AVATAR = = false
+ACCOUNT_LINKING = login
+
+[webhook]
+ALLOWED_HOST_LIST = *
+
+[sbt.auth_keycloak]
+ENABLED = true
+KEYCLOAK_URL = http://vm-works-ws-nosw-50008.vdc01.ws.dev.sbt:8080
+ADMIN_CLIENT_ID_MASTER_REALM = admin-cli
+ADMIN_CLI_SECRET = ltGBS1catLoSfISrbTLvlWdpiiu5p5el
+REALM_NAME = sc-dev
+REALM_CLIENT_ID = sc-ift4-client
+REALM_CLIENT_SECRET = 3TTMJJAFkIhl1ij2LQ0kjs4MoFmDiNpX
+
+[sbt.one_work]
+ENABLED = true
+WORKS = true
+SSD_UI_ADMIN_URL = https://dev.pd10.pvw.sbt/ssd/ssd-ui-admin/v2
+TOOL_KEY = sc-ift4
+PROJECT_URI = /sbt-pd04-test/demo-2
+LOGIN_LINK = /sc-ift4/user/login
+LOGOUT_LINK = /ssd/tools/sc-ift4/user/logout
+SERVICE_URL = https://ift.pd10.pvw.sbt/ssd/ssd-side-menu-backend
+MENU_KEY = m_sc-ift4
+CONTEXT_URI = /sbt
+FALLBACK_TIMEOUT = 5s
+
+[sbt.audit]
+AUDIT_PATH = /var/log/sc-ift4
+AUDIT_FILE_NAME = audit
+AUDIT_ROTATE = true
+MAX_SIZE_SHIFT = 28
+DAILY_ROTATE = true
+MAX_DAYS = 7
+COMPRESS = true
+COMPRESSION_LEVEL = -1
+
+[sourcecontrol.wrap.vault]
+WRAP_TOKEN_PATH = %(WORK_PATH)s/vault/wrap_token.json
+TTL_WRAP_TOKEN = 86400
+NAME_TENANT_SEC_MAN_WRAP = DEV_DZO
+URL_SEC_MAN = http://secman-dzo.solution.sbt:8200
+PERIOD_WRAPPING_TOKEN = 14400
+VAULT_ENABLED = true
+
+[sourcecontrol.vault.db]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/DB4
+VERSION_KV = 1
+USER_KEY = USER
+PASSWORD_KEY = PASSWD
+
+[sourcecontrol.vault.server]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/LFS_JWT_SECRET
+VERSION_KV = 1
+LFS_JWT_SECRET = TOKEN
+
+[sourcecontrol.vault.security]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/INTERNAL_TOKEN
+VERSION_KV = 1
+INTERNAL_TOKEN = TOKEN
+
+[sourcecontrol.vault.oauth2]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/JWT_SECRET
+VERSION_KV = 1
+JWT_SECRET = TOKEN
+
+[sourcecontrol.vault.auth_keycloak]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/AUTH_KEYCLOAK_IFT4
+VERSION_KV = 1
+REALM_CLIENT_SECRET = REALM_CLIENT_SECRET
+REALM_CLIENT_ID = REALM_CLIENT_ID
+ADMIN_CLI_SECRET = ADMIN_CLI_SECRET
+ADMIN_CLIENT_ID_MASTER_REALM = ADMIN_CLIENT_ID_MASTER_REALM
+
+[sourcecontrol.vault.one_work]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = TOKEN
+VERSION_KV = 1
+ONE_WORK_TOKEN = ONE_WORK
+
+[sourcecontrol]
+ENABLED = true
+TENANT_WITH_ROLE_MODEL_ENABLED = true
+MULTI_TENANT_ENABLED = true
+INTERNAL_PRIVILEGE_MANAGEMENT = false
+INTERNAL_PROJECT_CREATE = true
+EXTERNAL_PRE_RECEIVE_HOOK_ENABLED = true
+IAM_TOOL_NAME = sc-ift4
+
+[gitaly]
+ENABLED = true
+
+[gitaly.servers.gitaly-3]
+TOKEN = gitaly3
+ADDRESS = tcp://vm-gitt-ws-nosw-50090.vdc01.ws.dev.sbt:8075
+
+[sourcecontrol.vault.task_tracker]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = task_tracker
+VERSION_KEY = 1
+API_TOKEN = token
+
+[sourcecontrol.vault.kafka]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = kafka
+VERSION_KEY = 1
+CERTIFICATE = certificate
+PRIVATE_KEY = private_key
+CA_ROOT_CERTIFICATE = ca_root_cert
+
+[sourcecontrol.vault.mtls.task_tracker]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/mtls_secrets_task_tracker_ift5
+VERSION_KV = 1
+CA_CERT_PATH = ca_cert
+CERT_PATH = client_cert
+KEY_PATH = client_key
+ENABLED = false
+
+[sourcecontrol.vault.mtls.server]
+STORAGE_PATH = A/DEV/GITT/KV
+SECRET_PATH = IFT/mtls_secrets_sc_server
+VERSION_KV = 1
+CA_CERT_PATH = ca_cert
+CERT_PATH = server_cert
+KEY_PATH = server_key
+ENABLED = true
+
+[iam]
+ENABLED = true
+BASE_URL = https://ift.pd10.pvw.sbt/ssd/tools/sc-ift4/
+SSH_DOMAIN = ift.pd10.pvw.sbt
+WHITE_LIST_ROLES_USER = sc_user,ROLE_USER
+WHITE_LIST_ROLES_ADMIN = sc_admin,ROLE_ADMIN
+WS_PRIVILEGES_ENABLED = true
+ENABLE_REPOSITORY_DELETE = true
+CASBIN_CACHE_UPDATE_TTL_IN_SECONDS = 5
+
+[sourcecontrol.tasktracker]
+TASK_TRACKER_ENABLED = true
+API_BASE_URL = https://dev.pd10.pvw.sbt/swtr/sctt1/extension/plugin/v2/rest/api/swtr_task_tracker_plugin/v1
+UNIT_BASE_URL = https://dev.pd10.pvw.sbt/swtr/sctt1/units/all/unit
+UNITS_VALIDATION_ENABLED = true
+IAM_UNIT_BASE_URL = https://dev.pd10.pvw.sbt/swtr/sctt1/units/all/unit
+UNIT_LINKS_SENDER_INTERVAL_SECONDS = 300
+API_TOKEN =
+
+[sourcecontrol.vault.mtls]
+MTLS_ENABLED = true
+
+[sourcecontrol.codehub]
+CODEHUB_MARK_LABEL_NAME = CodeHub
+CODEHUB_MARK_ENABLED = true
+CODEHUB_METRIC = true
+CODEHUB_USAGES_INTERVAL_SECONDS = 10
+CODEHUB_COUNTER_INTERVAL_SECONDS = 20
+INTERNAL_METRIC_NAMES_LIST = unique_clones
+
+[sourcecontrol.tracing]
+TRACING_ENABLED=false
+TRACING_TYPE=log
+

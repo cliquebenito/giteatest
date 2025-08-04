@@ -1,0 +1,13 @@
+audit=false
+fund=false
+update-notifier=false
+package-lock=true
+save-exact=true
+lockfile-version=3
+
+strict-ssl=false
+always-auth=true
+
+//sberworks.ru/nexus-ci/repository/npm-all/:_auth={LOGIN_PASSWORD_BASE64}
+@sds-eng:registry=https://sberworks.ru/nexus-ci/repository/npm-all/
+@sbt-works:registry=https://sberworks.ru/nexus-ci/repository/npm-all/

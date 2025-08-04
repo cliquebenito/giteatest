@@ -1,0 +1,122 @@
+# Лежит не в таргетном месте, необходимо переместить, когда будет понимание куда класть и куда генерить
+# Команда для генерации: oapi-codegen -generate types -config api/openapi/producers/v1/repository.cfg.yaml api/openapi/producers/v1/repository.yaml
+openapi: 3.0.0
+info:
+  title: Kafka contracts
+  version: 1.0.0
+
+paths:
+  /:
+    get:
+      description: Fake endpoint to create a repository event
+      responses:
+        200:
+          description: Fake response to create a repository event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRepositoryEvent'
+
+components:
+  schemas:
+    CreateRepositoryEvent:
+      description: Create repository event
+      type: object
+      properties:
+        id:
+          description: Event id
+          type: string
+        timestamp:
+          description: When the event was created
+          type: integer
+          format: timestamp
+        issuer:
+          description: Issuer of the event
+          type: string
+        type:
+          $ref: '#/components/schemas/EventType'
+        action:
+          $ref: '#/components/schemas/Action'
+        project-info:
+          $ref: '#/components/schemas/ProjectInfo'
+        properties:
+          description: Properties of the event
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        version:
+          description: Version of contract
+          type: string
+          default: 1.0.0
+        user-info:
+          $ref: '#/components/schemas/UserInfo'
+        tenant-id:
+          description: Tenant id
+          type: string
+      required:
+        - id
+        - timestamp
+        - issuer
+        - type
+        - action
+        - project-info
+        - properties
+        - version
+        - user-info
+        - tenant-id
+    Action:
+      description: Action performed on the event, e.g. create, update, delete
+      type: string
+      enum:
+        - create
+        - update
+        - delete
+    EventType:
+      description: Type of the event
+      type: string
+      enum:
+        - node
+        - user
+        - system
+        - nothing
+        - other
+    ProjectInfo:
+      description: Information about the project
+      type: object
+      properties:
+        project-id:
+          description: Project id
+          type: string
+        project-key:
+          description: Project key
+          type: string
+        project-name:
+          description: Project name
+          type: string
+        tenant:
+          description: Project tenant
+          type: string
+      required:
+        - project-id
+    Property:
+      description: Property of the event
+      type: object
+      properties:
+        name:
+          description: Property name
+          type: string
+        value:
+          description: Property value
+          type: string
+      required:
+        - name
+        - value
+    UserInfo:
+      description: Information about the user who performed the action
+      type: object
+      properties:
+        user-id:
+          description: User id
+          type: string
+      required:
+        - user-id

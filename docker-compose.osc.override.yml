@@ -1,0 +1,9 @@
+services:
+  server:
+    build:
+      dockerfile: ./Dockerfile.rootless.osc
+      context: ./
+      args:
+        GOPROXY: "https://$SBEROSC_USER:$SBEROSC_TOKEN@dzo.sw.sbc.space/osc/repo/go"
+        SBEROSC_NPM_REPO_LINK: "dzo.sw.sbc.space/osc/repo/npm"
+        SBEROSC_BASE64_STRING: "$SBEROSC_BASE64_STRING"

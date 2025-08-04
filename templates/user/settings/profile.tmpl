@@ -1,0 +1,134 @@
+{{template "user/settings/layout_head" (dict "ctxData" . "pageClass" "user settings profile")}}
+	<div class="user-setting-content">
+		<div class="sc-box sc-box_attached gt-mb-4">
+			<h4 class="sc-box__header">
+				{{.locale.Tr "settings.public_profile"}}
+			</h4>
+			<div class="sc-box__body">
+				<p>{{.locale.Tr "settings.profile_desc"}}</p>
+				<form class="ui form" action="{{.Link}}" method="post">
+					{{.CsrfTokenHtml}}
+					<div class="required field {{if .Err_Name}}error{{end}} {{if EnableOneWork }}disabled{{end}}">
+						<label for="username">{{.locale.Tr "username"}}
+							<span class="text red gt-hidden" id="name-change-prompt"> {{.locale.Tr "settings.change_username_prompt"}}</span>
+							<span class="text red gt-hidden" id="name-change-redirect-prompt"> {{.locale.Tr "settings.change_username_redirect_prompt"}}</span>
+						</label>
+						<input id="username" name="name" value="{{.SignedUser.Name}}" data-name="{{.SignedUser.Name}}" {{if not EnableOneWork }}autofocus{{end}} required {{if or (not .SignedUser.IsLocal) .IsReverseProxy}}disabled{{end}}>
+						{{if or (not .SignedUser.IsLocal) .IsReverseProxy}}
+						<p class="help text blue">{{$.locale.Tr "settings.password_username_disabled"}}</p>
+						{{end}}
+					</div>
+					<div class="field {{if .Err_FullName}}error{{end}} {{if EnableOneWork }}disabled{{end}}">
+						<label for="full_name">{{.locale.Tr "settings.full_name"}}</label>
+						<input id="full_name" name="full_name" value="{{.SignedUser.FullName}}">
+					</div>
+					{{if not EmptyEmailEnabled}}
+						<div class="field {{if .Err_Email}}error{{end}} {{if EnableOneWork }}disabled{{end}}">
+							<label for="email">{{.locale.Tr "email"}}</label>
+							<p>{{.SignedUser.Email}}</p>
+						</div>
+						<div class="inline field {{if EnableOneWork }}disabled{{end}}">
+							<div class="ui checkbox" id="keep-email-private">
+								<label data-tooltip-content="{{.locale.Tr "settings.keep_email_private_popup"}}"><strong>{{.locale.Tr "settings.keep_email_private"}}</strong></label>
+								<input name="keep_email_private" type="checkbox" {{if .SignedUser.KeepEmailPrivate}}checked{{end}}>
+							</div>
+						</div>
+					{{end}}
+					<div class="field {{if .Err_Description}}error{{end}} {{if EnableOneWork }}disabled{{end}}">
+						<label for="description">{{$.locale.Tr "user.user_bio"}}</label>
+						<textarea id="description" name="description" rows="2" placeholder="{{.locale.Tr "settings.biography_placeholder"}}">{{.SignedUser.Description}}</textarea>
+					</div>
+					<div class="field {{if .Err_Website}}error{{end}} {{if EnableOneWork }}disabled{{end}}">
+						<label for="website">{{.locale.Tr "settings.website"}}</label>
+						<input id="website" name="website" type="url" value="{{.SignedUser.Website}}">
+					</div>
+					<div class="field {{if EnableOneWork }}disabled{{end}}">
+						<label for="location">{{.locale.Tr "settings.location"}}</label>
+						<input id="location" name="location"  value="{{.SignedUser.Location}}">
+					</div>
+
+					<!-- private block -->
+
+
+					<div class="inline field {{if .Err_Visibility}}error{{end}} {{if EnableOneWork }}disabled{{end}}">
+						<span class="inline required field"><label for="visibility">{{.locale.Tr "settings.visibility"}}</label></span>
+						<div class="ui selection type dropdown">
+							{{if .SignedUser.Visibility.IsPublic}}<input type="hidden" id="visibility" name="visibility" value="0">{{end}}
+							{{if .SignedUser.Visibility.IsLimited}}<input type="hidden" id="visibility" name="visibility" value="1">{{end}}
+							{{if .SignedUser.Visibility.IsPrivate}}<input type="hidden" id="visibility" name="visibility" value="2">{{end}}
+							<div class="text">
+								{{if .SignedUser.Visibility.IsPublic}}{{.locale.Tr "settings.visibility.public"}}{{end}}
+								{{if .SignedUser.Visibility.IsLimited}}{{.locale.Tr "settings.visibility.limited"}}{{end}}
+								{{if .SignedUser.Visibility.IsPrivate}}{{.locale.Tr "settings.visibility.private"}}{{end}}
+							</div>
+							{{svg "octicon-triangle-down" 14 "dropdown icon"}}
+							<div class="menu">
+								{{range $mode := .AllowedUserVisibilityModes}}
+									{{if $mode.IsPublic}}
+										<div class="item" data-tooltip-content="{{$.locale.Tr "settings.visibility.public_tooltip"}}" data-value="0">{{$.locale.Tr "settings.visibility.public"}}</div>
+									{{else if $mode.IsLimited}}
+										<div class="item" data-tooltip-content="{{$.locale.Tr "settings.visibility.limited_tooltip"}}" data-value="1">{{$.locale.Tr "settings.visibility.limited"}}</div>
+									{{else if $mode.IsPrivate}}
+										<div class="item" data-tooltip-content="{{$.locale.Tr "settings.visibility.private_tooltip"}}" data-value="2">{{$.locale.Tr "settings.visibility.private"}}</div>
+									{{end}}
+								{{end}}
+							</div>
+						</div>
+					</div>
+
+					<div class="field {{if EnableOneWork }}disabled{{end}}">
+						<div class="ui checkbox" id="keep-activity-private">
+							<label data-tooltip-content="{{.locale.Tr "settings.keep_activity_private_popup"}}"><strong>{{.locale.Tr "settings.keep_activity_private"}}</strong></label>
+							<input name="keep_activity_private" type="checkbox" {{if .SignedUser.KeepActivityPrivate}}checked{{end}}>
+						</div>
+					</div>
+					{{if not EnableOneWork }}
+					<div class="field">
+						<button class="sc-button sc-button_primary">{{$.locale.Tr "settings.update_profile"}}</button>
+					</div>
+					{{end}}
+				</form>
+			</div>
+		</div>
+
+		<div class="sc-box sc-box_attached">
+			<h4 class="sc-box__header">
+				{{.locale.Tr "settings.avatar"}}
+			</h4>
+			<div class="sc-box__body">
+				<form class="ui form" action="{{.Link}}/avatar" method="post" enctype="multipart/form-data">
+					{{.CsrfTokenHtml}}
+					{{if not (DisableGravatar $.Context)}}
+					<div class="inline field">
+						<div class="ui radio checkbox">
+							<input name="source" value="lookup" type="radio" {{if not .SignedUser.UseCustomAvatar}}checked{{end}}>
+							<label>{{.locale.Tr "settings.lookup_avatar_by_mail"}}</label>
+						</div>
+					</div>
+					<div class="field {{if .Err_Gravatar}}error{{end}}">
+						<label for="gravatar">Avatar {{.locale.Tr "email"}}</label>
+						<input id="gravatar" name="gravatar" value="{{.SignedUser.AvatarEmail}}">
+					</div>
+					{{end}}
+
+					<div class="inline field">
+						<div class="ui radio checkbox">
+							<input name="source" value="local" type="radio" {{if .SignedUser.UseCustomAvatar}}checked{{end}}>
+							<label>{{.locale.Tr "settings.enable_custom_avatar"}}</label>
+						</div>
+					</div>
+
+					<div class="inline field">
+						<label for="avatar">{{.locale.Tr "settings.choose_new_avatar"}}</label>
+						<input name="avatar" type="file" accept="image/png,image/jpeg,image/gif,image/webp">
+					</div>
+
+					<div class="field field-buttons">
+						<button class="sc-button sc-button_base">{{$.locale.Tr "settings.update_avatar"}}</button>
+						<button class="sc-button sc-button_danger" data-request-url="{{.Link}}/avatar/delete" data-done-url="{{.Link}}">{{$.locale.Tr "settings.delete_current_avatar"}}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{{template "user/settings/layout_footer" .}}

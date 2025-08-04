@@ -1,0 +1,88 @@
+.override .admin-table-panel .ui.button.primary svg {
+  color: inherit;
+}
+.override .admin-table-panel .ui.button.primary:hover {
+  border-radius: 8px;
+}
+
+.override .page-content.admin .container {
+  margin: 0 auto;
+}
+
+.override .admin-table-panel .ui.primary.button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row;
+}
+
+.override .admin-setting-content .admin-dl-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  row-gap: 6px;
+  font-size: 0.9em;
+}
+.override .admin-setting-content h4.ui.top.attached.header {
+  padding: 1.5em 0!important;
+}
+.override .admin-setting-content h4.ui.top.attached.header:first-child {
+  padding-top: 0!important;
+}
+
+.override .admin-setting-content .admin-dl-horizontal dt {
+  text-overflow: initial;
+  white-space: normal;
+  line-height: 1.2;
+  width: 50%;
+  margin: 0;
+}
+
+.override .admin-setting-content .admin-dl-horizontal dd {
+  width: 50%;
+}
+
+.override .admin-setting-content .admin-dl-horizontal dd svg.octicon-x {
+  fill: var(--color-red);
+}
+
+.override .admin-setting-content .admin-dl-horizontal dd svg.octicon-check {
+  fill: var(--color-primary)
+}
+
+.override .admin-setting-content  .ui.table {
+  font-size: 0.9em;
+}
+
+.override .admin-setting-content .ui.form .field {
+  width: 100%;
+}
+.override .admin-setting-content .ui.form .field input {
+  width: 100%;
+}
+.override .admin-setting-content .ui.form .field .dropdown {
+  width: 100%;
+}
+.override .admin-setting-content .ui.form .field .dropdown.icon {
+  width: 36px;
+}
+
+
+.override .admin-setting-content .system-monitoring-table tfoot .ui.button {
+  color: var(--color-text)
+}
+
+.override .admin-setting-content .users-table svg.octicon-x {
+  fill: var(--color-red);
+}
+
+
+.override .admin-setting-content .ui.menu .ui.dropdown.item .menu .item:not(.filtered) {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.override .admin-setting-content .ui.menu .ui.dropdown.item .menu .item:not(.filtered) input{
+  min-height: 20px;
+}

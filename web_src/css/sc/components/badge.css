@@ -1,0 +1,104 @@
+.sc-badge {
+    min-width: 24px;
+    height: 18px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    
+    font-family: var(--fonts-monospace);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.sc-badge svg {
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+}
+
+.sc-badge_default {
+    color: var(--sc-color-white);
+    background-color: var(--sc-color-blue-lighten);
+}
+
+.sc-badge_primary {
+    color: var(--sc-color-white);
+    background-color: var(--sc-color-primary);
+}
+
+
+.sc-badge_base {
+    color: var(--sc-color-white);
+    background-color: var(--sc-color-grey);
+}
+
+
+.sc-badge_outlined {
+    border: 1px solid var(--sc-color-stroke);
+    color: var(--sc-color-grey-dark);
+    background-color: transparent;
+}
+
+
+.sc-badge_info {
+    color: var(--sc-color-grey-dark);
+    background-color: var(--sc-color-grey);
+}
+
+
+.sc-badge_positive {
+    color: var(--sc-color-white);
+    background-color: var(--sc-color-green);
+}
+
+
+.sc-badge_negative {
+    color: var(--sc-color-white);
+    background-color: var(--sc-color-red);
+}
+
+
+.sc-badge_warning {
+    color: var(--sc-color-white);
+    background-color: var(--sc-color-orange);
+}
+
+
+.sc-badge_transparent {
+    color: var(--sc-color-grey-dark);
+    background-color: var(--sc-color-bg);
+}
+
+
+.sc-badge-info {
+    min-height: 24px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: var(--fonts-monospace);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 24px;
+    background-color: var(--sc-color-blue-lighter);
+    color: var(--sc-color-blue);
+    text-decoration: none;
+}
+.sc-badge-info:hover {
+    background-color: var(--sc-color-blue-lighter);
+    color: var(--sc-color-blue);
+    text-decoration: none;
+}
+
+
+a.sc-badge:hover {
+    color: var(--sc-color-white);
+    text-decoration: none;
+    opacity: .8;
+    cursor: pointer;
+}

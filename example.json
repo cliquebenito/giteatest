@@ -1,0 +1,8 @@
+POST https://dev.pd10.pvw.sbt/swtr/extension/plugin/v2/rest/api/swtr_task_tracker_plugin/v1/unit/search
+accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+"unit_codes": ["SWTR-1", "SVTR-1"]
+}

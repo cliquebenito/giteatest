@@ -1,0 +1,84 @@
+.with-side-menu {
+  --closed-menu-width: 64px;
+  --display-menu-item-text: none;
+  --display-submenu: none;
+  --opened-menu-width: 300px;
+  --sidemenu-error-svg-size: 30px;
+  margin-left: 50px;
+}
+
+/* отступ контентой области */
+.with-side-menu .page-content{
+  padding: 48px;
+}
+/* скрываем меню, до тех пор пока оно не проинициализировалось
+    таким образом избегаем блика при во время выполнения скрипта иницилизации меню
+ */
+.side-menu-container.loading {
+  visibility: hidden;
+}
+
+/* логотип отобажается только при открытом меню */
+.side-menu-active .side-menu-container-logo {
+  display: block;
+}
+
+.side-menu-active .side-menu-container {
+  left: 0;
+  width: var(--opened-menu-width);
+}
+
+.side-menu-active {
+  margin-left: var(--opened-menu-width);
+  --display-menu-item-text: block;
+  --display-submenu: auto;
+  --sidemenu-error-svg-size: 60px;
+}
+.side-menu-active .side-menu-close-button-container {
+  justify-content: flex-end;
+}
+
+
+.side-menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 64px;
+    z-index: 1000;
+    background-color: var(--color-box-body);
+    border-right: 1px solid rgba(34,36,38,.15);
+}
+
+.side-menu-close-button-container {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+}
+
+.close-menu-button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    padding: 0;
+}
+
+.close-menu-button svg {
+  fill: var(--color-text);
+}
+
+.side-menu-container-logo {
+  color: var(--color-text);
+  text-align: center;
+  font-family: var(--fonts-monospace);
+  font-size: 22px;
+  margin-bottom: 12px;
+  display: none;
+  text-decoration: none;
+}
+
+.side-menu-container-logo:hover {
+  color:  var(--color-text);
+  opacity: .8;
+  text-decoration: none;
+}

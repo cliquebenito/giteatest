@@ -1,0 +1,10 @@
+<div class="sc-tabs-nav sc-tabs-nav_center">
+	<a class="{{if .PageIsOpenIDConnect}}sc-tabs-nav__item_active {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/user/openid/connect">
+		{{.locale.Tr "auth.openid_connect_title"}}
+	</a>
+	{{if and .EnableOpenIDSignUp (not .AllowOnlyInternalRegistration)}}
+		<a class="{{if .PageIsOpenIDRegister}}sc-tabs-nav__item_activ {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/user/openid/register">
+			{{.locale.Tr "auth.openid_register_title"}}
+		</a>
+	{{end}}
+</div>

@@ -1,0 +1,24 @@
+.repository.branches .bar.bar-behind {
+    background-color: var(--sc-color-red-50);
+    border-radius: 4px 0 0 4px;
+}
+
+.repository.branches .bar.bar-ahead {
+    background-color: var(--sc-color-green-50);
+    border-radius: 0 4px 4px 0;
+}
+
+.ui.repository.branches .info {
+    font-size: 12px;
+    font-size: var(--fonts-proportional);
+    color: var(--sc-color-text);
+}
+
+.ui.repository.branches .info > .sha.label:first-child {
+    margin-left: 0;
+}
+
+.ui.repository.branches .info .commit-time {
+    color: var(--sc-color-text-secondary);
+    font-size: .9em;
+}

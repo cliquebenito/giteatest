@@ -1,0 +1,57 @@
+/* TODO: move to VUE component */
+.git-hook-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.git-hook-form .form-row {
+    display: flex;
+    width: 100%;
+    gap: 24px;
+}
+
+.git-hook-form .field {
+    width: 100%;
+}
+.git-hook-form .hint-field {
+    display: none;
+    color: #E63C1A;
+}
+
+.git-hook-form .field.invalid input {
+    border-color: #E63C1A;
+}
+
+.git-hook-form .field.invalid .hint-field  {
+    display: block;
+}
+
+.git-hook-form .hint {
+    background-color: #F9F9F9;
+    padding: 16px;
+    color: #737B8C;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+.git-hook-form .hint ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.git-hook-form .controls {
+    display: flex;
+    column-gap: 24px;
+    margin-top: 24px;
+}
+
+
+.admin-setting-content .git-hook-form  .button.primary:not(:disabled):hover {
+    background-color: #4799EB;
+}
+
+
+.admin-setting-content .git-hook-form  .button:not(:disabled):hover {
+    border-radius: 8px;
+}
+  

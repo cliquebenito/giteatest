@@ -1,0 +1,11 @@
+{{template "org/settings/layout_head" (dict "ctxData" . "pageClass" "organization settings options")}}
+			<div class="org-setting-content">
+				<div class="sc-box sc-box_attached">
+					<h4 class="sc-box__header">
+						{{.locale.Tr "settings.applications"}}
+					</h4>
+
+				{{template "user/settings/applications_oauth2_list" .}}
+				</div>
+			</div>
+{{template "org/settings/layout_footer" .}}

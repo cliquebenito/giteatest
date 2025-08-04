@@ -1,0 +1,26 @@
+{{with .Org}}
+	<script>
+		window.config.OWProjectReposCount = {{.NumRepos}};
+		window.config.OWProjectName = {{.LowerName}};
+		window.localStorage.setItem('OWProjectName', {{.LowerName}});
+		window.config.displayName = {{.DisplayName}};
+	</script>
+	<div class="ui container">
+		<div class="ui vertically grid head">
+			<div class="column">
+				<div class="ui header sc-project-header">
+					<div class="sc-project__image sc-project__image_small">
+						{{avatar $.Context . 100}}
+					</div>
+					<span class="text thin grey"><a href="{{.HomeLink}}">{{.DisplayName}}</a></span>
+					<span class="org-visibility">
+						{{if .Visibility.IsLimited}}<div class="sc-badge sc-badge_outlined">{{$.locale.Tr "org.settings.visibility.limited_shortname"}}</div>{{end}}
+						{{if .Visibility.IsPrivate}}<div class="sc-badge sc-badge_outlined">{{$.locale.Tr "org.settings.visibility.private_shortname"}}</div>{{end}}
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+{{end}}
+
+{{template "org/menu" .}}

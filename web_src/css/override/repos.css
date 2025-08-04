@@ -1,0 +1,510 @@
+.explore .navbar {
+    /* margin-bottom: 15px !important; */
+    /* background-color: var(--color-navbar) !important; */
+    /* border-width: 1px !important; */
+    margin-bottom: 24px !important;
+}
+
+.ui.repository.list .item {
+    padding: 1.714rem 1.143rem;
+}
+
+
+.ui.repository.list .item:not(:first-child) {
+    border-top: 1px solid #B9BDC6;
+    /* border-top: 1px solid var(--color-secondary);#B9BDC6 */
+}
+
+.ui.repository.list .item .ui.header {
+    font-size: 1.5rem;
+    margin-bottom: 1.143rem;
+}
+
+.ui.repository.list .item .ui.tags {
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.ui.repository.list .item .description-footer {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    color: #737B8C;
+    font-family: 'Inter', sans-serif;
+}
+
+
+.ui.tags,
+.repo-title {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.ui.fluid.action.input {}
+
+.ui.repository.list .item .description-footer .time,
+.ui.repository.list .description>p {
+    font-family: 'Inter', sans-serif;
+}
+
+
+.ui.secondary.pointing.menu .item svg {
+    display: none;
+}
+
+.ui.menu.new-menu .item:first-child {
+    margin: 0 !important;
+}
+
+.ui.repository.list .description {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.ui.repository.list .description>p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+.tags .ui.label {
+    padding: 4px 12px;
+    line-height: 16px;
+    font-size: 12px;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    color: rgb(51, 102, 153);
+}
+
+
+
+/* SEARCH */
+
+.override .search-sort-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
+
+.override .repo-search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.override .repo-search .fluid.action.input {
+    width: 100%;
+    border: 1px solid rgb(185, 189, 198);
+    border-radius: 8px;
+}
+
+.override .repo-search .fluid.action.input input {
+    border: none;
+    background: transparent;
+}
+.override .repo-search .fluid.action.input input::placeholder {
+    color: #B9BDC6
+}
+
+.override .repo-search .fluid.action.input button {
+    border: none;
+    background: transparent;
+}
+
+
+
+/* REPO */
+.override .repository .header-wrapper {
+    background-color: transparent;
+}
+
+.override .repo-title .repo-icon svg {
+    display: none;
+}
+
+
+.override .ui.repo-topic.large.label.topic {
+    padding: 4px 12px;
+    line-height: 16px;
+    font-size: 12px;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    color: rgb(51, 102, 153);
+    background: var(--color-label-bg);
+}
+
+
+/* CLONE BUTTONS */
+
+
+.override .ui.basic.small.compact.button {
+    border-radius: 8px;
+    font-size: 15px;
+    color: #2E3038;
+    background: transparent;
+    border: none;
+    box-shadow: none!important;
+}
+
+.override .ui.basic.small.compact.button.primary {
+    background-color: #737B8C;
+    color: #fff;
+}
+
+.override .ui.basic.small.compact.button.primary:hover,
+.override .ui.basic.small.compact.button:hover {
+    background-color: #D5D9DD;
+    color: #2E3038!important;
+}
+
+.override .load-btns-wrap {
+    align-items: stretch;
+    column-gap: 16px;
+}
+
+
+.override .repo-button-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.override .repo-button-row__controls-group {
+    display: flex;
+    column-gap: 8px;
+    margin: 0;
+}
+
+.override .repo-button-row__controls-group .branch-dropdown-button.ui.basic.small.compact.button {
+    background: rgb(241, 242, 244);
+    border: 1px solid rgb(213, 217, 221);
+    border-radius: 4px;
+    color: rgb(46, 48, 56);
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 16px;
+    column-gap: 8px;
+}
+
+/* .override .repo-button-row__clone-group .clone-form {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.override .repo-button-row__clone-group .clone-field {
+    display: flex;
+    align-items: center;
+    border: 1px solid #D3DBDF;
+    border-radius: 6px;
+    height: 32px;
+    padding: 0 6px 0 12px;
+    min-width: 285px;
+    column-gap: 8px;
+    overflow: hidden;
+}
+.override .repo-button-row__clone-group .clone-field:focus-within {
+    border-color: #1976D2;
+}
+
+.override .repo-button-row__clone-group .clone-field input {
+    width: 300px!important;
+    flex-grow: 1;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.override .repo-button-row__clone-group .clone-field .sc-button_icon {
+    height: 28px;
+    width: 28px;
+    min-height: 0;
+    border-radius: 6px;
+}
+
+.override .repo-button-row__clone-group .clone-form .ui.dropdown.sc-button {
+    position: relative;
+    display: inline-flex;
+    border-width: 1px;
+    align-items: center;
+    border-radius: 6px!important;
+} */
+
+
+
+/* FILE TABLE */
+/*
+.override .repository.file.list #repo-files-table thead th {
+    background-color: #F3F5F6;
+    padding: 12px 16px;
+    border-color: #d2dbde;
+}
+
+.override #repo-files-table .author-wrapper {
+    color: #2E3038;
+    font-size: 13px;
+}
+.override #repo-files-table .author-wrapper  strong {
+    font-weight: 500;
+}
+
+.override .repository #commits-table td.sha .sha.label,
+.override  .repository #repo-files-table .sha.label,
+.override  .repository #rev-list .sha.label,
+.override  .repository .timeline-item.commits-list .singular-commit .sha.labe{
+    border: 1px solid rgb(213, 217, 221);
+    border-radius: 4px;
+    background-color: transparent;
+    font-weight: 400;
+    color: #2E3038;
+}
+
+.override  #repo-files-table .message-wrapper {
+    color: #2E3038;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.override .repository.file.list #repo-files-table tbody .svg.octicon-file-directory-fill,
+.override .repository.file.list #repo-files-table tbody .svg.octicon-file-submodule {
+    color: #1976D2;
+}
+
+.override .repository.file.list #repo-files-table td a {
+    color: #2E3038;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.override .repository.file.list #repo-files-table td.age,
+.override .repository.file.list #repo-files-table td.message a {
+    color: #737B8C;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.override .repository.file.list #repo-files-table tr:hover {
+    background-color: #F1F2F4;
+}
+.override .repository.file.list #repo-files-table tr:hover a {
+    color: #144BB8;
+} */
+
+.override  .file-header-left {
+    color: #737B8C;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: var(--fonts-monospace);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-right: 0!important;
+}
+.override  .file-header-left strong {
+    font-weight: normal;
+}
+
+.override .file-header-left::after {
+    margin-left: 12px;
+    content: '';
+    border-top: 1px solid rgb(213, 217, 221);
+    flex-grow: 1;
+
+}
+
+/* SEGMENT */
+.override .repository .ui.segment.sub-menu {
+  padding: 0 !important;
+}
+
+.override .repository .ui.segment.sub-menu .list .item {
+    padding: 0!important;
+    margin: 0!important;
+}
+.override .repository .ui.segment.sub-menu .list .item > * {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    justify-content: center;
+    padding: 12px 0;
+}
+
+.override .repository .ui.segment.sub-menu .list .item .item-value {
+    font-weight: normal;
+    color: #2E3038;
+    font-size: 20px;
+}
+
+.override .repository .ui.segment.sub-menu .list .item svg {
+    color: #737B8C;
+    width: 16px;
+    height: 16px;
+}
+
+.override .repository .ui.segment.sub-menu .list .item .item-label {
+    font-size: 13px;
+    color: #737B8C;
+    font-family: var(--fonts-proportional);
+    text-transform: capitalize;
+}
+.override .repository .ui.segment.sub-menu .list .item .item-label:after {
+    content: ':'
+}
+
+.override .ui.segments:not(.horizontal) > .segment:last-child {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.override .btn-history {
+    border:  none!important;
+}
+
+.override .breadcrumb.repo-path {
+    font-family: var(--fonts-monospace);
+    font-size: 16px;
+    color: #2E3038;
+}
+
+.override .breadcrumb.repo-path a {
+    color: #144BB8;
+    font-weight: 700;
+}
+.override .breadcrumb.repo-path .divider {
+    color: #B9BDC6;
+    margin: 0 8px;
+}
+
+.override .repository.new.repo form .header,
+.override .repository.new.migrate form .header,
+.override .repository.new.fork form .header,
+.override .header-create {
+    text-align: left;
+}
+
+
+.override .file-view.markup.markdown {
+    font-family: var(--fonts-override, var(--fonts-proportional)), "Noto Sans", "Liberation Sans", sans-serif, var(--fonts-emoji);
+    font-size: 15px;
+    line-height: 20px;
+    color: #2E3038;
+}
+
+.override .file-view.markup.markdown h1 {
+    color: #2E3038;
+    font-size: 42px;
+}
+
+.override .repo-editor-header .ui.breadcrumb.field {
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.override .ui.dropzone {
+  padding: 0 12px;
+}
+
+.override .file-header .file-actions .ui.buttons {
+  background: rgb(241, 242, 244);
+  border: 1px solid rgb(213, 217, 221);
+  border-radius: 4px;
+  color: rgb(46, 48, 56);
+  padding: 1px;
+}
+
+.override .file-header .file-actions .ui.buttons .ui.mini.basic.button {
+  border: none;
+  border-right: 1px solid rgb(213, 217, 221);
+  background: transparent;
+  border-radius: 0;
+}
+
+.override .file-header .file-actions .ui.buttons .ui.mini.basic.button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.override .file-header .file-actions .ui.buttons .ui.mini.basic.button:last-child {
+  border-right: none;
+  border-radius: 0 4px 4px 0;
+}
+
+.override .file-header .file-actions .ui.buttons .ui.mini.basic.button:hover {
+  background: #D5D9DD;
+}
+
+.override .ui.icon.buttons.tiny.color-buttons {
+  display: flex;
+  align-items: center;
+  background: rgb(241, 242, 244);
+  border: 1px solid rgb(185, 189, 198);
+  border-radius: 4px;
+  height: 38px;
+  padding: 2px;
+}
+
+.override .ui.icon.buttons.tiny.color-buttons .search {
+  background: transparent;
+  border: none;
+}
+
+.override .ui.icon.buttons.tiny.color-buttons .ui.button {
+  color: #2E3038;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 15px;
+  background: transparent;
+  border: none;
+  box-shadow: none!important;
+  padding: 0 8px;
+}
+
+.override .ui.icon.buttons.tiny.color-buttons .ui.button.active {
+  background-color: #737B8C;
+  color: #fff;
+}
+
+.override .repo-licenses-list li:not(:last-child) a::after {
+  content: ','
+}
+
+.override .arrow {
+    position: absolute;
+    right: 16px;
+}
+
+.override .branch-text {
+    margin-right: 8px;
+}
+
+.override .overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.override .repo-buttons {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.override .repo-icon {
+    display: none;
+}

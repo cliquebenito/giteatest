@@ -1,0 +1,16 @@
+.theme-dark {
+    --sc-color-text-primary: var(--sc-color-grey-20);
+    --sc-color-text-secondary: var(--sc-color-grey-50);
+
+    --sc-color-stroke: var(--sc-color-grey-80);
+    --sc-color-fill: #232933;
+    --sc-color-fill-secondary: #232933;
+    --sc-color-bg-input: #232933;
+    --sc-color-bg: #373b47;
+    --sc-color-bg-secondary: #232933;
+    --sc-button-bg-hover: #373b47;
+
+    --sc-color-box: #2a2e3a;
+
+    --color-primary: var(--sc-color-primary);
+}

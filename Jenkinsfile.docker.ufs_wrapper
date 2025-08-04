@@ -1,0 +1,69 @@
+def onDistrib(app, distr) {
+    workdir = pwd()
+    userId = sh ( script: "id -u", returnStdout: true).trim()
+    docker_registry = sh ( script: "echo ${app.base_image} | sed 's|http[s]*://||' | cut -d / -f 1", returnStdout: true).trim()
+
+    withCredentials([usernamePassword(credentialsId: "${app.tuz_ci}_osc", passwordVariable: 'OSC_TOKEN', usernameVariable: 'OSC_USER')]) {
+      configFileProvider([configFile(fileId: 'sa_npm_config_osc', variable: 'NPM_CONFIG')]) {
+        withDockerRegistry([ credentialsId: app.tuz_cd, url: "https://${docker_registry}" ]) {
+          sh "docker pull ${app.base_image}"
+          sh "cp ${NPM_CONFIG} ./npm_config"
+          def image = docker.build("${app.name}:latest", " \
+          --build-arg OSC_TOKEN='${OSC_TOKEN}' \
+          --build-arg BASE_IMAGE='${app.base_image}' \
+          --build-arg APPNAME='${app.name}' \
+          --build-arg APP_VERSION='${app.version}' \
+          --build-arg BUILD_NUMBER='${BUILD_NUMBER}' \
+          --build-arg APP_BRANCH='${app.branch}' \
+          --build-arg NPM_CONFIG='./npm_config' \
+          --build-arg GO_VERSION='${app.go_version}' \
+          --build-arg NODE_VERSION='${app.node_version}' \
+          --build-arg NPM_VERSION='${app.npm_version}' \
+          --build-arg SKIP_TESTS='${app.skip_tests}' \
+          --no-cache \
+          -f devops/Dockerfile \
+          ."
+          )
+          image.inside {
+            sh "cp /build/sc ./"
+            sh "cp /build/sc-gitaly-backup ./"
+            sh "cp /build/environment-to-ini ./"
+            sh "cp /build/report-backend.xml ./ || true"
+          }
+        }
+      }
+    }
+    sh "strip sc"
+    sh "docker rmi ${app.name}:latest"
+
+    if (fileExists('report-backend.xml')) {
+      junit 'report-backend.xml'
+    }
+
+    if (params.ADDITIONAL.contains('run-sonar')) {
+      def scannerHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+      withSonarQubeEnv(credentialsId: "${app.tuz_ci}_sonar", installationName: 'SonarQube') {
+        sh """
+          ${scannerHome}/sonar-scanner \
+          -Dsonar.projectKey=${app.name} \
+          -Dsonar.branch.name=${app.branch} \
+          -Dsonar.exclusions="**/*.sql,**/*.yml,**/*.yaml,**/*.tgz"
+        """
+      }
+    }
+
+    // Prepare docker artefacts
+    sh "mv -f Dockerfile.sc Dockerfile"
+
+    // Add binary artifacts to distro structure
+    distr.addBH("sc")
+    distr.addBH("sc-gitaly-backup")
+    distr.addConf("custom/conf/app.example.ini")
+    if (params.PLAYBOOKS.contains('docker')) {
+      distr.addDockerItems ("gitt", "Dockerfile")
+      distr.addDockerItems ("gitt", "docker/rootless")
+      distr.addDockerItems ("gitt", "environment-to-ini")
+      distr.addDockerItems ("gitt", "contrib/autocompletion/bash_autocomplete")
+    }
+}
+return wrapJenkinsfile(this)

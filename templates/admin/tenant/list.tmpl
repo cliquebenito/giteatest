@@ -1,0 +1,12 @@
+{{template "admin/layout_head" (dict "ctxData" . "pageClass" "admin tenants")}}
+<div class="admin-setting-content">
+
+	<script>
+		window.config.pageData = {
+			apiUrl: {{ .Link }},
+			tenants: {{ .Tenants }}
+		}
+	</script>
+	<div id="tenants-administration"></div>
+</div>
+{{template "admin/layout_footer" .}}

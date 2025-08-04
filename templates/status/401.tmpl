@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{{AssetUrlPrefix}}/img/favicon.svg" type="image/svg+xml">
+	<link rel="alternate icon" href="{{AssetUrlPrefix}}/img/favicon.png" type="image/png">
+	<link rel="stylesheet" href="{{AssetUrlPrefix}}/css/error-page.css?v={{AssetVersion}}">
+    <title>401 | {{.locale.Tr "error401.title"}}</title>
+</head>
+<body>
+    <main class="error-page">
+        <div class="error-page__container">
+            <div class="error-page__img-container">
+                <img class="error-page_img" src="{{AssetUrlPrefix}}/img/svg/illustration-hand-lock.svg" alt='{{.locale.Tr "error401.title"}}'/>
+            </div>	
+            <h1 class="error-page__title">{{.locale.Tr "error401.title"}}</h1>
+            <p class="error-page__description">{{.locale.Tr "error401.description" | Safe}}</p>
+            <div class="error-page__button-row">
+                <a class="sc-button sc-button_primary" href="{{AppSubUrl}}/user/login">{{.locale.Tr "error401.button"}}</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<svg width="150.000122" height="125.013672" viewBox="0 0 150 125.014" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<filter id="filter_577_20718_dd" x="11.028687" y="48.508301" width="22.222046" height="21.111328" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="1" dy="1"/>
+			<feGaussianBlur stdDeviation="0"/>
+			<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"/>
+			<feBlend mode="normal" in2="shape" result="effect_innerShadow_1"/>
+		</filter>
+		<filter id="filter_577_20719_dd" x="38.028687" y="48.508301" width="22.222046" height="21.111328" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="1" dy="1"/>
+			<feGaussianBlur stdDeviation="0"/>
+			<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"/>
+			<feBlend mode="normal" in2="shape" result="effect_innerShadow_1"/>
+		</filter>
+		<filter id="filter_577_20720_dd" x="66.028687" y="48.508301" width="22.222046" height="21.111328" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="1" dy="1"/>
+			<feGaussianBlur stdDeviation="0"/>
+			<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"/>
+			<feBlend mode="normal" in2="shape" result="effect_innerShadow_1"/>
+		</filter>
+		<filter id="filter_578_20812_dd" x="93.028687" y="48.508301" width="22.222046" height="21.111328" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="1" dy="1"/>
+			<feGaussianBlur stdDeviation="0"/>
+			<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"/>
+			<feBlend mode="normal" in2="shape" result="effect_innerShadow_1"/>
+		</filter>
+	</defs>
+	<rect id="Rectangle 18" x="7.777832" y="21.499023" rx="6.000000" width="142.222275" height="93.333328" fill="#DED5C6" fill-opacity="1.000000"/>
+	<rect id="Rectangle 18" y="12.609863" rx="6.000000" width="142.222275" height="93.333328" fill="#F8F1EB" fill-opacity="1.000000"/>
+	<g opacity="0.440000">
+		<g filter="url(#filter_577_20718_dd)">
+			<path id="path" d="M18.34 54.87L11.89 55.8L11.78 55.83C11.4 55.93 11.16 56.17 11.06 56.54C10.96 56.92 11.06 57.25 11.34 57.52L16.03 62.04L14.95 68.43L14.94 68.54C14.91 68.93 15.07 69.23 15.4 69.44C15.73 69.66 16.07 69.67 16.42 69.49L22.18 66.47L27.95 69.49L28.05 69.53C28.42 69.68 28.76 69.63 29.06 69.38C29.37 69.13 29.49 68.81 29.42 68.43L28.29 62.04L32.95 57.52C33.2 57.22 33.33 56.8 33.19 56.43C33.04 56.07 32.77 55.86 32.39 55.8L25.93 54.87L23.02 49.06C22.84 48.69 22.53 48.5 22.11 48.5C21.7 48.5 21.39 48.69 21.21 49.06L18.34 54.87Z" fill="#E5DCD5" fill-opacity="1.000000" fill-rule="nonzero"/>
+		</g>
+		<g filter="url(#filter_577_20719_dd)">
+			<path id="path" d="M45.34 54.87L38.89 55.8L38.78 55.83C38.4 55.93 38.16 56.17 38.06 56.54C37.96 56.92 38.06 57.25 38.34 57.52L43.03 62.04L41.95 68.43L41.94 68.54C41.91 68.93 42.07 69.23 42.4 69.44C42.73 69.66 43.07 69.67 43.42 69.49L49.18 66.47L54.95 69.49L55.05 69.53C55.42 69.68 55.76 69.63 56.06 69.38C56.37 69.13 56.49 68.81 56.42 68.43L55.29 62.04L59.95 57.52C60.2 57.22 60.33 56.8 60.19 56.43C60.04 56.07 59.77 55.86 59.39 55.8L52.93 54.87L50.02 49.06C49.84 48.69 49.53 48.5 49.11 48.5C48.7 48.5 48.39 48.69 48.21 49.06L45.34 54.87Z" fill="#E5DCD5" fill-opacity="1.000000" fill-rule="nonzero"/>
+		</g>
+		<g filter="url(#filter_577_20720_dd)">
+			<path id="path" d="M73.34 54.87L66.89 55.8L66.78 55.83C66.4 55.93 66.16 56.17 66.06 56.54C65.96 56.92 66.06 57.25 66.34 57.52L71.03 62.04L69.95 68.43L69.94 68.54C69.91 68.93 70.07 69.23 70.4 69.44C70.73 69.66 71.07 69.67 71.42 69.49L77.18 66.47L82.95 69.49L83.05 69.53C83.42 69.68 83.76 69.63 84.06 69.38C84.37 69.13 84.49 68.81 84.42 68.43L83.29 62.04L87.95 57.52C88.2 57.22 88.33 56.8 88.19 56.43C88.04 56.07 87.77 55.86 87.39 55.8L80.93 54.87L78.02 49.06C77.84 48.69 77.53 48.5 77.11 48.5C76.7 48.5 76.39 48.69 76.21 49.06L73.34 54.87Z" fill="#E5DCD5" fill-opacity="1.000000" fill-rule="nonzero"/>
+		</g>
+		<g filter="url(#filter_578_20812_dd)">
+			<path id="path" d="M100.34 54.87L93.89 55.8L93.78 55.83C93.4 55.93 93.16 56.17 93.06 56.54C92.96 56.92 93.06 57.25 93.34 57.52L98.03 62.04L96.95 68.43L96.94 68.54C96.91 68.93 97.07 69.23 97.4 69.44C97.73 69.66 98.07 69.67 98.42 69.49L104.18 66.47L109.95 69.49L110.05 69.53C110.42 69.68 110.76 69.63 111.06 69.38C111.37 69.13 111.49 68.81 111.42 68.43L110.29 62.04L114.95 57.52C115.2 57.22 115.33 56.8 115.19 56.43C115.04 56.07 114.78 55.86 114.39 55.8L107.93 54.87L105.02 49.06C104.84 48.69 104.53 48.5 104.12 48.5C103.7 48.5 103.39 48.69 103.21 49.06L100.34 54.87Z" fill="#E5DCD5" fill-opacity="1.000000" fill-rule="nonzero"/>
+		</g>
+	</g>
+	<circle id="Oval 11" cx="11.110840" cy="23.721191" r="2.222223" fill="#F44336" fill-opacity="1.000000"/>
+	<circle id="Oval 11" cx="17.777832" cy="23.721191" r="2.222223" fill="#FBC02D" fill-opacity="1.000000"/>
+	<circle id="Oval 11" cx="24.444336" cy="23.721191" r="2.222223" fill="#4CAF50" fill-opacity="1.000000"/>
+	<path id="Vector 23" d="M89.25 6.56C86.86 8.78 89.19 12.35 91.29 13.49C84.95 10.8 72.65 6.87 69.58 10.85C66.42 14.95 76.81 19.8 82.41 21.72C91.86 24.84 95.89 27.72 101.36 34.29C100.82 34.02 100.24 33.73 99.62 33.41C94.63 30.88 87.32 27.17 78 28.5C69.73 29.68 60.71 33.11 64.42 40.69C66.28 44.5 70.53 43.32 75.62 41.91C80.07 40.68 85.17 39.27 89.88 40.86C102.81 45.23 98.33 68.63 88.48 67.43C78.62 66.22 71.78 65.5 70.94 71.28C70.18 76.5 78.73 78.28 84.64 79.5C85.26 79.63 85.86 79.76 86.41 79.88C92.18 81.14 106.4 80.78 109.34 83.94C112.29 87.09 118.49 110.92 119.98 114.77L143.87 114.77C145.55 114.77 147.77 113.71 148.88 111.98C140.19 80.72 132.39 5.44 102.69 9.38C99.53 6.73 91.88 4.11 89.25 6.56Z" fill="#F6C2AB" fill-opacity="1.000000" fill-rule="evenodd"/>
+	<path id="Vector 24" d="M91.44 13.73C98.45 15.73 103.81 17.95 109.46 25.58" stroke="#000000" stroke-opacity="0.100000" stroke-width="1.000000" stroke-linecap="round"/>
+	<path id="Vector 25" d="M103.13 9.66C108.37 11.06 112.7 15.09 114.96 19.4" stroke="#000000" stroke-opacity="0.100000" stroke-width="1.000000" stroke-linecap="round"/>
+	<path id="path" d="M67.88 51.62L61.48 55.83L61.37 55.91C61.01 56.21 60.88 56.58 60.96 57.04C61.05 57.49 61.31 57.79 61.75 57.94L69.01 60.41L71.06 67.76L71.11 67.88C71.28 68.31 71.59 68.55 72.05 68.61C72.51 68.68 72.88 68.52 73.16 68.15L77.78 62.07L85.44 62.4L85.57 62.4C86.03 62.37 86.36 62.15 86.56 61.73C86.76 61.32 86.73 60.92 86.46 60.54L82.06 54.3L84.75 47.15C84.86 46.71 84.79 46.2 84.46 45.88C84.12 45.57 83.73 45.48 83.29 45.61L75.95 47.84L69.94 43.1C69.56 42.79 69.14 42.75 68.69 42.95C68.25 43.16 68.02 43.51 68.01 44L67.88 51.62Z" fill="#FF9800" fill-opacity="1.000000" fill-rule="nonzero"/>
+</svg>

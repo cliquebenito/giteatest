@@ -1,0 +1,25 @@
+<div class="ui container">
+	<div class="sc-tabs-nav">
+		<a class="{{if .PageIsExploreRepositories}}sc-tabs-nav__item_active {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/explore/repos">
+			{{svg "octicon-repo"}} {{.locale.Tr "explore.repos"}}
+		</a>
+		{{if not .UsersIsDisabled}}
+		<a class="{{if .PageIsExploreUsers}}sc-tabs-nav__item_active {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/explore/users">
+			{{svg "octicon-person"}} {{.locale.Tr "explore.users"}}
+		</a>
+		{{end}}
+		{{if EnableOneWork}}
+		<a class="{{if .PageIsExploreDashboard}}sc-tabs-nav__item_active {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/">
+			{{.locale.Tr "activities"}}
+		</a>
+		{{end}}
+		<a class="{{if .PageIsExploreOrganizations}}sc-tabs-nav__item_active {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/explore/organizations">
+			{{svg "octicon-organization"}} {{.locale.Tr "explore.organizations"}}
+		</a>
+		{{if and (not $.UnitTypeCode.UnitGlobalDisabled) .IsRepoIndexerEnabled}}
+		<a class="{{if .PageIsExploreCode}}sc-tabs-nav__item_active {{end}}sc-tabs-nav__item" href="{{AppSubUrl}}/explore/code">
+			{{svg "octicon-code"}} {{.locale.Tr "explore.code"}}
+		</a>
+		{{end}}
+	</div>
+</div>

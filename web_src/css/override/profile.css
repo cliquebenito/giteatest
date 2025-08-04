@@ -1,0 +1,145 @@
+.override .ui.card {
+    border: none;
+}
+
+.override #profile-avatar a {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.override .user.profile .ui.card .profile-avatar-name {
+    text-align: left;
+    border: none;
+}
+
+.override .ui.card .header {
+    text-align: left;
+    margin-bottom: 24px;
+}
+.override .ui.card .username {
+    font-family: var(--fonts-monospace);
+    font-size: 20px;
+    font-weight: 700;
+    color: #2E3038;
+}
+
+.override .profile-meta {
+    margin-top: 24px!important;
+    color: #737B8C;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.override .ui.card .follow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.override .ui.card .follow form {
+    width: 100%;
+    padding: 0 16px;
+}
+.override .ui.card .follow button {
+    width: 100%;
+    background-color: var(--color-blue);
+    border-radius: 8px;
+    color: #fff;
+}
+
+.override .user.profile .ui.card .extra ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.override .user.profile .ui.card .extra ul li {
+    border: none!important;
+    font-size: 12px;
+    color: #737B8C;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.override .user.profile .ui.card .extra ul li a {
+    color: #144BB8;
+}
+.override .user.profile .ui.card .extra ul li a i {
+    color: #737B8C;
+}
+
+.override .user.profile .ui.cards > .card > .extra, .ui.card > .extra {
+    border: none;
+}
+
+.override .user.profile .ui.card .render-content.markup {
+    font-size: 16px;
+    line-height: 24px;
+    color: #2E3038;
+    padding: 0 16px;
+    margin-bottom: 24px;
+}
+
+
+
+.override  .ui.form .field  {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+}
+
+.override  .ui.form label {
+    color: #737B8C;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: 1;
+}
+
+.override  .user-setting-content p {
+    color: rgb(115, 123, 140);
+    font-family: var(--fonts-proportional);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 24px;
+}
+
+.override .page-content.profile .ui.form .field.required label::after {
+    content: none;
+}
+
+.override .user-setting-content .ui.top.attached.header {
+    padding-top: 0;
+}
+
+.override  .ui.form .field.field-buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+
+.override .page-content.user.settings .ui.key.list .item {
+    color: rgb(115, 123, 140);
+    font-family: var(--fonts-proportional);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 24px;
+}
+.override .ui.selection.dropdown {
+    border-radius: 8px;
+}
+
+.override .repository.new.repo .ui.form #auto-init,
+.override .repository.new.repo form .help,
+.override .repository.new.migrate form .help,
+.override .repository.new.fork form .help {
+    margin-left: 0!important;
+}

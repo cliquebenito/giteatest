@@ -1,0 +1,675 @@
+{
+  "consumes": ["application/json", "text/plain"],
+  "produces": ["application/json", "text/html"],
+  "schemes": ["http", "https"],
+  "swagger": "2.0",
+  "info": {
+    "description": "This documentation describes the SourceControl API V3.",
+    "title": "SourceControl API.",
+    "license": { "name": "MIT", "url": "http://opensource.org/licenses/MIT" },
+    "version": "{{AppVer | JSEscape | Safe}}"
+  },
+  "basePath": "{{AppSubUrl | JSEscape | Safe}}/api/v3",
+  "paths": {
+    "/repos/{tenant}/{project}/{repo}/review_settings": {
+      "get": {
+        "produces": ["application/json"],
+        "summary": "Returns all review settings for repository",
+        "operationId": "GetReviewSettings",
+        "tags": ["review_settings"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"}
+        ],
+        "responses": {
+          "200": {"$ref": "#/responses/ReviewSettings"},
+          "400": {"description": "Bad request","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}},
+          "404": {"description": "Not found"},
+          "500": {"description": "Internal server error","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}}
+        }
+      },
+      "post": {
+        "produces": ["application/json"],
+        "summary": "Creates review settings for repository",
+        "operationId": "CreateReviewSettings",
+        "tags": ["review_settings"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"body","in":"body","required":true,"description":"BranchReviewSetting payload","schema":{"$ref":"#/definitions/BranchReviewSetting"}}
+        ],
+        "responses": {
+          "201": {"description":"Created"},
+          "400": {"description":"Bad request","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}},
+          "500": {"description":"Internal server error","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}}
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/review_settings/{branch_name}": {
+      "get": {
+        "produces": ["application/json"],
+        "summary": "Returns branch review settings for repository",
+        "operationId": "GetBranchReviewSettings",
+        "tags": ["review_settings"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch identifier"}
+        ],
+        "responses": {
+          "200": {"$ref":"#/responses/ReviewSettings"},
+          "400": {"description":"Bad request","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}},
+          "404": {"description":"Not found"},
+          "500": {"description":"Internal server error","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}}
+        }
+      },
+      "put": {
+        "produces": ["application/json"],
+        "summary": "Updates review settings for repository",
+        "operationId": "UpdateReviewSettings",
+        "tags": ["review_settings"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch identifier"},
+          {"name":"body","in":"body","required":true,"description":"BranchReviewSetting payload","schema":{"$ref":"#/definitions/BranchReviewSetting"}}
+        ],
+        "responses": {
+          "200": {"description":"OK"},
+          "400": {"description":"Bad request","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}},
+          "404": {"description":"Not found"},
+          "500": {"description":"Internal server error","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}}
+        }
+      },
+      "delete": {
+        "produces": ["application/json"],
+        "summary": "Deletes branch review settings",
+        "operationId": "DeleteReviewSettings",
+        "tags": ["review_settings"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch identifier"}
+        ],
+        "responses": {
+          "204": {"description":"No Content"},
+          "400": {"description":"Bad request","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}},
+          "404": {"description":"Not found"},
+          "500": {"description":"Internal server error","schema": {"type":"object","properties": {"errors": {"type":"array","items": {"type":"string"}},"message": {"type":"string"},"url": {"type":"string"}}}}
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/sonar": {
+      "post": {
+        "summary": "Create Sonar settings for the repository",
+        "operationId": "createSonarSettings",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["sonar"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant key"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project key"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository key"},
+          {"name":"body","in":"body","required":true,"description":"Sonar settings to create","schema":{"$ref":"#/definitions/CreateOrUpdateSonarProjectRequest"}}
+        ],
+        "responses": {
+          "201": { "description": "Created" },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": { "type": "array", "items": { "type": "string" } },
+                "message": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            }
+          },
+          "404": { "description": "Not found" },
+          "409": { "$ref": "#/responses/conflict" },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": { "type": "array", "items": { "type": "string" } },
+                "message": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Sonar settings for the repository",
+        "operationId": "updateSonarSettings",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["sonar"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant key"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project key"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository key"},
+          {"name":"body","in":"body","required":true,"description":"Sonar settings to update","schema":{"$ref":"#/definitions/CreateOrUpdateSonarProjectRequest"}}
+        ],
+       "responses": {
+         "200": { "description": "OK" },
+         "400": {
+           "description": "Bad request",
+           "schema": {
+             "type": "object",
+             "properties": {
+               "errors": { "type": "array", "items": { "type": "string" } },
+               "message": { "type": "string" },
+               "url": { "type": "string" }
+             }
+           }
+         },
+         "404": { "description": "Not found" },
+         "500": {
+           "description": "Internal server error",
+           "schema": {
+             "type": "object",
+             "properties": {
+               "errors": { "type": "array", "items": { "type": "string" } },
+               "message": { "type": "string" },
+               "url": { "type": "string" }
+             }
+           }
+         }
+       }
+      },
+      "get": {
+        "summary": "Get Sonar settings for the repository",
+        "operationId": "getSonarSettings",
+        "produces": ["application/json"],
+        "tags": ["sonar"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string"},
+          {"name":"project","in":"path","required":true,"type":"string"},
+          {"name":"repo","in":"path","required":true,"type":"string"}
+        ],
+        "responses": {
+          "200": { "$ref": "#/responses/sonarSettings" },
+          "404": { "description": "Not found" },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": { "type": "array", "items": { "type": "string" } },
+                "message": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Sonar settings for the repository",
+        "operationId": "deleteSonarSettings",
+        "produces": ["application/json"],
+        "tags": ["sonar"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string"},
+          {"name":"project","in":"path","required":true,"type":"string"},
+          {"name":"repo","in":"path","required":true,"type":"string"}
+        ],
+        "responses": {
+          "200": { "description": "Deleted" },
+          "404": { "description": "Not found" },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": { "type": "array", "items": { "type": "string" } },
+                "message": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/branch_protections": {
+      "get": {
+        "produces": ["application/json"],
+        "summary": "Get all branch protection rules for repository",
+        "operationId": "GetBranchProtections",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved branch protection rules",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BranchProtectionRule"
+              }
+            }
+          },
+          "400": {"$ref": "#/responses/validationError"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      },
+      "post": {
+        "produces": ["application/json"],
+        "summary": "Create a new branch protection rule",
+        "operationId": "CreateBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Branch protection rule details",
+            "schema": {
+              "$ref": "#/definitions/BranchProtectionBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Branch protection rule successfully created"},
+          "400": {"$ref": "#/responses/validationError"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/branch_protections/{branch_name}": {
+      "get": {
+        "produces": ["application/json"],
+        "summary": "Get branch protection rule by name",
+        "operationId": "GetBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch name"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved branch protection rule",
+            "schema": {
+              "$ref": "#/definitions/BranchProtectionRule"
+            }
+          },
+          "400": {"$ref": "#/responses/validationError"},
+          "404": {"$ref": "#/responses/notFound"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      },
+      "put": {
+        "produces": ["application/json"],
+        "summary": "Update branch protection rule",
+        "operationId": "UpdateBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch name"},
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Branch protection rule details",
+            "schema": {
+              "$ref": "#/definitions/BranchProtectionBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {"description": "Branch protection rule successfully updated"},
+          "400": {"$ref": "#/responses/validationError"},
+          "404": {"$ref": "#/responses/notFound"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      },
+      "delete": {
+        "produces": ["application/json"],
+        "summary": "Delete branch protection rule",
+        "operationId": "DeleteBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch name"}
+        ],
+        "responses": {
+          "204": {"description": "Branch protection rule successfully deleted"},
+          "400": {"$ref": "#/responses/validationError"},
+          "404": {"$ref": "#/responses/notFound"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/branch_protections": {
+      "get": {
+        "produces": ["application/json"],
+        "summary": "Get all branch protection rules for repository",
+        "operationId": "GetBranchProtections",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved branch protection rules",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BranchProtectionRule"
+              }
+            }
+          },
+          "400": {"$ref": "#/responses/validationError"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      },
+      "post": {
+        "produces": ["application/json"],
+        "summary": "Create a new branch protection rule",
+        "operationId": "CreateBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Branch protection rule details",
+            "schema": {
+              "$ref": "#/definitions/BranchProtectionBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Branch protection rule successfully created"},
+          "400": {"$ref": "#/responses/validationError"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/branch_protections/{branch_name}": {
+      "get": {
+        "produces": ["application/json"],
+        "summary": "Get branch protection rule by name",
+        "operationId": "GetBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch name"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved branch protection rule",
+            "schema": {
+              "$ref": "#/definitions/BranchProtectionRule"
+            }
+          },
+          "400": {"$ref": "#/responses/validationError"},
+          "404": {"$ref": "#/responses/notFound"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      },
+      "put": {
+        "produces": ["application/json"],
+        "summary": "Update branch protection rule",
+        "operationId": "UpdateBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch name"},
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Branch protection rule details",
+            "schema": {
+              "$ref": "#/definitions/BranchProtectionBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {"description": "Branch protection rule successfully updated"},
+          "400": {"$ref": "#/responses/validationError"},
+          "404": {"$ref": "#/responses/notFound"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      },
+      "delete": {
+        "produces": ["application/json"],
+        "summary": "Delete branch protection rule",
+        "operationId": "DeleteBranchProtection",
+        "tags": ["branch_protections"],
+        "parameters": [
+          {"name":"tenant","in":"path","required":true,"type":"string","description":"Tenant identifier"},
+          {"name":"project","in":"path","required":true,"type":"string","description":"Project identifier"},
+          {"name":"repo","in":"path","required":true,"type":"string","description":"Repository identifier"},
+          {"name":"branch_name","in":"path","required":true,"type":"string","description":"Branch name"}
+        ],
+        "responses": {
+          "204": {"description": "Branch protection rule successfully deleted"},
+          "400": {"$ref": "#/responses/validationError"},
+          "404": {"$ref": "#/responses/notFound"},
+          "500": {"$ref": "#/responses/error"}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateOrUpdateSonarProjectRequest": {
+      "type":"object",
+      "required":["sonar_server_url","sonar_project_key","sonar_token"],
+      "properties":{
+        "sonar_server_url":{"type":"string"},
+        "sonar_project_key":{"type":"string"},
+        "sonar_token":{"type":"string"}
+      }
+    },
+    "BranchReviewSetting": {"$ref":"#/definitions/BranchReviewSetting"},
+    "ApprovalSettings": {"$ref":"#/definitions/ApprovalSettings"},
+    "DefaultReviewerSet": {"$ref":"#/definitions/DefaultReviewerSet"},
+    "MergeRestrictions": {"$ref":"#/definitions/MergeRestrictions"},
+    "MergeSettings": {"$ref":"#/definitions/MergeSettings"},
+    "StatusChecks": {"$ref":"#/definitions/StatusChecks"},
+    "BranchProtectionBody": {
+      "type": "object",
+      "required": ["branch_name"],
+      "properties": {
+        "branch_name": {
+          "type": "string",
+          "description": "Branch name or pattern to protect"
+        },
+        "push_settings": {
+          "$ref": "#/definitions/PushSettings"
+        },
+        "force_push_settings": {
+          "$ref": "#/definitions/ForcePushSettings"
+        },
+        "deletion_settings": {
+          "$ref": "#/definitions/DeletionSettings"
+        },
+        "additional_restrictions": {
+          "$ref": "#/definitions/AdditionalRestrictions"
+        }
+      }
+    },
+    "PushSettings": {
+      "type": "object",
+      "properties": {
+        "require_push_whitelist": {
+          "type": "boolean",
+          "description": "Whether push whitelist is required"
+        },
+        "push_whitelist_usernames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of usernames allowed to push"
+        },
+        "allow_push_deploy_keys": {
+          "type": "boolean",
+          "description": "Whether deploy keys are allowed to push"
+        }
+      }
+    },
+    "ForcePushSettings": {
+      "type": "object",
+      "properties": {
+        "require_force_push_whitelist": {
+          "type": "boolean",
+          "description": "Whether force push whitelist is required"
+        },
+        "force_push_whitelist_usernames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of usernames allowed to force push"
+        },
+        "allow_force_push_deploy_keys": {
+          "type": "boolean",
+          "description": "Whether deploy keys are allowed to force push"
+        }
+      }
+    },
+    "DeletionSettings": {
+      "type": "object",
+      "properties": {
+        "require_deletion_whitelist": {
+          "type": "boolean",
+          "description": "Whether deletion whitelist is required"
+        },
+        "branch_deletion_whitelist_usernames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of usernames allowed to delete"
+        },
+        "allow_deletion_deploy_keys": {
+          "type": "boolean",
+          "description": "Whether deploy keys are allowed to delete"
+        }
+      }
+    },
+    "AdditionalRestrictions": {
+      "type": "object",
+      "properties": {
+        "protected_file_patterns": {
+          "type": "string",
+          "description": "Patterns for protected files"
+        },
+        "unprotected_file_patterns": {
+          "type": "string",
+          "description": "Patterns for unprotected files"
+        }
+      }
+    },
+    "BranchProtectionRule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Rule ID"
+        },
+        "branch_name": {
+          "type": "string",
+          "description": "Protected branch name or pattern"
+        },
+        "push_settings": {
+          "$ref": "#/definitions/PushSettings"
+        },
+        "force_push_settings": {
+          "$ref": "#/definitions/ForcePushSettings"
+        },
+        "deletion_settings": {
+          "$ref": "#/definitions/DeletionSettings"
+        },
+        "additional_restrictions": {
+          "$ref": "#/definitions/AdditionalRestrictions"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      }
+    }
+  },
+  "responses": {
+    "validationError": {
+      "description":"APIValidationError is error format response related to input validation",
+      "headers":{"message":{"type":"string"},"url":{"type":"string"}}
+    },
+    "notFound": {"description":"APINotFound is a not found empty response"},
+    "conflict": {"description":"APIConflict is a conflict empty response"},
+    "error": {
+      "description":"APIError is error format response",
+      "headers":{"message":{"type":"string"},"url":{"type":"string"}}
+    },
+    "sonarSettings": {
+      "description":"Sonar model info",
+      "headers":{"sonar_server_url":{"type":"string"},"sonar_project_key":{"type":"string"},"sonar_token":{"type":"string"}}
+    },
+    "ReviewSettings": {"description":"","schema":{"type":"array","items":{"$ref":"#/definitions/BranchReviewSetting"}}},
+    "BranchProtections": {
+      "description": "List of branch protection rules",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/BranchProtectionRule"
+        }
+      }
+    },
+    "BranchProtection": {
+      "description": "Branch protection rule details",
+      "schema": {
+        "$ref": "#/definitions/BranchProtectionRule"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "AccessToken": {"type":"apiKey","name":"access_token","in":"query"},
+    "AuthorizationHeaderToken": {"type":"apiKey","name":"Authorization","in":"header","description":"API tokens must be prepended with \"token\" followed by a space."},
+    "BasicAuth": {"type":"basic"},
+    "SudoHeader": {"type":"apiKey","name":"Sudo","in":"header","description":"Sudo API request as the user provided as the key. Admin privileges are required."},
+    "SudoParam": {"type":"apiKey","name":"sudo","in":"query","description":"Sudo API request as the user provided as the key. Admin privileges are required."},
+    "TOTPHeader": {"type":"apiKey","name":"X-GITEA-OTP","in":"header","description":"Must be used in combination with BasicAuth if two-factor authentication is enabled."},
+    "Token": {"type":"apiKey","name":"token","in":"query"}
+  },
+  "security": [
+    {"BasicAuth":[]},{"Token":[]},{"AccessToken":[]},{"AuthorizationHeaderToken":[]},{"SudoParam":[]},{"SudoHeader":[]},{"TOTPHeader":[]}
+  ]
+}

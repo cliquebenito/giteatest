@@ -1,0 +1,15 @@
+.override .page-content.sonar .sonar-logo {
+  margin-bottom: 24px;
+}
+
+.override .sonar-connect-form .form-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  column-gap: 24px;
+}
+
+.override .ui.form.sonar-connect-form .field {
+  width: 100%;
+}

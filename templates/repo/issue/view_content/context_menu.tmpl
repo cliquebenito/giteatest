@@ -1,0 +1,56 @@
+{{if .ctxData.IsSigned}}
+{{$referenceUrl := ""}}
+{{if .issue}}
+{{$referenceUrl = printf "%s#%s" .ctxData.Issue.Link .item.HashTag}}
+{{else}}
+{{$referenceUrl = printf "%s/files#%s" .ctxData.Issue.Link .item.HashTag}}
+{{end}}
+
+<div class="item action ui dropdown jump pointing top right context-dropdown">
+	{{if CheckPrivileges .ctxData.TraceID .ctxData.TraceEndpoint .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID "write"}}
+		<a class="context-menu sc-button sc-button_icon sc-button_transparent">
+			{{svg "octicon-kebab-vertical"}}
+		</a>
+	{{else if CheckPrivilegesByRoleAndCustom .ctxData.TraceID .ctxData.TraceEndpoint .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID $.ctxData.Repository.ID "approvePR"}}
+		<a class="context-menu sc-button sc-button_icon sc-button_transparent">
+			{{svg "octicon-kebab-vertical"}}
+		</a>
+	{{else}}
+		<div class="copy-svg">
+			<a data-clipboard-text-type="url" data-clipboard-text="{{AppSubUrl}}{{$referenceUrl}}">
+				{{svg "copy-icon"}}
+				<span class="tooltip">
+						Копировать ссылку
+				</span>
+			</a>
+		</div>
+	{{end}}
+	{{if or (CheckPrivilegesByRoleAndCustom .ctxData.TraceID .ctxData.TraceEndpoint .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID .ctxData.Repository.ID "approvePR") (CheckPrivileges .ctxData.TraceID .ctxData.TraceEndpoint  .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID "write")}}
+	<div class="sc-dropdown-menu menu">
+		<div class="item context js-aria-clickable" data-clipboard-text-type="url" data-clipboard-text="{{AppSubUrl}}{{$referenceUrl}}">
+			{{.ctxData.locale.Tr "repo.issues.context.copy_link"}}
+		</div>
+
+		<div class="item context js-aria-clickable quote-reply {{if .diff}}quote-reply-diff{{end}}" data-target="{{.item.HashTag}}-raw">
+			{{.ctxData.locale.Tr "repo.issues.context.quote_reply"}}
+		</div>
+
+		{{if or (CheckPrivilegesByRoleAndCustom .ctxData.TraceID .ctxData.TraceEndpoint .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID .ctxData.Repository.ID "approvePR") (CheckPrivileges .ctxData.TraceID .ctxData.TraceEndpoint  .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID "write")}}
+			{{if .IsCommentPoster}}
+				<div class="item context js-aria-clickable edit-content">
+					{{.ctxData.locale.Tr "repo.issues.context.edit"}}
+				</div>
+			{{end}}
+			{{if or .IsCommentPoster (CheckPrivileges .ctxData.TraceID .ctxData.TraceEndpoint .ctxData.SignedUser.ID .ctxData.TenantID .ctxData.Owner.ID "own")}}
+				{{if .delete }}
+						<div class="item context js-aria-clickable delete-comment" data-comment-id={{.item.HashTag}} data-url="{{.ctxData.RepoLink}}/comments/{{.item.ID}}/delete" data-locale="{{.ctxData.locale.Tr "repo.issues.delete_comment_confirm"}}">
+							{{.ctxData.locale.Tr "repo.issues.context.delete"}}
+						</div>
+					{{end}}
+			{{end}}
+		{{end}}
+	</div>
+	{{end}}
+	{{end}}
+</div>
+

@@ -1,0 +1,28 @@
+def onDistrib(app, distr) {
+    def goTool = tool name: 'go_v1.23.1', type: 'go'
+    def scannerTool = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+    env.GOPATH = "${goTool}/bin"
+    env.GO111MODULE = "on"
+    env.GOSUMDB = "off"
+    env.PATH = "${env.PATH}:${goTool}/bin:${scannerTool}"
+
+    withEnv(["GOROOT=${goTool}", "PATH+GO=${goTool}/bin"]) {
+        withCredentials([usernamePassword(credentialsId: 'tuz_sbt_ci_gitru_osc', usernameVariable: 'OSC_USER', passwordVariable: 'OSC_TOKEN')]) {
+            env.GOPROXY = "https://${OSC_USER}:${OSC_TOKEN}@sberworks.ru/osc/repo/go"
+            sh(script: 'make all')
+
+        }
+    }
+
+    withSonarQubeEnv(credentialsId: 'sa_sbt_ci_vcs_sonar', installationName: 'SonarQube') {
+        sh """
+            sonar-scanner \
+            -Dsonar.projectKey=${app.sonar_project} \
+            -Dsonar.branch.name=${app.branch} \
+        """
+    }
+    zip archive: true, dir: './bin/custom_hooks/', zipFile: 'hooks.zip'
+    distr.addBH('hooks.zip')
+}
+
+return wrapJenkinsfile(this)
