@@ -1,0 +1,1665 @@
+{
+  "consumes": [
+    "application/json",
+    "text/plain"
+  ],
+  "produces": [
+    "application/json",
+    "text/html"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "This documentation describes the SourceControl API V2.",
+    "title": "SourceControl API.",
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+    "version": "{{AppVer | JSEscape | Safe}}"
+  },
+  "paths": {
+    "/admin/privileges": {
+      "get": {
+        "description": "This endpoint retrieves privileges for specific users, tenants, and projects based on the provided filters.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "admin"
+        ],
+        "summary": "Query privileges for users within tenants and projects",
+        "operationId": "getPrivileges",
+        "parameters": [
+          {
+            "description": "Array of filters for querying privileges",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "project_key": {
+                    "description": "Key of the project",
+                    "type": "string"
+                  },
+                  "tenant_key": {
+                    "description": "Key of the tenant",
+                    "type": "string"
+                  },
+                  "user_key": {
+                    "description": "Key of the user",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Privileges successfully retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "granted": {
+                  "description": "List of privileges granted to users",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "privilege_groups": {
+                        "description": "Privilege groups assigned to the user",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "privilege_group": {
+                              "description": "Assigned privilege group",
+                              "type": "string"
+                            },
+                            "project_key": {
+                              "description": "Key of the project",
+                              "type": "string"
+                            },
+                            "tenant_key": {
+                              "description": "Key of the tenant",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "user_key": {
+                        "description": "Key of the user",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "This endpoint applies privileges to users by either granting or revoking specific privilege groups within a tenant and project.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "admin"
+        ],
+        "summary": "Apply privileges to users by granting or revoking specific roles",
+        "operationId": "ApplyPrivileges",
+        "parameters": [
+          {
+            "description": "Privileges to be applied (grant or revoke)",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "apply_privilege_groups"
+              ],
+              "properties": {
+                "apply_privilege_groups": {
+                  "type": "object",
+                  "required": [
+                    "grant",
+                    "revoke"
+                  ],
+                  "properties": {
+                    "grant": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "privilege_group": {
+                                  "description": "Name of the privilege group to be granted",
+                                  "type": "string"
+                                },
+                                "project_key": {
+                                  "description": "Key of the project",
+                                  "type": "string"
+                                },
+                                "tenant_key": {
+                                  "description": "Key of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "Key of the user to grant privileges to",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "revoke": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "privilege_group": {
+                                  "description": "Name of the privilege group to be revoked",
+                                  "type": "string"
+                                },
+                                "project_key": {
+                                  "description": "Key of the project",
+                                  "type": "string"
+                                },
+                                "tenant_key": {
+                                  "description": "Key of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "Key of the user to revoke privileges from",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Privileges successfully applied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "applied_status": {
+                  "type": "object",
+                  "properties": {
+                    "granted": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "privilege_group": {
+                                  "description": "Granted role",
+                                  "type": "string"
+                                },
+                                "project_id": {
+                                  "description": "ID of the project",
+                                  "type": "integer",
+                                  "format": "int64"
+                                },
+                                "tenant_id": {
+                                  "description": "ID of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "ID of the user",
+                            "type": "string",
+                            "format": "string"
+                          }
+                        }
+                      }
+                    },
+                    "revoked": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "privilege_group": {
+                                  "description": "Revoked role",
+                                  "type": "string"
+                                },
+                                "project_id": {
+                                  "description": "ID of the project",
+                                  "type": "integer",
+                                  "format": "int64"
+                                },
+                                "tenant_id": {
+                                  "description": "ID of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "ID of the user",
+                            "type": "string",
+                            "format": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Privileges applying error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "applied_status": {
+                  "type": "object",
+                  "properties": {
+                    "granted": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "privilege_group": {
+                                  "description": "Granted role",
+                                  "type": "string"
+                                },
+                                "project_id": {
+                                  "description": "ID of the project",
+                                  "type": "integer",
+                                  "format": "int64"
+                                },
+                                "tenant_id": {
+                                  "description": "ID of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "ID of the user",
+                            "type": "string",
+                            "format": "string"
+                          }
+                        }
+                      }
+                    },
+                    "revoked": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "privilege_group": {
+                                  "description": "Revoked role",
+                                  "type": "string"
+                                },
+                                "project_id": {
+                                  "description": "ID of the project",
+                                  "type": "integer",
+                                  "format": "int64"
+                                },
+                                "tenant_id": {
+                                  "description": "ID of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "ID of the user",
+                            "type": "string",
+                            "format": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {
+                    "grant": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "error": {
+                                  "description": "Error message",
+                                  "type": "string"
+                                },
+                                "privilege_group": {
+                                  "description": "Role that caused an error",
+                                  "type": "string"
+                                },
+                                "project_id": {
+                                  "description": "ID of the project",
+                                  "type": "integer",
+                                  "format": "int64"
+                                },
+                                "tenant_id": {
+                                  "description": "ID of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "ID of the user",
+                            "type": "string",
+                            "format": "string"
+                          }
+                        }
+                      }
+                    },
+                    "revoke": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "privilege_groups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "error": {
+                                  "description": "Error message",
+                                  "type": "string"
+                                },
+                                "privilege_group": {
+                                  "description": "Role that caused an error",
+                                  "type": "string"
+                                },
+                                "project_id": {
+                                  "description": "ID of the project",
+                                  "type": "integer",
+                                  "format": "int64"
+                                },
+                                "tenant_id": {
+                                  "description": "ID of the tenant",
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "user_key": {
+                            "description": "ID of the user",
+                            "type": "string",
+                            "format": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "description": "This endpoint is responsible for getting user details",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "summary": "Returns the user",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User login name",
+            "name": "user_key",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "description": "Email of the user",
+                  "type": "string"
+                },
+                "full_name": {
+                  "description": "Full name of the user",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "ID of the user",
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "description": "Name of the user",
+                  "type": "string"
+                },
+                "user_key": {
+                  "description": "User login name",
+                  "type": "string"
+                },
+                "visibility": {
+                  "description": "Visibility of the user",
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "This endpoint is responsible for creating a user",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "summary": "Returns the new user",
+        "operationId": "createUser",
+        "parameters": [
+          {
+            "description": "The user to create",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "user_key",
+                "name",
+                "email",
+                "full_name"
+              ],
+              "properties": {
+                "email": {
+                  "description": "Email of the user",
+                  "type": "string"
+                },
+                "full_name": {
+                  "description": "Full name of the user",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the user",
+                  "type": "string"
+                },
+                "user_key": {
+                  "description": "User login name",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "description": "Email of the user",
+                  "type": "string"
+                },
+                "full_name": {
+                  "description": "Full name of the user",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "ID of the user",
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "description": "Name of the user",
+                  "type": "string"
+                },
+                "user_key": {
+                  "description": "User login name",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "description": "This endpoint retrieves information about a specific project based on the provided tenant key and project key.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get project info",
+        "operationId": "getProject",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Unique key of the tenant",
+            "name": "tenant_key",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Unique key of the project",
+            "name": "project_key",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "Unique identifier of the project",
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "description": "Name of the project",
+                  "type": "string"
+                },
+                "project_key": {
+                  "description": "Unique key of the project",
+                  "type": "string"
+                },
+                "uri": {
+                  "description": "Relative URI of the project",
+                  "type": "string"
+                },
+                "visibility": {
+                  "description": "Visibility level of the project",
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/create": {
+      "post": {
+        "description": "This endpoint creates a new project within the specified tenant. It requires details such as tenant ID, organization name, organization key, description, and visibility level.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Create a new project",
+        "operationId": "createProject",
+        "parameters": [
+          {
+            "description": "Details of the organization to be created",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "tenant_id",
+                "name",
+                "project_key",
+                "description",
+                "visibility"
+              ],
+              "properties": {
+                "description": {
+                  "description": "Detailed description of the organization",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the organization",
+                  "type": "string"
+                },
+                "project_key": {
+                  "description": "Unique key for the organization",
+                  "type": "string"
+                },
+                "tenant_id": {
+                  "description": "ID of the tenant to which the organization belongs",
+                  "type": "string"
+                },
+                "visibility": {
+                  "description": "Visibility level of the organization",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project details successfully retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "Unique identifier of the project",
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "description": "Name of the project",
+                  "type": "string"
+                },
+                "project_key": {
+                  "description": "Unique key of the project",
+                  "type": "string"
+                },
+                "uri": {
+                  "description": "Relative URI of the project",
+                  "type": "string"
+                },
+                "visibility": {
+                  "description": "Visibility level of the project",
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Method returning the error",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Swagger documentation URL",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/repos": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repo"
+        ],
+        "summary": "Returns the repo by repo external key",
+        "operationId": "getOrgRepo",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "repo_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "tenant_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "project_key",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/repositoryGetResponse"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repo"
+        ],
+        "summary": "Creates the repo owned by the given tenant and project",
+        "operationId": "createTenantOrgRepo",
+        "parameters": [
+          {
+            "description": "Details of the repo to be created",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "tenant_key",
+                "project_key",
+                "repository_key",
+                "default_branch",
+                "description",
+                "name",
+                "private"
+              ],
+              "properties": {
+                "default_branch": {
+                  "description": "Name of branch",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "Description of repository",
+                  "type": "integer"
+                },
+                "name": {
+                  "description": "Name of repository",
+                  "type": "string"
+                },
+                "private": {
+                  "description": "Is repo private",
+                  "type": "boolean"
+                },
+                "project_key": {
+                  "description": "External key of project",
+                  "type": "string"
+                },
+                "repository_key": {
+                  "description": "External key of repository",
+                  "type": "string"
+                },
+                "tenant_key": {
+                  "description": "External key of tenant",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/repositoryPostResponse"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/projects/repos/marks/codehub": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repo"
+        ],
+        "summary": "Set mark code hub for repo",
+        "operationId": "setMark",
+        "parameters": [
+          {
+            "description": "Details of the mark to be set",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "tenant_key",
+                "project_key",
+                "repo_key"
+              ],
+              "properties": {
+                "project_key": {
+                  "description": "External key of project",
+                  "type": "string"
+                },
+                "repo_key": {
+                  "description": "External key of repository",
+                  "type": "string"
+                },
+                "tenant_key": {
+                  "description": "External key of tenant",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "repo"
+        ],
+        "summary": "Delete mark code hub for repo",
+        "operationId": "mark",
+        "parameters": [
+          {
+            "description": "Details of the mark to be set",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "tenant_key",
+                "project_key",
+                "repo_key"
+              ],
+              "properties": {
+                "project_key": {
+                  "description": "External key of project",
+                  "type": "string"
+                },
+                "repo_key": {
+                  "description": "External key of repository",
+                  "type": "string"
+                },
+                "tenant_key": {
+                  "description": "External key of tenant",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/projects/repos/metrics": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Returns internal metric for repo",
+        "operationId": "getInternalMetric",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "repo_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "tenant_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "project_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "metric",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/internalMetricGetResponse"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/projects/repos/reuse_metric": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Returns external metric for repo",
+        "operationId": "getExternalMetric",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "repo_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "tenant_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "project_key",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/externalMetricGetResponse"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Creates/updates external metric for repo",
+        "operationId": "setExternalMetric",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "repo_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "tenant_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "project_key",
+            "in": "query"
+          },
+          {
+            "description": "Details of the repo to be created",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "value",
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "description": "Description of external metric",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Value of external metric",
+                  "type": "int"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Deletes external metric for repo",
+        "operationId": "deleteExternalMetric",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "repo_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "tenant_key",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "project_key",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tenants": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "tenant"
+        ],
+        "summary": "Returns the tenant by key",
+        "operationId": "getTenantByKey",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "key of tenant",
+            "name": "tenant_key",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/tenantGetResponse"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "tenant"
+        ],
+        "summary": "Creates tenant by tenant key and name",
+        "operationId": "createTenant",
+        "parameters": [
+          {
+            "description": "Details of the repo to be created",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "tenant_key",
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "description": "Name of tenant",
+                  "type": "string"
+                },
+                "tenant_key": {
+                  "description": "External key of tenant",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/tenantPostResponse"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "externalMetricGetResponse": {
+      "description": "",
+      "headers": {
+        "text": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "internalMetricGetResponse": {
+      "description": "",
+      "headers": {
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "repositoryGetResponse": {
+      "description": "Repository model for API v2 get response",
+      "headers": {
+        "default_branch": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "private": {
+          "type": "boolean"
+        },
+        "project_key": {
+          "type": "string"
+        },
+        "repository_key": {
+          "type": "string"
+        },
+        "tenant_key": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "repositoryPostResponse": {
+      "description": "Repository model for API v2 post response",
+      "headers": {
+        "default_branch": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "private": {
+          "type": "boolean"
+        },
+        "project_key": {
+          "type": "string"
+        },
+        "repository_key": {
+          "type": "string"
+        },
+        "tenant_key": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "tenantGetResponse": {
+      "description": "Tenant model for API v2 response",
+      "headers": {
+        "id": {
+          "type": "string"
+        },
+        "is_active": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tenant_key": {
+          "type": "string"
+        }
+      }
+    },
+    "tenantPostResponse": {
+      "description": "Tenant model for API v2 response",
+      "headers": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tenant_key": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "AccessToken": {
+      "type": "apiKey",
+      "name": "access_token",
+      "in": "query"
+    },
+    "AuthorizationHeaderToken": {
+      "description": "API tokens must be prepended with \"token\" followed by a space.",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "BasicAuth": {
+      "type": "basic"
+    },
+    "SudoHeader": {
+      "description": "Sudo API request as the user provided as the key. Admin privileges are required.",
+      "type": "apiKey",
+      "name": "Sudo",
+      "in": "header"
+    },
+    "SudoParam": {
+      "description": "Sudo API request as the user provided as the key. Admin privileges are required.",
+      "type": "apiKey",
+      "name": "sudo",
+      "in": "query"
+    },
+    "TOTPHeader": {
+      "description": "Must be used in combination with BasicAuth if two-factor authentication is enabled.",
+      "type": "apiKey",
+      "name": "X-GITEA-OTP",
+      "in": "header"
+    },
+    "Token": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "query"
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    },
+    {
+      "Token": []
+    },
+    {
+      "AccessToken": []
+    },
+    {
+      "AuthorizationHeaderToken": []
+    },
+    {
+      "SudoParam": []
+    },
+    {
+      "SudoHeader": []
+    },
+    {
+      "TOTPHeader": []
+    }
+  ]
+}

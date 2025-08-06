@@ -1,0 +1,109 @@
+{{template "base/head" .}}
+<div role="main" aria-label="{{.Title}}" class="page-content repository quickstart">
+	{{template "repo/header" .}}
+	<div class="container ui">
+		<div class="grid ui">
+			<div class="sixteen wide column content">
+				{{template "base/alert" .}}
+				{{if .Repository.IsArchived}}
+					<div class="ui warning message">
+						{{if .Repository.ArchivedUnix.IsZero}}
+							{{.locale.Tr "repo.archive.title"}}
+						{{else}}
+							{{.locale.Tr "repo.archive.title_date" (DateTime "long" .Repository.ArchivedUnix) | Safe}}
+						{{end}}
+					</div>
+				{{end}}
+				{{if .Repository.IsBroken}}
+						<div class="ui segment center">
+							{{.locale.Tr "repo.broken_message"}}
+						</div>
+				{{else if .CanWriteCode}}
+					<h4 class="sc-title sc-title_h3">
+						{{.locale.Tr "repo.quick_guide"}}
+					</h4>
+					<div class="sc-box empty-repo-guide">
+						<div class="item gt-mb-4">
+							<p class="repo-clone-hint">{{.locale.Tr "repo.clone_helper" "http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository" | Str2html}}</p>
+
+							<div class="gt-df load-btns-wrap">
+								{{if EnableRoleModel}}
+								{{if and (CheckPrivileges .TraceID .TraceEndpoint .SignedUser.ID .TenantID .Owner.ID "write") (not .Repository.IsArchived)}}
+									<a class="sc-button sc-button_base sc-button_small" href="{{.RepoLink}}/_new/{{.BranchName | PathEscapeSegments}}/">
+										{{.locale.Tr "repo.editor.new_file"}}
+									</a>
+									{{if .RepositoryUploadEnabled}}
+									<a class="sc-button sc-button_base sc-button_small" href="{{.RepoLink}}/_upload/{{.BranchName | PathEscapeSegments}}/">
+										{{.locale.Tr "repo.editor.upload_file"}}
+									</a>
+									{{end}}
+								{{else if CheckPrivilegesByRoleAndCustom $.TraceID $.TraceEndpoint $.SignedUser.ID $.TenantID $.Owner.ID $.Repository.ID "changeBranch"}}
+									<a class="sc-button sc-button_base sc-button_small" href="{{.RepoLink}}/_new/{{.BranchName | PathEscapeSegments}}/">
+										{{.locale.Tr "repo.editor.new_file"}}
+									</a>
+									{{if .RepositoryUploadEnabled}}
+										<a class="sc-button sc-button_base sc-button_small" href="{{.RepoLink}}/_upload/{{.BranchName | PathEscapeSegments}}/">
+											{{.locale.Tr "repo.editor.upload_file"}}
+										</a>
+									{{end}}
+								{{end}}
+								{{else}}
+									{{if and .CanWriteCode (not .Repository.IsArchived)}}
+										<a class="sc-button sc-button_base sc-button_small" href="{{.RepoLink}}/_new/{{.BranchName | PathEscapeSegments}}/">
+												{{.locale.Tr "repo.editor.new_file"}}
+										</a>
+										{{if .RepositoryUploadEnabled}}
+											<a class="sc-button sc-button_base sc-button_small" href="{{.RepoLink}}/_upload/{{.BranchName | PathEscapeSegments}}/">
+													{{.locale.Tr "repo.editor.upload_file"}}
+											</a>
+										{{end}}
+									{{end}}
+								{{end}}
+								<div class="ui action small input gt-df gt-f1 clone-form">
+									{{template "repo/clone_buttons" .}}
+								</div>
+							</div>
+						</div>
+
+						{{if not .Repository.IsArchived}}
+
+							<div class="item gt-mb-4">
+								<h3>{{.locale.Tr "repo.create_new_repo_command"}}</h3>
+								<div class="markup">
+									<pre><code>touch README.md
+git init
+{{if ne .Repository.DefaultBranch "master"}}git checkout -b {{.Repository.DefaultBranch}}{{end}}
+git add README.md
+git commit -m "first commit"
+git remote add origin <span class="js-clone-url">{{$.CloneButtonOriginLink.HTTPS}}</span>
+git push -u origin {{.Repository.DefaultBranch}}</code></pre>
+								</div>
+							</div>
+
+							<div class="item">
+								<h3>{{.locale.Tr "repo.push_exist_repo"}}</h3>
+								<div class="markup">
+									<pre><code>git remote add origin <span class="js-clone-url">{{$.CloneButtonOriginLink.HTTPS}}</span>
+git push -u origin {{.Repository.DefaultBranch}}</code></pre>
+								</div>
+							</div>
+						{{end}}
+					{{else}}
+						<div class="center repo-uninitialized">
+							<img src="{{AssetUrlPrefix}}/img/svg/analysis-error.svg" alt="repository error" />
+							<p class="repo-uninitialized-header">
+								{{.locale.Tr "error.error"}}
+							</p>
+							<p>
+								{{.locale.Tr "repo.empty_message"}}
+							</p>
+							<a class="sc-button sc-button_primary" href="{{AppSubUrl}}/">{{.locale.Tr "repo.to_main_page"}}</a>
+						</div>
+					{{end}}
+					{{template "repo/clone_script" .}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{template "base/footer" .}}

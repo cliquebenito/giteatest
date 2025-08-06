@@ -1,0 +1,36 @@
+{{template "repo/settings/layout_head" (dict "ctxData" . "pageClass" "repository settings sonar")}}
+	<div class="repo-setting-content">
+		<script>
+			window.config.pageData = {
+				baseLink: {{.Link}},
+				tokenAuth: {{.Sonar.Token}},
+				projectKey: {{.Sonar.ProjectKey}},
+				url: {{.Sonar.URL}},
+				text: {
+					labelServerUrl: {{.locale.Tr "repo.settings.sonar.label.server_url"}},
+					labelTokenAuth: {{.locale.Tr "repo.settings.sonar.label.token_auth"}},
+					labelProjectKey: {{.locale.Tr "repo.settings.sonar.label.project_key"}},
+					placeholderServerUrl: {{.locale.Tr "repo.settings.sonar.placeholder.server_url"}},
+					placeholderTokenAuth: {{.locale.Tr "repo.settings.sonar.placeholder.token_auth"}},
+					placeholderProjectKey: {{.locale.Tr "repo.settings.sonar.placeholder.project_key"}},
+					buttonSubmit: {{.locale.Tr "repo.settings.sonar.button.submit"}},
+					buttonReset: {{.locale.Tr "repo.settings.sonar.button.reset"}},
+					alertSuccess: {{.locale.Tr "repo.settings.sonar.alert_success"}},
+					alertFailure:  {{.locale.Tr "repo.settings.sonar.alert_failure"}}
+				}
+			};
+		</script>
+
+		<h4 class="ui top attached header">
+			{{.locale.Tr "repo.settings.sonar"}}
+		</h4>
+
+		<div class="ui attached segment">
+			<div class="sonar-logo">
+				{{ svg "sonar-cube-logo" }}
+			</div>
+			<div id="form-sonar-connect"></div>
+		</div>
+
+	</div>
+{{template "repo/settings/layout_footer" .}}

@@ -1,0 +1,82 @@
+# Лежит не в таргетном месте, необходимо переместить, когда будет понимание куда класть и куда генерить
+# Команда для генерации: oapi-codegen -generate types -config api/openapi/producers/v2/repository.cfg.yaml api/openapi/producers/v2/repository.yaml
+openapi: 3.0.0
+info:
+  title: Repository events
+  version: 2.0.0
+
+paths:
+  /:
+    get:
+      description: Fake endpoint to create a repository event
+      responses:
+        200:
+          description: Fake response to create a repository event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRepositoryEvent'
+
+components:
+  schemas:
+    CreateRepositoryEvent:
+      description: Create repository event
+      type: object
+      properties:
+        metadata:
+          $ref: './generic/meta.yaml#/components/schemas/Metadata'
+        context:
+          $ref: './generic/context.yaml#/components/schemas/Context'
+        payload:
+          $ref: '#/components/schemas/Payload'
+      required:
+        - metadata
+        - context
+        - payload
+    Payload:
+      type: object
+      properties:
+        repository_info:
+          $ref: '#/components/schemas/RepositoryInfo'
+        initiator_user:
+          $ref: '#/components/schemas/InitiatorUser'
+        additional_properties:
+          $ref: '#/components/schemas/AdditionalProperties'
+      required:
+        - repository_info
+        - initiator_user
+    RepositoryInfo:
+      type: object
+      description: Repository info
+      properties:
+        tenant_name:
+          type: string
+          description: Tenant name
+        project_name:
+          type: string
+          description: Project name
+        repository_id:
+          type: string
+          description: Repository id
+        repository_name:
+          type: string
+          description: Repository name
+      required:
+        - tenant_name
+        - project_name
+        - repository_id
+        - repository_name
+    InitiatorUser:
+      type: object
+      description: Initiator user
+      properties:
+        id:
+          type: string
+          description: User id
+      required:
+        - id
+    AdditionalProperties:
+      type: object
+      description: Additional properties
+      additionalProperties:
+        type: string

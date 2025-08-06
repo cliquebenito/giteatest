@@ -1,0 +1,65 @@
+POST https://dev.pd10.pvw.sbt/swtr/sctt1/extension/plugin/v2/rest/api/swtr_task_tracker_plugin/v1/unit/search
+accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InlsYlJsRldWVEdGQUR5RXAtV1pPNndzdV95NkFnbG8zSjJpclJuRTlFM2MifQ.eyJzYmVycGRpIjoiU09VUkNFX0NPTlRST0xfVFVaX1NCRVJQREkiLCJuYW1lIjoiU09VUkNFX0NPTlRST0xfVFVaX05BTUUiLCJncm91cHMiOlsiUk9MRV9TT1VSQ0VfQ09OVFJPTF9VU0VSIl0sInByZWZlcnJlZF91c2VybmFtZSI6IlNPVVJDRV9DT05UUk9MX1RVWl9QUkVGRkVSRURfVVNFUk5BTUUifQ.j9HzYdQmIYydcQaaSgbBk61mpglZjir2J-Qn8d7RSgR2Tg_r_kmOni3XTq7U06F80GUK8l_cO__1GBkLWf0kJKi199dGEWCyZcNCQZZSEGDpDfalqv4QpfzSfnb-wbURqeYmvaN9_XZm9Q_I5liTdtDvxiIt4ITUukHjyOC3TrlxRfTtjfXpWPlCSyiw_XxY-3cpnZFHc0nituR7SpyWnlL6uHbeDaH_azFUDbIg7DkbUToCql_NteJBzm5pEvU7xRS9uHhpmuk9LPZe3VjdO7UaoVgH09G3FvR9mWlTJD2nkZ9UZiHK5hvjopD73AaKt1up4Ww9zBcsDpshZ5wMJg
+
+{
+  "unit_codes": ["SWTR-1", "SVTR-1"]
+}
+
+###
+
+PATCH https://dev.pd10.pvw.sbt/swtr/sctt1/extension/plugin/v2/rest/api/swtr_task_tracker_plugin/v1/pull_request/add
+accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "unit_codes": ["ARM-13"],
+  "pr_id": 1,
+  "pr_url": "/SWTR/sber-track/pulls/1",
+  "pr_status": "OPENED",
+  "user_login": "admin_ift2"
+}
+
+curl -X POST -v \
+--cacert ./pd10-ca.crt \
+--cert ./vm-gitt-ws-sc-dev-50070.vdc01.ws.dev.sbt.crt \
+--key ./vm-gitt-ws-sc-dev-50070.vdc01.ws.dev.sbt.key \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InlsYlJsRldWVEdGQUR5RXAtV1pPNndzdV95NkFnbG8zSjJpclJuRTlFM2MifQ.eyJzYmVycGRpIjoiU09VUkNFX0NPTlRST0xfVFVaX1NCRVJQREkiLCJuYW1lIjoiU09VUkNFX0NPTlRST0xfVFVaX05BTUUiLCJncm91cHMiOlsiUk9MRV9TT1VSQ0VfQ09OVFJPTF9VU0VSIl0sInByZWZlcnJlZF91c2VybmFtZSI6IlNPVVJDRV9DT05UUk9MX1RVWl9QUkVGRkVSRURfVVNFUk5BTUUifQ.j9HzYdQmIYydcQaaSgbBk61mpglZjir2J-Qn8d7RSgR2Tg_r_kmOni3XTq7U06F80GUK8l_cO__1GBkLWf0kJKi199dGEWCyZcNCQZZSEGDpDfalqv4QpfzSfnb-wbURqeYmvaN9_XZm9Q_I5liTdtDvxiIt4ITUukHjyOC3TrlxRfTtjfXpWPlCSyiw_XxY-3cpnZFHc0nituR7SpyWnlL6uHbeDaH_azFUDbIg7DkbUToCql_NteJBzm5pEvU7xRS9uHhpmuk9LPZe3VjdO7UaoVgH09G3FvR9mWlTJD2nkZ9UZiHK5hvjopD73AaKt1up4Ww9zBcsDpshZ5wMJg" \
+-d '{"unit_codes": ["DSG-1", "KWK1-2"]}' \
+https://vm-swtr-ws-syngx-156.vdc02.ws.dev.sbt:8443/swtrdev4/extension/plugin/v2/rest/api/swtr_task_tracker_plugin/v1/unit/search
+
+curl -X POST -v --cacert /home/gitt-works/vcs-1958/pd10-ca.crt --cert /home/gitt-works/vcs-1958/vm-gitt-ws-sc-dev-50070.vdc01.ws.dev.sbt.crt
+--key /home/gitt-works/vcs-1958/vm-gitt-ws-sc-dev-50070.vdc01.ws.dev.sbt.key --header "Content-Type: application/json" --header
+"Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InlsYlJsRldWVEdGQUR5RXAtV1pPNndzdV95NkFnbG8zSjJpclJuRTlFM2MifQ.eyJzYmVycGRpIjoiU09VUkNFX0NPTlRST0xfVFVaX1NCRVJQREkiLCJuYW1lIjoiU09VUkNFX0NPTlRST0xfVFVaX05BTUUiLCJncm91cHMiOlsiUk9MRV9TT1VSQ0VfQ09OVFJPTF9VU0VSIl0sInByZWZlcnJlZF91c2VybmFtZSI6IlNPVVJDRV9DT05UUk9MX1RVWl9QUkVGRkVSRURfVVNFUk5BTUUifQ.j9HzYdQmIYydcQaaSgbBk61mpglZjir2J-Qn8d7RSgR2Tg_r_kmOni3XTq7U06F80GUK8l_cO__1GBkLWf0kJKi199dGEWCyZcNCQZZSEGDpDfalqv4QpfzSfnb-wbURqeYmvaN9_XZm9Q_I5liTdtDvxiIt4ITUukHjyOC3TrlxRfTtjfXpWPlCSyiw_XxY-3cpnZFHc0nituR7SpyWnlL6uHbeDaH_azFUDbIg7DkbUToCql_NteJBzm5pEvU7xRS9uHhpmuk9LPZe3VjdO7UaoVgH09G3FvR9mWlTJD2nkZ9UZiHK5hvjopD73AaKt1up4Ww9zBcsDpshZ5wMJg" -d '{"unit_codes": ["DSG-1", "KWK1-2"]}' https://vm-swtr-ws-syngx-156.vdc02.ws.dev.sbt:8443/swtrdev4/extension/plugin/v2/rest/api/swtr_task_tracker_plugin/v1/unit/search
+
+cat pd10-ca.crt
+-----BEGIN CERTIFICATE-----
+MIIEjjCCAvagAwIBAgIBATANBgkqhkiG9w0BAQsFADA3MRUwEwYDVQQKDAxTT0xV
+VElPTi5TQlQxHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTAeFw0yMTA0
+MjMxMDIxNDBaFw00MTA0MjMxMDIxNDBaMDcxFTATBgNVBAoMDFNPTFVUSU9OLlNC
+VDEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MIIBojANBgkqhkiG9w0B
+AQEFAAOCAY8AMIIBigKCAYEAnZB77pkGVyOtvBsXcJZBE42qKmq7jE2snkOgtTxc
+C595WsHXpw5cFo9MwxqkvgCjSK1aKW8swnIcOv89EzeA+fSbGQPhhb+2MKWYdrUw
+OpIqfbNiGDsSfoNFLFubY1RrUtw65efHz43kop7oVhVn4D4/d2/i9qcpSx44mt0l
+l56pBQaf5p97MlVMmYWk+SxKl56nwtMMPUGPgqMw/hqhtf4toFMeLEy955ntJCyU
+P13eedtUvpYneyZDz9ATHIfxFaQ6DOKoLYt3L+jCAQdRwPvYXqq3E5OE/p21di7S
+7D1+JCmEzvVfvBWvVcfSIG9rfB+ioXXqS+UABGZfHQsHeqipg+odu/MqG/5O+heJ
+RFOjU4PGtALz6grr1DPqbm+LJtjSfERFN94VyPPakTCQSSrMRlSTH9HyU5M++xBm
+30ygO85rMYcBCd93MnuzVIHOjgsckGA+/llwWpTfiTSV1HI6/eSmq8zWRbSIRgR0
+gY8D7LtF+jJaFXOpITXvsYfdAgMBAAGjgaQwgaEwHwYDVR0jBBgwFoAUPrWbUaMc
+W7QrM7+wCCz4pubJW44wDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAcYw
+HQYDVR0OBBYEFD61m1GjHFu0KzO/sAgs+KbmyVuOMD4GCCsGAQUFBwEBBDIwMDAu
+BggrBgEFBQcwAYYiaHR0cDovL2lwYS1jYS5zb2x1dGlvbi5zYnQvY2Evb2NzcDAN
+BgkqhkiG9w0BAQsFAAOCAYEARgh7L3jio3yGBOICneWuVEhfNHAqeZPwKfJXO5DW
+5V1mwinsSnn7NKo4TGUr3EIbDMMX09qSH7NSI0hgDmKZbAzOSOX1AC70j4IThn/P
+RrDiQPwLhBdl3Nl30inK0yiKjfr9yqB9BcMA2ZsEilBZGoQxj9FZllabaCLC9szo
+VKjD3QYQw9D8QnP+RXyAUMyy3FFzwvF07TgWKYij8rqH0qfGxC484vyd3G1NmqQg
+jd7xWE8grOgu/RHM1uhHVZbBcjdfE/i6nTWpbnScuP72Yv40Hda4dmb1cEAN8kyq
++L1TX1C69sroQDERjLeSbjOXrsma5VlcTCp8f8lVeTOTC0SlO1MACudxL1Ko+DX/
+r5BsJU1nqSuXw1X24sdYz4zdY+zpaD5jtqQw4DDN1jyanagBZIFNI3MBIuHmFp0t
+yw0Sq1l1eP/2LbxHcODFafF0Mc3x8z1XM5uda1Szl2pm60PGoXhz65NZEGYugn5H
+aQlqcQJ1HPBDzq8VLNk7p1it
+-----END CERTIFICATE-----

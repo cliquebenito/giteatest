@@ -1,0 +1,4 @@
+package: events
+output: models/events/v1/repository.gen.go
+generate:
+  models: true

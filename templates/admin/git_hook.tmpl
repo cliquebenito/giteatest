@@ -1,0 +1,21 @@
+{{template "admin/layout_head" (dict "ctxData" . "pageClass" "admin git hooks")}}
+<div class="admin-setting-content">
+
+	<h4 class="ui top attached header">
+		{{.locale.Tr "admin.git_hooks"}}
+	</h4>
+
+	<script>
+		window.config.pageData = {
+			baseLink: {{.Link}},
+			path: {{ if not .PreReceiveHook }} "" {{ else }} {{.PreReceiveHook.Path }} {{ end }},
+			timeout: {{ if not .PreReceiveHook }} ""  {{ else }}  parseInt({{ .PreReceiveHookTimeoutMs }}) {{ end }},
+			positionalParameters: {{ if not .PreReceiveHook }} "" {{ else }} {{ .PreReceiveHook.PositionalParameters }} {{ end }}
+		}
+	</script>
+
+	<div id="pre-receive-git-hooks-form"></div>
+
+</div>
+
+{{template "admin/layout_footer" .}}

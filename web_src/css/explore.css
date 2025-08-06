@@ -1,0 +1,123 @@
+.explore .navbar .svg {
+  width: 16px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.ui.repository.list .item {
+  padding: 1.714rem 1.143rem;
+}
+
+.override .ui.repository.list .repo-title a {
+  color: #144BB8;
+}
+
+.ui.repository.list .item:not(:first-child) {
+  border-top: 1px solid #B9BDC6;
+  /* border-top: 1px solid var(--color-secondary);#B9BDC6 */
+}
+
+.ui.repository.list .item .ui.header {
+  font-size: 1.5rem;
+  margin-bottom: 1.143rem;
+}
+
+.ui.repository.list .item .ui.header .name {
+  word-break: break-all;
+}
+
+.ui.repository.list .item .ui.header .metas {
+  font-size: 14px;
+}
+
+.ui.repository.list .item .time {
+  font-size: 12px;
+}
+
+.ui.repository.list .item .ui.tags {
+  /* margin-bottom: 1.143rem; */
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ui.repository.list .item .description-footer {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  color: #737B8C;
+  font-family: var(--fonts-proportional);
+}
+
+.ui.repository.list .repo-title .labels {
+  word-break: normal;
+  flex-shrink: 0;
+}
+
+.ui.repository.branches .info {
+  font-size: 12px;
+  color: var(--color-text-light);
+  display: flex;
+  white-space: pre;
+}
+
+.ui.repository.branches .info .commit-message {
+  max-width: 72em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui.repository.branches .overflow-visible {
+  overflow: visible;
+}
+
+/* fix alignment of PR popup in branches table */
+.ui.repository.branches table .ui.popup {
+  text-align: left;
+}
+
+.ui.user.list .item {
+  padding-bottom: 25px;
+  display: flex;
+}
+
+.ui.user.list .item:not(:first-child) {
+  border-top: 1px solid var(--color-secondary);
+  padding-top: 25px;
+}
+
+.ui.user.list .item img.ui.avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.ui.user.list .item .description {
+  margin-top: 5px;
+}
+
+.ui.user.list .item .description .svg:not(:first-child) {
+  margin-left: 5px;
+}
+
+.ui.tags,
+.repo-title {
+  font-family: var(--fonts-monospace);
+}
+
+
+.ui.repository.list .item .description-footer .time,
+.ui.repository.list .description > p {
+  font-family: var(--fonts-proportional);
+}
+
+
+.ui.secondary.pointing.menu .item  svg {
+  display: none;
+}
+
+.ui.menu.new-menu .item:first-child {
+  margin: 0!important;
+}

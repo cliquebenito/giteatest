@@ -1,0 +1,442 @@
+/* repository header */
+.repo-header {
+    margin-bottom: 16px;
+}
+
+.repo-title {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    font-size: 20px;
+    font-weight: normal;
+    font-family: var(--fonts-monospace);
+    margin: 0;
+}
+
+.repo-title-container {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.repo-title__divider {
+    color: var(--sc-color-grey-dark);
+}
+.repo-title__link {
+    color: var(--sc-color-primary);
+    cursor: pointer;
+}
+
+/* buttons */
+.repo-buttons {
+    display: flex;
+    column-gap: 8px;
+}
+
+
+/* repository menu */
+.repository-menu__card {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    color: var(--sc-color-grey-dark);
+    font-family: var(--fonts-proportional);
+}
+
+.repository-menu__card .item-label::after {
+    content: ':';
+}
+
+.repository-menu__card .item-value {
+    font-family: var(--fonts-monospace);
+    color: var(--sc-color-text-primary);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* topics */
+.repo-topics {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.repository-summary {
+    margin-bottom: 16px;
+}
+.repository-summary-language-stats {
+    height: 40px!important;
+}
+
+
+/* languages bar */
+.language-stats {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+/* languages stats */
+.language-stats-details {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.language-stats-details .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+    min-height: 24px;
+}
+
+.language-stats-details__language {
+    font-size: 13px;
+    color: var(--sc-color-grey-dark);
+    font-family: var(--fonts-proportional);
+}
+
+.language-stats-details__percent {
+    color: var(--sc-color-text-primary);
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--fonts-monospace);
+}
+
+/* repo button row */
+.repo-button-row {
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.repo-button-row__controls-group {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    margin: 0;
+    align-items: center;
+}
+
+/* clone form */
+.repo-button-row__clone-group {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    margin: 0;
+}
+
+.clone-form {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.clone-field {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--sc-color-stroke);
+    border-radius: 6px;
+    height: 32px;
+    padding: 0 6px 0 12px;
+    min-width: 285px;
+    column-gap: 8px;
+    overflow: hidden;
+}
+.clone-field:focus-within {
+    border-color: #1976D2;
+}
+
+.clone-field input {
+    width: 300px!important;
+    flex-grow: 1;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.clone-field .sc-button_icon {
+    height: 28px;
+    width: 28px;
+    min-height: 0;
+    border-radius: 6px;
+}
+
+.clone-form .ui.dropdown.sc-button {
+    position: relative;
+    display: inline-flex;
+    border-width: 1px;
+    align-items: center;
+    border-radius: 6px!important;
+    color: var(--sc-color-text-primary);
+}
+
+.clone-form .ui.dropdown.sc-button svg {
+    color: var(--sc-color-text-primary);
+}
+
+/* file table */
+.repo-file-explorer {
+    width: 100%;
+    border: 1px solid var(--sc-color-stroke);
+    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.repo-file-explorer thead {
+    background-color: var(--sc-color-fill);
+}
+
+.repo-file-explorer thead tr:hover {
+    background-color: var(--sc-color-fill)!important;
+}
+
+.repo-file-explorer thead th {
+    border: none;
+    padding: 8px 16px!important;
+    font-size: 15px;
+    color: var(--sc-color-text-primary)
+}
+
+
+.repo-file-explorer tr.has-parent:hover {
+    background-color: transparent!important;
+}
+.repo-file-explorer tr.has-parent td {
+    padding: 8px 16px!important;
+}
+
+.repo-file-explorer .back-to-folder {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+.repo-file-explorer .back-to-folder a {
+    padding: 0!important;
+}
+
+
+
+.repo-file-explorer thead th.last-commit {
+    text-align: left;
+}
+
+.repo-file-explorer thead th.last-commit a {
+    color: var(--sc-color-text-primary);
+}
+.repo-file-explorer thead th.last-commit a:hover {
+    text-decoration: none;
+    color: var(--sc-color-primary)
+}
+
+.repo-file-explorer thead th.last-commit .author-wrapper {
+    font-weight: bold;
+}
+.repo-file-explorer thead th.last-commit .ui.sha.label  {
+    padding: 8px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid var(--sc-color-grey-dark);
+    background-color: var(--sc-color-bg);
+}
+.repo-file-explorer thead th.last-commit .ui.sha.label:hover {
+    color: var(--sc-color-text-primary);
+    background-color: var(--sc-color-fill);
+}
+
+.repo-file-explorer tbody td {
+    padding: 10px 16px!important;
+    border-bottom: 1px solid var(--sc-color-stroke);
+
+}
+
+.repo-file-explorer tbody  a {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+
+.repo-file-explorer tbody td.name a {
+    font-family: var(--fonts-proportional);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--sc-color-text-primary);
+}
+.repo-file-explorer tbody td.name a:hover {
+    text-decoration: none;
+    color: var(--sc-color-primary);
+}
+
+.repo-file-explorer tbody td.message .truncate {
+    color: var(--sc-color-grey-dark);
+    font-family: var(--fonts-proportional);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+}
+.repo-file-explorer tbody td.message .truncate a:hover {
+    text-decoration: none;
+    color: var(--sc-color-primary);
+}
+
+.repo-file-explorer tbody td.age .time-since {
+    color: var(--sc-color-grey-dark);
+    font-size: 13px;
+}
+
+.repo-file-explorer .truncate {
+    padding: 0!important;
+}
+
+.repo-file-explorer tr:last-child td {
+    border-bottom: none;
+}
+
+@media (max-width: 767px) {
+    .repo-file-explorer tr {
+        padding: 0!important;
+        border-bottom: 1px solid var(--sc-color-stroke);
+    }
+    .repo-file-explorer tbody td,
+    .repo-file-explorer tr:last-child {
+        border-bottom: none;
+    }
+}
+
+
+/* pull request */
+.repository.view.issue .comment-list .comment > .content > div:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: var(--sc-color-fill);
+    padding: 8px;
+}
+.repository.view.issue .comment-list .comment > .content > div.no-header {
+    background-color: var(--sc-color-bg);
+}
+.repository.view.issue .comment-list .comment > .content > div:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.repository.view.issue .comment-list .comment .comment-container {
+    border-radius: 8px;
+}
+
+.repository.view.issue .comment-list .timeline-item .badge {
+    border: 1px solid var(--sc-color-stroke);
+    background-color: var(--sc-color-bg);
+    color: var(--sc-color-text-primary);
+}
+
+.repository.view.issue .comment-list .timeline-item .badge.badge-commit {
+    border: 1px solid var(--sc-color-stroke);
+    background-color: var(--sc-color-bg);
+    color: var(--sc-color-text-primary);
+}
+.repository.view.issue .comment-list .timeline::before {
+    width: 1px;
+    background-color: var(--sc-color-grey);
+    left: 31px;
+    z-index: 0;
+}
+.repository.view.issue .comment-list .comment .comment-container {
+    border: 1px solid var(--sc-color-stroke);
+}
+.comment-header::before {
+    border-right-color: var(--sc-color-grey);
+}
+.comment-header::after {
+    border-right-color: var(--sc-color-fill);
+}
+.comment-header-left a {
+    color: var(--sc-color-primary)
+}
+
+#tt-widget {
+    width: 100%;
+}
+
+.repo-uninitialized {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 217px);
+}
+
+.repo-uninitialized-header {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+
+/* comment clound in discussion */
+.comment-code-cloud.ui.segment {
+    border: none;
+}
+
+.repository.view.issue .comment-list .code-comment {
+    border: 1px solid var(--sc-color-stroke);
+    margin: 0;
+    border-radius: 8px;
+}
+
+.owners {
+  margin-block: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.owners-input {
+  margin-block: 8px;
+}
+
+.owners-input.error {
+  border: 2px solid var(--sc-color-red-50);
+}
+
+.error-message {
+  display: block;
+  height: 1.2em;
+  color: var(--sc-color-red-50);
+  font-size: 0.9em;
+  visibility: hidden;
+}
+
+.error-message:not(:empty) {
+  visibility: visible;
+}
+
+
+/* create repo */
+.repository.new.repo form .help {
+    margin-left: 0!important;
+    margin-top: 6px;
+    font-size: .9em;
+    display: flex;
+    flex-wrap: wrap;
+}
+.repository.new.repo .ui.form #auto-init {
+    margin-left: 0!important;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}

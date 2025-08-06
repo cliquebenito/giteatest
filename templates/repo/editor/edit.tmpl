@@ -1,0 +1,90 @@
+{{template "base/head" .}}
+<div role="main" aria-label="{{.Title}}" class="page-content repository file editor edit">
+	{{template "repo/header" .}}
+	<div class="ui container">
+		{{template "base/alert" .}}
+		<form class="ui edit form sc-file-edit" method="post">
+			{{.CsrfTokenHtml}}
+			<input type="hidden" name="last_commit" value="{{.last_commit}}">
+			<input type="hidden" name="page_has_posted" value="{{.PageHasPosted}}">
+			<div class="sc-box sc-box_attached sc-file-editor">
+				<div class="sc-box__header">
+					<div class="ui breadcrumb field{{if .Err_TreePath}} error{{end}}">
+						<a class="section" href="{{$.BranchLink}}">{{.Repository.Name}}</a>
+						{{$n := len .TreeNames}}
+						{{$l := Eval $n "-" 1}}
+						{{range $i, $v := .TreeNames}}
+							<div class="divider"> / </div>
+							{{if eq $i $l}}
+								<input id="file-name" value="{{$v}}" placeholder="{{$.locale.Tr "repo.editor.name_your_file"}}" data-editorconfig="{{$.Editorconfig}}" required autofocus>
+								<span class="sc-button sc-button_icon sc-button_transparent" data-tooltip-content="{{$.locale.Tr "repo.editor.filename_help"}}">{{svg "octicon-info"}}</span>
+							{{else}}
+								<span class="section"><a href="{{$.BranchLink}}/{{index $.TreePaths $i | PathEscapeSegments}}">{{$v}}</a></span>
+							{{end}}
+						{{end}}
+						<a class="sc-button sc-button_base sc-file-edit__cancel" href="{{$.BranchLink}}{{if not .IsNewFile}}/{{PathEscapeSegments .TreePath}}{{end}}">{{.locale.Tr "repo.editor.cancel_lower"}}</a>
+						<input type="hidden" id="tree_path" name="tree_path" value="{{.TreePath}}" required>
+					</div>
+				</div>
+				<div class="sc-box__body">
+					<div class="field sc-file-edit__container">
+						<div class="sc-button-group sc-button-group_tabs" data-write="write" data-preview="preview" data-diff="diff">
+							{{if .IsNewFile}}
+								<a class="active sc-button-group__item item" data-tab="write" data-new-file="true">{{.locale.Tr "repo.editor.new_file"}}</a>
+							{{else}}
+								<a class="active sc-button-group__item item" data-tab="write" data-new-file="false">{{.locale.Tr "repo.editor.edit_file"}}</a>
+							{{end}}
+							<a class="sc-button-group__item item" data-tab="preview" data-url="{{.Repository.Link}}/markup" data-context="{{.RepoLink}}/src/{{.BranchNameSubURL}}" data-markup-mode="file">{{.locale.Tr "preview"}}</a>
+							{{if not .IsNewFile}}
+							<a class="sc-button-group__item item" data-tab="diff" data-url="{{.RepoLink}}/_preview/{{.BranchName | PathEscapeSegments}}/{{.TreePath | PathEscapeSegments}}" data-context="{{.BranchLink}}">{{.locale.Tr "repo.editor.preview_changes"}}</a>
+							{{end}}
+						</div>
+						<div class="ui bottom attached active tab segment borderless" data-tab="write">
+							<textarea id="edit_area" name="content" class="gt-hidden" data-id="repo-{{.Repository.Name}}-{{.TreePath}}"
+								data-url="{{.Repository.Link}}/markup"
+								data-context="{{.RepoLink}}"
+								data-previewable-extensions="{{.PreviewableExtensions}}"
+								data-line-wrap-extensions="{{.LineWrapExtensions}}">
+{{.FileContent}}</textarea>
+							<div class="editor-loading is-loading"></div>
+						</div>
+						<div class="ui tab sc-box sc-box_borderless" data-tab="preview">
+							{{.locale.Tr "loading"}}
+						</div>
+						<div class="ui tab sc-box sc-box_borderless diff edit-diff " data-tab="diff">
+							{{.locale.Tr "loading"}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{if CheckPrivileges $.TraceID $.TraceEndpoint $.SignedUser.ID $.TenantID .Owner.ID "write"}}
+				{{template "repo/editor/commit_form" .}}
+			{{else if CheckPrivilegesByRoleAndCustom $.TraceID $.TraceEndpoint $.SignedUser.ID $.TenantID .Owner.ID .Repository.ID "changeBranch"}}
+				{{template "repo/editor/commit_form" .}}
+			{{ end }}
+		</form>
+	</div>
+
+
+	<div class="ui g-modal-confirm modal" id="edit-empty-content-modal">
+		<div class="header">
+			{{svg "octicon-file"}}
+			{{.locale.Tr "repo.editor.commit_empty_file_header"}}
+		</div>
+		<div class="center content">
+			<p>{{.locale.Tr "repo.editor.commit_empty_file_text"}}</p>
+		</div>
+		<div class="actions">
+			<button class="ui red cancel button">
+				{{svg "octicon-x"}}
+				{{.locale.Tr "repo.editor.cancel"}}
+			</button>
+			<button class="ui green ok button">
+				{{svg "fontawesome-save"}}
+				{{.locale.Tr "repo.editor.commit_changes"}}
+			</button>
+		</div>
+	</div>
+
+</div>
+{{template "base/footer" .}}

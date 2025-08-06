@@ -1,0 +1,151 @@
+.override .ui.repository.list .repo-title a {
+    color: var(--color-primary-light-2);
+}
+
+.override .ui.checkbox label {
+    color: var(--color-text)!important;
+}
+.override .ui.form input {
+    background: var(--color-input-background);
+    border-color: var(--color-input-border-hover);
+    color: var(--color-input-text);
+}
+.override .admin-setting-content .cron-table .cron-table__cell_name,
+.override .ui.vertical.menu .item,
+.override .ui.attached.header,
+.override .ui.compact.menu .item,
+.override .ui.icon.buttons.tiny.color-buttons .ui.button,
+.override .ui.basic.small.compact.button {
+    color: inherit;
+}
+
+.override .admin-setting-content .cron-table .button:not(:disabled):hover,
+.override .admin-setting-content .cron-table .button:hover {
+  background: var(--color-hover);
+}
+.override .admin-setting-content .cron-table .button svg {
+  color: var(--color-caret)
+}
+.markup .highlight pre,
+.markup pre {
+    background-color: var(--color-markup-code-block);
+}
+
+.override .admin-setting-content .cron-table .button:disabled {
+  background-color: transparent;
+}
+.override .admin-setting-content .cron-table .button:disabled svg {
+  color: #3e3f42;
+}
+
+.override .ui.button.simple,
+.override .ui.labeled.button,
+.override .ui.compact.menu,
+.override .ui.small.button:disabled,
+.override .ui.small.button:active,
+.override .ui.small.button,
+.override .ui.compact.basic.button {
+    background: transparent;
+    color: inherit;
+}
+
+.override .ui.compact.menu .item:not(:last-child)::after {
+    content: '';
+    background-color: var(--color-secondary);
+}
+
+.override .ui.form input[type="file"] {
+    background: transparent;
+}
+
+.override .ui.top.main.menu {
+    background-color: var(--color-header-bar);
+}
+.override .ui.secondary.main.menu .item, .override .brandname {
+    color: var(--color-text);
+}
+
+.override .repo-title a:not(.rss-icon), .override .breadcrumb.repo-path a {
+    color: var(--color-primary-light-2);
+}
+.override #repo-files-table thead,
+.override .repository.file.list #repo-files-table tr:hover {
+    background-color: var(--color-secondary);
+}
+.override .ui.basic.small.compact.button,
+.override #repo-files-table .author-wrapper,
+.override .repository #commits-table td.sha .sha.label,
+.override .repository #repo-files-table .sha.label,
+.override .repository #rev-list .sha.label,
+.override .repository .timeline-item.commits-list .singular-commit .sha.label,
+.override #repo-files-table .message-wrapper {
+    color: inherit;
+}
+.override .repository.file.list #repo-files-table td a,
+.override .clone-field input,
+.override
+.repo-button-row__controls-group
+.branch-dropdown-button.ui.basic.small.compact.button,
+.override .repository .ui.segment.sub-menu .list .item .item-value,
+.override .file-view.markup.markdown h1,
+.override .repository.file.list #repo-files-table tr:hover a,
+.override .breadcrumb.repo-path,
+.override .file-view.markup.markdown,
+.override h3  {
+    color: var(--color-text);
+}
+.override .repo-button-row__clone-group,
+.override
+.repo-button-row__controls-group
+.branch-dropdown-button.ui.basic.small.compact.button,
+.override .clone-btns-wrap,
+.override .file-header .file-actions .ui.buttons {
+    background: transparent;
+}
+.override .file-header .file-actions .ui.buttons .ui.mini.basic.button:hover {
+    color: #2e3038;
+}
+.override
+.repo-button-row__controls-group
+.branch-dropdown-button.ui.basic.small.compact.button:hover {
+    color: var(--color-text)!important;
+}
+
+.override .ui.user.list  .item a{
+    color: var(--color-primary-light-2);
+}
+
+.override .git-hook-form .hint {
+  background-color: #232933;
+}
+.override .git-hook-form .ui.button.basic:hover {
+  background-color: var(--color-hover)
+}
+
+.override {
+    --color-primary: #4183c4;
+    --color-primary-contrast: #ffffff;
+    --color-primary-dark-1: #3876b3;
+    --color-primary-dark-2: #31699f;
+    --color-primary-dark-3: #2b5c8b;
+    --color-primary-dark-4: #254f77;
+    --color-primary-dark-5: #193450;
+    --color-primary-dark-6: #0c1a28;
+    --color-primary-dark-7: #04080c;
+    --color-primary-light-1: #548fca;
+    --color-primary-light-2: #679cd0;
+    --color-primary-light-3: #7aa8d6;
+    --color-primary-light-4: #8db5dc;
+    --color-primary-light-5: #b3cde7;
+    --color-primary-light-6: #d9e6f3;
+    --color-primary-light-7: #f4f8fb;
+    --color-primary-alpha-10: #4183c419;
+    --color-primary-alpha-20: #4183c433;
+    --color-primary-alpha-30: #4183c44b;
+    --color-primary-alpha-40: #4183c466;
+    --color-primary-alpha-50: #4183c480;
+    --color-primary-alpha-60: #4183c499;
+    --color-primary-alpha-70: #4183c4b3;
+    --color-primary-alpha-80: #4183c4cc;
+    --color-primary-alpha-90: #4183c4e1;
+  }

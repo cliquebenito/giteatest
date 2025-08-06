@@ -1,0 +1,57 @@
+<div class="side-menu-container loading" id="menuContainer">
+    {{$notificationUnreadCount := 0}}
+	{{if .IsSigned}}
+		{{if .NotificationUnreadCount}}{{$notificationUnreadCount = call .NotificationUnreadCount}}{{end}}
+	{{end}}
+    <div class="side-menu-close-button-container"><button class="close-menu-button">{{svg "octicon-three-bars"}}</button></div>
+		<a class="side-menu-container-logo" href="{{AppSubUrl}}">SourceControl</a>
+	<side-menu
+        id="menu"
+				mode="{{if .OneWork.Works}}works{{else}}separate{{end}}"
+				children-items='[
+								{{if .IsSigned}}
+										{{if not .MustChangePassword}}
+												{"key": "profile", "label": "{{.locale.Tr "your_profile"}}", "icon": "HomeOutlined", "children":
+														[
+																{"key": "{{AppSubUrl}}/{{.SignedUser.Name}}", "label": "{{.locale.Tr "signed_in_as"}} {{.SignedUser.Name}}", "link": "{{AppSubUrl}}/{{.SignedUser.Name}}"},
+																{"key": "{{AppSubUrl}}/{{.SignedUser.Name}}?tab=stars", "label": "{{.locale.Tr "your_starred"}}", "link": "{{AppSubUrl}}/{{.SignedUser.Name}}?tab=stars"},
+																{"key": "{{AppSubUrl}}/notifications/subscriptions", "label": "{{.locale.Tr "notification.subscriptions"}}", "link": "{{AppSubUrl}}/notifications/subscriptions"},
+																{"key": "{{AppSubUrl}}/user/settings", "label": "{{.locale.Tr "your_settings"}}", "link": "{{AppSubUrl}}/user/settings"}
+																{{if .IsAdmin}}
+																		, {"key": "{{AppSubUrl}}/admin", "label": "{{.locale.Tr "admin_panel"}}", "link": "{{AppSubUrl}}/admin"}
+																{{end}}
+														]
+												},
+												{"key": "create", "label": "{{.locale.Tr "create_new"}}", "icon": "ToolOutlined", "children":
+														[
+																{{if .SignedUser.CanCreateOrganization}}
+																		{"key": "{{AppSubUrl}}/org/create", "label": "{{.locale.Tr "new_org"}}", "link": "{{AppSubUrl}}/org/create"}
+																{{end}}
+														]
+												},
+										{{end}}
+										{"key": "{{AppSubUrl}}/notifications", "label": "{{.locale.Tr "notifications"}} ({{$notificationUnreadCount}})", "link": "{{AppSubUrl}}/notifications", "icon": "DatabaseOutlined"},
+										{{if not .MustChangePassword}}
+												{{if not .UnitPullsGlobalDisabled}}
+														{"key": "{{AppSubUrl}}/pulls", "label": "{{.locale.Tr "pull_requests"}}", "link": "{{AppSubUrl}}/pulls", "icon": "PartitionOutlinedRotated" },
+												{{end}}
+												{{if .ShowMilestonesDashboardPage}}
+														{"key": "{{AppSubUrl}}/milestones", "label": "{{.locale.Tr "milestones"}}", "link": "{{AppSubUrl}}/milestones", "icon": "ProjectOutlined" },
+												{{end}}
+												{"key": "{{AppSubUrl}}/explore/repos", "label": "{{.locale.Tr "explore"}}", "link": "{{AppSubUrl}}/explore/repos", "icon": "CompassOutlined" },
+										{{end}}
+										{"key": "{{AppSubUrl}}/user/logout", "label": "{{.locale.Tr "sign_out"}}", "link": "{{AppSubUrl}}/user/logout", "icon": "LogoutOutlined" }
+								{{else}}
+										{"key": "{{AppSubUrl}}/user/login", "label": "{{.locale.Tr "sign_in"}}", "link": "{{AppSubUrl}}/user/login", "icon": "LoginOutlined" }
+										{{if .ShowRegistrationButton}}
+										, {"key": "{{AppSubUrl}}/user/sign_up", "label": "{{.locale.Tr "register"}}", "link": "{{AppSubUrl}}/user/sign_up", "icon": "UserAddOutlined" }
+										{{end}}
+								{{end}}
+						]'
+		open-keys='[]'
+		selected-keys='[]'
+        {{if .OneWork.ToolKey}} tool-key="{{.OneWork.ToolKey}}" {{end}}
+        {{if .OneWork.ProjectUri}} project-uri="{{.OneWork.ProjectUri}}" {{end}}
+        {{if .OneWork.AdminUrl}} ssd-ui-admin-url="{{.OneWork.AdminUrl}}" {{end}}
+	></side-menu>
+</div>

@@ -1,0 +1,75 @@
+.override .ui.attached.segment.two.column.grid .column {
+    color: rgb(115, 123, 140);
+    font-size: 14px;
+}
+
+.override .ui.attached.segment.two.column.grid .stats-table {
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.override .ui.header.activity-header {
+    font-size: 18px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+}
+
+.override .repository .ui.attached.segment.horizontal.segments .ui.attached.segment.text.center {
+    color: rgb(115, 123, 140);
+}
+
+.override .repository .ui.celled.table{
+  margin-top: 0;
+}
+
+.override .repository .ui.celled.table td.authors{
+  padding: 4px 10px;
+}
+
+.override .repository .ui.celled.table th{
+  color: rgb(185, 189, 198);
+  background-color: transparent;
+}
+
+.override .repository .ui.attached.segment.horizontal.segments{
+  display: flex;
+  gap: 20px;
+}
+
+.override .repository .ui.attached.segment.horizontal.segments.grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+.override .repository .ui.attached.segment.horizontal.segments.grid > *{
+  padding: 0px;
+}
+
+.override .repository .ui .svg-wrapper{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  background-color: rgb(241, 242, 244);
+  border-radius: 4px;
+}
+
+.override .repository .ui td .branch{
+ display: flex;
+ gap: 5px;
+}
+
+.override .repository .ui td .icon-text{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+ }
+
+.override .repository .ui .svg-wrapper > svg{
+  color:var(--color-blue);
+}

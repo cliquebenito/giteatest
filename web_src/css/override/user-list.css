@@ -1,0 +1,36 @@
+.override .ui.user.list  .item {
+    gap: 12px
+}
+
+.override .ui.user.list  .item a{
+    color: #144BB8
+}
+
+.override .ui.user.list .item .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.override .ui.avatar.gt-vm {
+    border: 8px;
+}
+
+.override .ui.user.list .item .content .header {
+    font-family: var(--fonts-monospace);
+    font-size: 18px;
+}
+
+.override .ui.user.list .item .content .description {
+    color: rgb(115, 123, 140);
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.override .ui.user.list .item .content .description .partial {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+

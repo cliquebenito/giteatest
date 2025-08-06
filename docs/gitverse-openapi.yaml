@@ -1,0 +1,5394 @@
+openapi: 3.0.3
+info:
+  title: REST API GitRU
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8080/sbt/api/v1
+    description: local
+  - url: http://localhost:3000/sbt/api/v1
+    description: local
+
+paths:
+  /signUp:
+    post:
+      tags:
+        - Sign
+      operationId: CreateUser
+      summary: Регистрация нового пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      security: [ ]
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateUserResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /signIn:
+    post:
+      tags:
+        - Sign
+      operationId: LoginUser
+      summary: Авторизация пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      security: [ ]
+      responses:
+        '200':
+          description: Ok
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: auth=abcde123456; HttpOnly
+              description: Токен сессии пользователя
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /signOut:
+    post:
+      tags:
+        - Sign
+      operationId: LogoutUser
+      summary: Выход пользователя из учетной записи
+      security: [ ]
+      responses:
+        '200':
+          description: Ok
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: auth=; HttpOnly
+                description: Удаляется токен сессии пользователя
+
+  /user:
+    get:
+      tags:
+        - User
+      summary: Инфо о текущем (аутентифицированном) пользователе
+      operationId: userGetCurrent
+      security:
+        - cookieAuth: [ ]
+      parameters: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /users/{username}:
+    get:
+      tags:
+        - User
+      summary: Инфо о пользователе по имени
+      operationId: userGetByName
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
+        '404':
+          description: Пользователь не найден или настройки видимости не позволяют его найти
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /users/search:
+    get:
+      tags:
+        - User
+      summary: Поиск пользователей по критериям.
+      description: |
+        - Поиск репозиторев
+      operationId: UserSearch
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: q
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Имя для поиска
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: boolean
+            description: Активность пользователя
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Параметры сортировки
+            enum:
+              - newest
+              - oldest
+              - recentupdate
+              - leastupdate
+              - reversealphabetically
+              - alphabetically
+              - lastlogin
+              - reverselastlogin
+      responses:
+        '200':
+          $ref: '#/components/responses/UserListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /user/settings:
+    get:
+      tags:
+        - User
+      summary: Настройки профиля текущего авторизованного пользователя
+      operationId: userGetProfileSettings
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSettingsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    patch:
+      tags:
+        - User
+      summary: Изменение настроек профиля текущего авторизованного пользователя
+      operationId: userPatchProfileSettings
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSettings'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSettingsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /user/settings/avatar:
+    post:
+      tags:
+        - User
+      summary: Смена аватара пользователя
+      operationId: userPostAvatar
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Avatar'
+      responses:
+        '200':
+          description: ""
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    delete:
+      tags:
+        - User
+      summary: Удаление аватара пользователя
+      operationId: userDeleteAvatar
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          description: ""
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /user/settings/password:
+    put:
+      tags:
+        - User
+      summary: Изменение пароля пользователя
+      operationId: changeUserPassword
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /user/settings/account/delete:
+    delete:
+      tags:
+        - User
+      summary: Удаление текущего авторизованного пользователя
+      operationId: deleteUserAccount
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteUserAccountRequest'
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /user/keys:
+    post:
+      tags:
+        - User
+      summary: Создание публичного SSH ключа текущему авторизованному пользователю
+      operationId: createUserSshKey
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSshKeyRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserSshKeyResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    get:
+      tags:
+        - User
+      summary: Получение списка SSH ключей текущего авторизованного пользователя
+      operationId: getUserSshKeys
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSshKeyListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /user/keys/{keyId}:
+    get:
+      tags:
+        - User
+      summary: Получение SSH ключа текущего авторизованного пользователя по идентификатору
+      operationId: getUserSshKey
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: keyId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/UserSettingsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    delete:
+      tags:
+        - User
+      summary: Удаление SSH ключа текущего авторизованного пользователя по идентификатору
+      operationId: deleteUserSshKey
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: keyId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /users/{username}/repos:
+    get:
+      tags:
+        - User
+      summary: Получение списка репозиториев пользователя по имени пользователя.
+      description: |
+        - Если пользователь не авторизован то в списке будут только публичные репозитории указанного в пути пользователя
+        - Если пользователь авторизован и в пути запроса указан этот авторизованный пользователь то в списке будут и публичные и приватные репозитории
+        - Если пользователь авторизован и в пути запроса указан другой пользователь то в списке будут только публичные репозитории указанного пользователя
+      operationId: ReposListByUsername
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepoListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /user/watching:
+    get:
+      tags:
+        - User
+      summary: Получение списка репозиториев, за которыми следит текущий пользователь. Устарело - используйте /repo/search
+      deprecated: true
+      operationId: CurrentUserWatchingRepoList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: q
+          in: path
+          required: false
+          schema:
+            type: string
+            description: Фраза для поиска
+        - name: topic
+          in: path
+          required: false
+          schema:
+            type: boolean
+            description: TRUE - вести поиск только по имени репозитория. По умолчанию этот параметр = FALSE
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Параметры сортировки. По умолчанию используется сортировка recentupdate
+            enum:
+              - newest
+              - oldest
+              - recentupdate
+              - leastupdate
+              - reversealphabetically
+              - alphabetically
+              - moststars
+              - feweststars
+              - mostforks
+              - fewestforks
+      responses:
+        '200':
+          $ref: '#/components/responses/RepoListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /user/orgs:
+    get:
+      tags:
+        - User
+      summary: Получение списка организаций текущего пользователя
+      operationId: GetCurrentUserOrganizationList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /user/dashboard:
+    get:
+      tags:
+        - User
+      summary: Получение списка активностей текущего пользователя
+      operationId: GetCurrentUserActionList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /user/dashboard/heatmap:
+    get:
+      tags:
+        - User
+      summary: Получение количества активностей текущего пользователя сгруппированных по дням
+      operationId: GetCurrentUserActionHeatmap
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionsHeatmapResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /users/{username}/dashboard:
+    get:
+      tags:
+        - User
+      summary: Получение списка активностей пользователя
+      operationId: GetUserActionList
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /users/{username}/dashboard/heatmap:
+    get:
+      tags:
+        - User
+      summary: Получение количества активностей пользователя сгруппированных по дням
+      operationId: GetUserActionHeatmap
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionsHeatmapResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /orgs:
+    post:
+      tags:
+        - Organization
+      summary: Создание организации
+      operationId: CreateOrganization
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/OrganizationResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /orgs/{orgName}:
+    get:
+      tags:
+        - Organization
+      summary: Получение информации об организации по имени организации
+      operationId: GetOrganizationByName
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: orgName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /orgs/{orgName}/settings:
+    get:
+      tags:
+        - Organization
+      summary: Получение настроек организации
+      operationId: GetOrganizationSettings
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: orgName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationSettingsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    patch:
+      tags:
+        - Organization
+      summary: Изменение настроек организации
+      operationId: PatchOrganizationSettings
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: orgName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationSettings'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationSettingsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /orgs/{orgName}/settings/avatar:
+    post:
+      tags:
+        - Organization
+      summary: Изменение аватара организации в настройках
+      operationId: OrganizationPostAvatar
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: orgName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Avatar'
+      responses:
+        '200':
+          description: ""
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    delete:
+      tags:
+        - Organization
+      summary: Удаление аватара организации
+      operationId: organizationDeleteAvatar
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: orgName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ""
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos:
+    post:
+      tags:
+        - Repository
+      summary: Создание репозитория, только для авторизованных пользователей
+      operationId: CreateRepo
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRepoRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateRepoResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}:
+    delete:
+      tags:
+        - Repository
+      summary: Удаление репозитория, только для авторизованных пользователей, являющихся владельцами репозитория
+      operationId: DeleteRepo
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    get:
+      tags:
+        - Repository
+      summary: Получение данных репозитория по имени
+      description: |
+        - Если пользователь не авторизован то он может получить данные только о публичном репозитории любого пользователя
+        - Если пользователь авторизован то он может получить данные о публичном репозитории любого пользователя или о своем приватном
+      operationId: GetRepo
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepoResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/archive/{archive}:
+    get:
+      tags:
+        - Repository
+      summary: Скачивание архива репозитория
+      description: |
+        - Если пользователь не авторизован то он может скачать только публичный репозиторий любого пользователя
+        - Если пользователь авторизован то он может скачать архив публичного репозитория любого пользователя или свой приватный
+      operationId: GetRepoArchive
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: archive
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >
+            Гит референс (имя ветки или хэш коммита) с суфиксами ".zip" / ".tar.gz" / ".bundle" в зависимости от необходимого формата
+            Пример: main.zip или aa8a6c0c66a4c2091a8d5dd812eccdad90f46d39.tar.gz
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/branches:
+    post:
+      tags:
+        - Repository
+      summary: Создание ветки в репозитории
+      operationId: CreateRepositoryBranch
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRepoBranchRequest'
+      responses:
+        '201':
+          description: "Ok"
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    get:
+      tags:
+        - Repository
+      summary: Получение списка веток репозитория
+      operationId: GetRepositoryBranchList
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryBranchListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/branches_list:
+    get:
+      tags:
+        - Repository
+      summary: Получение списка имен веток репозитория
+      operationId: GetRepositoryBranchNamesList
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryBranchNameListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/branches/{branchName}:
+    get:
+      tags:
+        - Repository
+      summary: Получение информации и ветке репозитория по имени ветки
+      operationId: GetRepositoryBranch
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: branchName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BranchName'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryBranchResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    delete:
+      tags:
+        - Repository
+      summary: Удаление ветки из реопзитория по имени ветки
+      operationId: DeleteRepositoryBranch
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: branchName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BranchName'
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/branches/rename:
+    put:
+      tags:
+        - Repository
+      summary: Переименование имени ветки
+      operationId: PutRenameRepoBranch
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBranchNameRequest'
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/commits:
+    get:
+      tags:
+        - Repository
+      summary: Получение списка коммитов репозитория
+      operationId: GetRepoCommitList
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: sha
+          in: query
+          required: false
+          description: Хэш коммита/имя ветки
+          schema:
+            type: string
+        - name: path
+          in: query
+          required: false
+          description: Путь и имя файла
+          schema:
+            type: string
+        - name: stat
+          in: query
+          required: false
+          description: Запросить статистику изменений (по умолчанию "false")
+          schema:
+            type: boolean
+        - name: files
+          in: query
+          required: false
+          description: Запросить список изменных файлов (по умолчанию "false")
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: not
+          in: query
+          required: false
+          description: Какие коммиты/ветки исключить из списка
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryCommitsListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/commits/{sha}:
+    get:
+      tags:
+        - Repository
+      summary: Получение коммита по хэш коммита
+      operationId: GetRepoCommit
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: sha
+          in: path
+          required: true
+          description: Хэш коммита
+          schema:
+            type: string
+        - name: stat
+          in: query
+          required: false
+          description: Запросить статистику изменений (по умолчанию "false")
+          schema:
+            type: boolean
+        - name: files
+          in: query
+          required: false
+          description: Запросить список изменных файлов (по умолчанию "false")
+          schema:
+            type: boolean
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryCommitResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/commits/{sha}/diff:
+    get:
+      tags:
+        - Repository
+      summary: Получение diff-a одного файла коммита
+      operationId: GetRepoCommitFileDiff
+      security: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: sha
+          in: path
+          required: true
+          description: Хэш коммита
+          schema:
+            type: string
+        - name: file
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommitFileDiffResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/contents:
+    get:
+      tags:
+        - Repository
+      summary: Получение метаданных о содержимом корня репозитория
+      operationId: GetRootContentsList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: ref
+          in: query
+          required: false
+          description: Имя ветки, если не указано то будет использована ветка по умлочанию
+          schema:
+            $ref: '#/components/schemas/BranchName'
+      responses:
+        '200':
+          $ref: '#/components/responses/ContentsListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/contents/{filepath}:
+    get:
+      tags:
+        - Repository
+      summary: Получение метаданных о файле (если запрошен файл) или списка содержимого если запрошена директория
+      description: >
+        Если репозиторий публичный то получить данные можно без ограничений
+        Если репозиторий приватный то данные может получить только авторизованный владелец
+      operationId: GetContents
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+        - name: ref
+          in: query
+          required: false
+          description: Имя ветки, если не указано то будет использована ветка по умолчанию
+          schema:
+            $ref: '#/components/schemas/BranchName'
+      responses:
+        '200':
+          description: Получение метаданных о файле (если запрошен файл) или списка содержимого если запрошена директория
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/responses/ContentsResponse'
+                  - $ref: '#/components/responses/ContentsListResponse'
+
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    post:
+      tags:
+        - Repository
+      summary: Создание файла в репозитории
+      operationId: RepoCreateFile
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFileOptions'
+      responses:
+        '200':
+          $ref: '#/components/responses/FileResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    put:
+      tags:
+        - Repository
+      summary: Изменение файла в репозитории
+      operationId: RepoUpdateFile
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileOptions'
+      responses:
+        '200':
+          $ref: '#/components/responses/FileResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    delete:
+      tags:
+        - Repository
+      summary: Удаление файла в репозитории
+      operationId: RepoDeleteFile
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteFileOptions'
+      responses:
+        '200':
+          $ref: '#/components/responses/FileDeleteResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/raw/branch/{branchName}/{filepath}:
+    get:
+      tags:
+        - Repository
+      summary: Получение содержимого файла в указанной ветке
+      description: >
+        Если репозиторий публичный то получить данные можно без ограничений
+        Если репозиторий приватный то данные может получить только авторизованный владелец
+      operationId: GetFileContentByBranch
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: branchName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BranchName'
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      responses:
+        '200':
+          description: Returns raw file content.
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/raw/commit/{sha}/{filepath}:
+    get:
+      tags:
+        - Repository
+      summary: Получение содержимого файла по указанному коммиту
+      description: >
+        Если репозиторий публичный то получить данные можно без ограничений
+        Если репозиторий приватный то данные может получить только авторизованный владелец
+      operationId: GetFileContentByCommit
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: sha
+          in: path
+          required: true
+          description: Хэш коммита
+          schema:
+            type: string
+        - name: filepath
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      responses:
+        '200':
+          description: Returns raw file content.
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/pulls:
+    post:
+      tags:
+        - Repository
+      summary: Создание запроса на слияние
+      operationId: CreatePR
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatePrResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    get:
+      tags:
+        - Repository
+      summary: Получение списка пулл-реквестов репозитория (ПРы приватного репозитория доступны только владельцу)
+      operationId: ListPullRequests
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: state
+          in: query
+          required: false
+          description: Статус пулл-реквеста
+          schema:
+            type: string
+            enum:
+              - closed
+              - open
+              - all
+        - name: sort
+          in: query
+          required: false
+          description: Варианты сортировки списка
+          schema:
+            type: string
+            enum:
+              - oldest
+              - recentupdate
+              - leastupdate
+              - mostcomment
+              - leastcomment
+              - priority
+        - name: milestone
+          in: query
+          required: false
+          description: ИД этапа
+          schema:
+            type: integer
+        - name: labels
+          in: query
+          required: false
+          description: Ид меток пулл-реквестов, возможно использовать список меток в формате ?labels=foo&labels=bar&labels=etc
+          schema:
+            type: array
+            items:
+              type: integer
+            collectionsFormat: multi
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/PrListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/pulls/{number}:
+    get:
+      tags:
+        - Repository
+      summary: Получение пулл-реквеста репозитория (ПР приватного репозитория доступен только владельцу)
+      operationId: GetPullRequest
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/GetPrResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/comments:
+    get:
+      tags:
+        - Repository
+      summary: Получение коментариев и событий пулл-реквеста репозитория
+      operationId: GetComments
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/GetPrCommentsResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    post:
+      tags:
+        - Repository
+      summary: Создание комментария и изменение статуса рулл реквеста
+      operationId: CreateComment
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/GetPrCommentResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/comments/{commentId}:
+    delete:
+      tags:
+        - Repository
+      summary: Удаление комментария
+      operationId: DeleteComment
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: commentId
+          in: path
+          required: true
+          description: Идентификатор комментария
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    put:
+      tags:
+        - Repository
+      summary: Изменение комментария
+      operationId: UpdateComment
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: commentId
+          in: path
+          required: true
+          description: Идентификатор комментария
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommentRequest'
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/comments/{commentId}/history:
+    get:
+      tags:
+        - Repository
+      summary: История изменений комментария
+      operationId: CommentHistory
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: commentId
+          in: path
+          required: true
+          description: Идентификатор комментария
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/GetPrCommentHistoryResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/comments/{commentId}/history/detail:
+    get:
+      tags:
+        - Repository
+      summary: Diff изменений комментария
+      operationId: CommentHistoryDetail
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: commentId
+          in: path
+          required: true
+          description: Идентификатор комментария
+          schema:
+            type: integer
+        - name: history_id
+          in: query
+          required: true
+          description: Идентификатор изменения комментария
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/CommentHistoryDetailResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/comments/{commentId}/history/delete:
+    delete:
+      tags:
+        - Repository
+      summary:  Мягкое удаление изменения комментария из истории (само событие удаления остается)
+      operationId: CommentHistoryDetailDelete
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: commentId
+          in: path
+          required: true
+          description: Идентификатор комментария
+          schema:
+            type: integer
+        - name: history_id
+          in: query
+          required: true
+          description: Идентификатор изменения комментария
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/comments/{commentId}/reactions/{action}:
+    post:
+      tags:
+        - Repository
+      summary: Реакция (смайлик) на комментарий. Возможные варианты смайлов должны быть предварительно прописаны в конфиге на сервере
+      operationId: PostReaction
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: commentId
+          in: path
+          required: true
+          description: Идентификатор комментария
+          schema:
+            type: integer
+        - name: action
+          in: path
+          required: true
+          description: Действие
+          schema:
+              type: string
+              enum:
+                - react
+                - unreact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/PostReactionResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/lock:
+    post:
+      tags:
+        - Repository
+      summary: Блокировка возможности комментирования пулл реквеста не соавторами
+      operationId: LockCommentPullRequest
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LockRequest'
+      responses:
+        '200':
+         description: OK
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/unlock:
+    post:
+      tags:
+        - Repository
+      summary: Разблокировка возможности комментирования пулл реквеста не соавторами
+      operationId: LockCommentPullRequest
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/attachments:
+    post:
+      tags:
+        - Repository
+      summary: Загрузить файл
+      operationId: UploadFile
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: "#/components/responses/UploadFileResponse"
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/attachments/{fileId}:
+    delete:
+      tags:
+        - Repository
+      summary: Удалить файл
+      operationId: DeleteFile
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Идентификатор файла
+            format: uuid
+      responses:
+        '200':
+          description: OK
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/status:
+    patch:
+      tags:
+        - Repository
+      summary: Изменение статуса пулл реквеста (закрыть или переоткрыть). Используйте /repos/{ownerName}/{repoName}/pulls/{number}/comments
+      operationId: ChangePullRequestStatus
+      deprecated: true
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePrStatusRequest'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/reviewer:
+    patch:
+      tags:
+        - Repository
+      summary: Добавление/удаление ревьюера ПР-а
+      operationId: AddAndRemovePullReviewer
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePullReviewerRequest'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/merge:
+    post:
+      tags:
+        - Repository
+      summary: Слияние пулл-реквеста
+      operationId: PostMergePullRequest
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMergePullRequest'
+      responses:
+        '200':
+          description: ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/pulls/{number}/diff:
+    get:
+      tags:
+        - Repository
+      summary: Diff одного файла пулл реквеста
+      operationId: GetPullRequestDiff
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: file
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommitFileDiffResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/pulls/{number}/commits:
+    get:
+      tags:
+        - Repository
+      summary: Получение списка коммитов пулл-реквеста
+      operationId: GetPullRequestCommitList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryCommitsListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/pulls/{number}/files:
+    get:
+      tags:
+        - Repository
+      summary: Получение списка файлов diff-a пулл-реквеста
+      operationId: GetPullRequestDiffFileList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/DiffListFilesResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/compare/diff/{baseBranch}...{headOwner}/{headRepoName}:{headBranch}:
+    get:
+      tags:
+        - Repository
+      summary: Diff одного файла веток
+      description: >
+        Так как могут сравниваться ветки разных репозиториев, то запрос имеет разные формы.
+        Краткая форма запроса веток /compare/{baseBranch}...{headBranch}, если сравниваются ветки одного репозитория.
+        Полная форма                /compare/{baseBranch}...{headOwner}/{headRepoName}:{headBranch}, если идет работа с форками.
+        На бекенде реализована только возможность работы с ветками одного репозитория (краткая форма)
+      operationId: GetCompareBranchesFileDiff
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: baseBranch
+          in: path
+          required: true
+          description: Название ветки
+          schema:
+            $ref: '#/components/schemas/BranchName'
+        - name: headOwner
+          in: path
+          required: true
+          description: Имя пользователя
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: headRepoName
+          in: path
+          required: true
+          description: Название репозитория
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: headBranch
+          in: path
+          required: true
+          description: Название ветки
+          schema:
+            $ref: '#/components/schemas/BranchName'
+        - name: file
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilePath'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommitFileDiffResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/compare/commits/{baseBranch}...{headOwner}/{headRepoName}:{headBranch}:
+    get:
+      tags:
+        - Repository
+      summary: Разница в коммитах по веткам репозитория
+      description: >
+        Так как могут сравниваться ветки разных репозиториев, то запрос имеет разные формы.
+        Краткая форма запроса веток /compare/{baseBranch}...{headBranch}, если сравниваются ветки одного репозитория.
+        Полная форма                /compare/{baseBranch}...{headOwner}/{headRepoName}:{headBranch}, если идет работа с форками.
+        На бекенде реализована только возможность работы с ветками одного репозитория (краткая форма)
+      operationId: GetCompareBranchesCommitsDiff
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: baseBranch
+          in: path
+          required: true
+          description: Название ветки
+          schema:
+            $ref: '#/components/schemas/BranchName'
+        - name: headOwner
+          in: path
+          required: true
+          description: Имя пользователя
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: headRepoName
+          in: path
+          required: true
+          description: Название репозитория
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: headBranch
+          in: path
+          required: true
+          description: Название ветки
+          schema:
+            $ref: '#/components/schemas/BranchName'
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/RepositoryCommitsListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/compare/files/{baseBranch}...{headOwner}/{headRepoName}:{headBranch}:
+    get:
+      tags:
+        - Repository
+      summary: Список различающихся файлов в коммитах по веткам репозитория
+      description: >
+        Так как могут сравниваться ветки разных репозиториев, то запрос имеет разные формы.
+        Краткая форма запроса веток /compare/{baseBranch}...{headBranch}, если сравниваются ветки одного репозитория.
+        Полная форма                /compare/{baseBranch}...{headOwner}/{headRepoName}:{headBranch}, если идет работа с форками.
+        На бекенде реализована только возможность работы с ветками одного репозитория (краткая форма)
+      operationId: GetCompareBranchesDiffFileList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: baseBranch
+          in: path
+          required: true
+          description: Название ветки
+          schema:
+            $ref: '#/components/schemas/BranchName'
+        - name: headOwner
+          in: path
+          required: true
+          description: Имя пользователя
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: headRepoName
+          in: path
+          required: true
+          description: Название репозитория
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: headBranch
+          in: path
+          required: true
+          description: Название ветки
+          schema:
+            $ref: '#/components/schemas/BranchName'
+      responses:
+        '200':
+          $ref: '#/components/responses/DiffListFilesResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/forks:
+    parameters:
+      - name: ownerName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserName'
+      - name: repoName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/RepoName'
+    post:
+      tags:
+        - Repository
+      summary: Форк репозитория
+      operationId: ForkRepo
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForkRepoRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateRepoResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/migrate:
+    post:
+      tags:
+        - Repository
+      summary: Миграция репозитория
+      operationId: MigrateRepo
+      security:
+        - cookieAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateRepoRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateRepoResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/action/{action}:
+    patch:
+      tags:
+        - Repository
+      summary: Действие, которое можно сделать с репозиторием
+      description: |
+        - следить/перестать следить
+        - добавить/убрать из избранного
+        - подтвердить принятие прав на репозиторий/отказаться принимать права на репозиторий
+      operationId: PostRepoAction
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: action
+          in: path
+          required: true
+          description: Действие, которое можно сделать с репозиторием
+          schema:
+            type: string
+            enum:
+              - watch
+              - unwatch
+              - star
+              - unstar
+              - acceptTransfer
+              - rejectTransfer
+      responses:
+        '200':
+          description: ""
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /repos/{ownerName}/{repoName}/watchers:
+    get:
+      tags:
+        - Repository
+      summary: Список пользователей, которые следят за репозиторием
+      operationId: GetRepoWatchersList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/stargazers:
+    get:
+      tags:
+        - Repository
+      summary: Список пользователей, которые добавили репозиторий в избранное
+      operationId: GetRepoStargazersList
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings:
+    patch:
+      tags:
+        - Repository
+      summary: Изменение основных настроек репозитория
+      operationId: UpdateRepositorySettings
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepoBaseSettings'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/pulls:
+    patch:
+      tags:
+        - Repository
+      summary: Изменение настроек стилей слияния пулл реквестов
+      operationId: UpdateRepositoryAdvancedSettings
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepoPullsSettings'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/archive:
+    post:
+      tags:
+        - Repository
+      summary: Архивирование репозитория
+      operationId: ArchiveRepository
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/unarchive:
+    post:
+      tags:
+        - Repository
+      summary: Разархивирование репозитория
+      operationId: UnarchiveRepository
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/transfer:
+    post:
+      tags:
+        - Repository
+      summary: Передача прав на репозиторий другому пользователю
+      operationId: TransferRepository
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepoTransferRequest'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/collaboration:
+    get:
+      tags:
+        - Repository
+      summary: Получение списка соавторов
+      operationId: GetCollaboration
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+      responses:
+        '200':
+          $ref: '#/components/responses/CollaborationListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/collaboration/{collaborator}:
+    post:
+      tags:
+        - Repository
+      summary: Добавление соавтора с правом на запись по умолчанию
+      operationId: CreateCollaboration
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: collaborator
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+      responses:
+        '200':
+          $ref: '#/components/responses/CollaborationResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+    delete:
+      tags:
+        - Repository
+      summary: Удаление соавтора
+      operationId: DeleteCollaboration
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: collaborator
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/{ownerName}/{repoName}/settings/collaboration/{collaborator}/{accessMode}:
+    put:
+      tags:
+        - Repository
+      summary: Изменение прав соавтора
+      operationId: UpdateCollaboration
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: collaborator
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: accessMode
+          in: path
+          required: true
+          description: Уровень доступа к репозиторию
+          schema:
+            type: string
+            enum:
+              - read
+              - write
+              - admin
+      responses:
+        '200':
+          description: Ok
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /repos/search:
+    get:
+      tags:
+        - Repository
+      summary: Поиск репозиториев по критериям.
+      description: |
+        - Поиск репозиторев
+      operationId: RepoSearch
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: Фраза для поиска в имени или в описании репозитория.
+          schema:
+            type: string
+        - name: topic
+          in: query
+          required: false
+          description: true искать только в топиках (тематическах метках) репозитория. По умолчанию false. Имеет смысл использовать только с q.
+          schema:
+            type: boolean
+        - name: includeDesc
+          in: query
+          required: false
+          description: true искать так же и в описании репозитория. По умолчанию false. Имеет смысл использовать только с q.
+          schema:
+            type: boolean
+        - name: language
+          in: query
+          required: false
+          description: Основной язык используемый в репозитории. Регистрозависим.
+          schema:
+            type: string
+        - name: only_show_relevant
+          in: query
+          required: false
+          description: Поиск только "полноценных" репозиториев (исключаются форки, не имеющие описания, иконки).
+          schema:
+            type: boolean
+        - name: uid
+          in: query
+          required: false
+          description: Идентификатор пользователя которому принадлежит репозиторий, либо он соавтор либо член команды.
+          schema:
+            type: integer
+        - name: team_id
+          in: query
+          required: false
+          description: Идентификатор команды имеющей доступ к репозиторию.
+          schema:
+            type: integer
+        - name: allPublic
+          in: query
+          required: false
+          description: true - включить в поиск публичные репозитории не принадлежащие пользователю. По умолчанию false. Имеет смысл использовать только с uid.
+          schema:
+            type: boolean
+        - name: allLimited
+          in: query
+          required: false
+          description: true - включить в поиск "ограниченные по видимости" репозитории не принадлежащие пользователю. По умолчанию false. Имеет смысл использовать только с uid.
+          schema:
+            type: boolean
+        - name: private
+          in: query
+          required: false
+          description: false - не искать приватные и лимитированные репозитории. По умолчанию true для авторизованного пользователя, всегда false для неавторизованного.
+          schema:
+            type: boolean
+        - name: is_private
+          in: query
+          required: false
+          description: При отсутствии ( по умолчанию) показывает приватные и публичнные репозитории. True только приватные, false только публичные.
+          schema:
+            type: boolean
+        - name: exclusive
+          in: query
+          required: false
+          description: true -  показывает только собственные репозитории. По умолчанию false.
+          schema:
+            type: boolean
+        - name: mode
+          in: query
+          required: false
+          description: |
+            - source убирает из списка форки и зеркала
+            - fork показывает только форки
+            - mirror показывает только зеркала
+            - collaborative командные репозитории (исключая зеркала)
+          schema:
+            type: string
+            enum:
+              - source
+              - fork
+              - mirror
+              - collaborative
+        - name: archived
+          in: query
+          required: false
+          description: true - показать все заархивированные репозитории, false только незаархивированные. При отсутствии ( значение по умолчанию) показывает оба типа
+          schema:
+            type: boolean
+        - name: template
+          in: query
+          required: false
+          description: true - показать все репозитории шаблоны, false только не шаблоны. При отсутствии ( значение по умолчанию) показывает оба типа
+          schema:
+            type: boolean
+        - name: starredBy
+          in: query
+          required: false
+          description: Идентификатор пользователя. Показывает репозитории добавленные в избранное данным пользователем
+          schema:
+            type: integer
+        - name: watchedBy
+          in: query
+          required: false
+          description: Идентификатор пользователя. Показывает репозитории добавленные в отслеживаемые данным пользователем
+          schema:
+            type: integer
+        - name: count_only
+          in: query
+          required: false
+          description: true показывает только количество записей в ответе
+          schema:
+            type: integer
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Параметры сортировки
+            enum:
+              - newest
+              - oldest
+              - leastupdate
+              - reversealphabetically
+              - alphabetically
+              - reversesize
+              - size
+              - moststars
+              - feweststars
+              - mostforks
+              - fewestforks
+              - recentupdate
+      responses:
+        '200':
+          $ref: '#/components/responses/RepoListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+  /explore/repos:
+    get:
+      tags:
+        - Explore
+      summary: Используйте /repos/search
+      deprecated: true
+      description: |
+        - Поиск репозиторев
+      operationId: ExploreRepos
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: q
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Фраза для поиска
+        - name: 'language'
+          in: path
+          required: false
+          schema:
+            type: boolean
+            description: Язык программирования используемый в репозитории
+        - name: only_show_relevant
+          in: path
+          required: false
+          schema:
+            type: boolean
+            description: Поиск только релевантных репозиториев (исключаются форки, не имеющие описания)
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Параметры сортировки
+            enum:
+              - newest
+              - oldest
+              - leastupdate
+              - reversealphabetically
+              - alphabetically
+              - reversesize
+              - size
+              - moststars
+              - feweststars
+              - mostforks
+              - fewestforks
+              - recentupdate
+      responses:
+        '200':
+          $ref: '#/components/responses/RepoListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /explore/users:
+    get:
+      tags:
+        - Explore
+      summary: Используйте /users/search
+      deprecated: true
+      description: |
+        - Поиск пользователей
+      operationId: ExploreUsers
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: q
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Имя для поиска
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Параметры сортировки
+            enum:
+              - newest
+              - oldest
+              - recentupdate
+              - leastupdate
+              - reversealphabetically
+              - alphabetically
+              - lastlogin
+              - reverselastlogin
+      responses:
+        '200':
+          $ref: '#/components/responses/UserListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /explore/orgs:
+    get:
+      tags:
+        - Explore
+      summary: Поиск организаций по критериям.
+      description: |
+        - Поиск репозиторев
+      operationId: ExploreOrgs
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: q
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Имя для поиска
+        - name: page
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Параметры сортировки
+            enum:
+              - newest
+              - oldest
+              - recentupdate
+              - leastupdate
+              - reversealphabetically
+              - alphabetically
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationListResponse'
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+  /attachments/{fileId}:
+    get:
+      tags:
+        - Other
+      summary: Скачать файл
+      operationId: DownloadFile
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          description: Идентификатор файла
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Бинарный файл
+          content:
+            application/octet-stream: { }
+        default:
+          $ref: '#/components/responses/DefaultErrorRes'
+
+components:
+  responses:
+    DefaultErrorRes:
+      description: Ошибка по умолчанию
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    CreateUserResponse:
+      description: Данные только что зарегистрированного пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateUserInfoResponse'
+      headers:
+        Set-Cookie:
+          schema:
+            type: string
+            example: auth=abcde123456; HttpOnly
+          description: Токен сессии пользователя
+    UserResponse:
+      description: Данные пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    UserListResponse:
+      description: Список пользователей
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserWithTotalCountInfo'
+    UserSettingsResponse:
+      description: Настройки профиля пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSettings'
+    UserSshKeyResponse:
+      description: Публичный SSH ключ пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSshKeyInfo'
+    UserSshKeyListResponse:
+      description: Список публичных SSH ключей пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserListSshKeyInfo'
+    OrganizationResponse:
+      description: Данные об организации
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Organization'
+    OrganizationListResponse:
+      description: Список организаций с общим числом организаций
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationListWithTotalCount'
+    OrganizationSettingsResponse:
+      description: Настройки организации
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationSettings'
+    CreateRepoResponse:
+      description: Детали созданного репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Repo'
+    RepoListResponse:
+      description: Список репозиториев пользователя
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepoWithTotalCountInfo'
+    RepoResponse:
+      description: Данные репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepoInfo'
+    FileResponse:
+      description: Данные о файле репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FileResponseInfo'
+    ContentsResponse:
+      description: Инфомация о содержимом репозитория (файле, директории)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContentsResponseInfo'
+    RepositoryBranchListResponse:
+      description: Список веток репозитория с информацией и общим количеством веток
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepositoryBranchesWithTotalCount'
+    RepositoryBranchResponse:
+      description: Информация о ветке репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepositoryBranchResponseInfo'
+    RepositoryBranchNameListResponse:
+      description: Список имен веток репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepositoryBranchNameList'
+    RepositoryCommitsListResponse:
+      description: Список коммитов репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepositoryCommitsList'
+    RepositoryCommitResponse:
+      description: Коммит репозитория
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RepositoryCommitInfo'
+    CommitDiffResponse:
+      description: Diff коммита
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommitDiffInfo'
+    CommitFileDiffResponse:
+      description: Diff одного файла коммита
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FileDiffInfo'
+    DiffListFilesResponse:
+      description: Список файлов diff-a коммитов
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/FileWithStat'
+    ContentsListResponse:
+      description: ContentsListResponse
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContentsListResponseInfo'
+    FileDeleteResponse:
+      description: Информация о удаленном файле (коммите)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FileCommitResponse'
+    CreatePrResponse:
+      description: Детали созданного запроса на слияние
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PullRequest'
+    GetPrResponse:
+      description: Данные пулл реквеста
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PullRequest'
+    GetPrCommentsResponse:
+      description: Комментарии пулл реквеста
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Comment'
+    GetPrCommentResponse:
+      description: Комментарий пулл реквеста
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Comment'
+    GetPrCommentHistoryResponse:
+      description: История изменений комментария
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommentHistory'
+    CommentHistoryDetailResponse:
+      description: Diff изменений комментария
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommentHistoryDetail'
+    PostReactionResponse:
+      description: Список всех реакций на комментарий
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Reaction"
+    UploadFileResponse:
+      description: Идентификатор файла
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+    PrListResponse:
+      description: Список пулл-реквестов репозитория с общим количеством ПР
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PullRequestListInfo'
+    ActionListResponse:
+      description: Список активностей пользователя (организации)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionsWithTotalCount'
+    ActionsHeatmapResponse:
+      description: Список активностей пользователя (организации) в виде количества по дням
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionsHeatmap'
+    CollaborationResponse:
+      description: Соавтор
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Collaboration'
+    CollaborationListResponse:
+      description: Список соавторов с доступами
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CollaborationList'
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: auth
+
+  schemas:
+    Page:
+      type: integer
+      default: 1
+    PageSize:
+      type: integer
+      default: 30
+
+    ApiError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 1000
+          description: Код ошибки
+        message:
+          type: string
+          description: Текст ошибки
+          example: Internal server error
+
+    CreateUserRequest:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          $ref: "#/components/schemas/UserName"
+        email:
+          $ref: "#/components/schemas/Email"
+        password:
+          $ref: "#/components/schemas/Password"
+
+    CreateUserInfoResponse:
+      type: object
+      required:
+        - username
+        - email
+      properties:
+        username:
+          $ref: "#/components/schemas/UserName"
+        email:
+          $ref: "#/components/schemas/Email"
+
+    LoginRequest:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          oneOf:
+            - $ref: "#/components/schemas/Email"
+            - $ref: "#/components/schemas/UserName"
+        password:
+          $ref: "#/components/schemas/Password"
+    ChangePasswordRequest:
+      type: object
+      required:
+        - old_password
+        - new_password
+      properties:
+        old_password:
+          $ref: "#/components/schemas/Password"
+        new_password:
+          $ref: "#/components/schemas/Password"
+    DeleteUserAccountRequest:
+      type: object
+      required:
+        - password
+      properties:
+        password:
+          $ref: "#/components/schemas/Password"
+    CreateSshKeyRequest:
+      type: object
+      required:
+        - title
+        - key
+      properties:
+        title:
+          type: string
+          maxLength: 255
+          description: Название ключа
+        key:
+          type: string
+          description: >
+            "Публичный ssh ключ, который начинается с 'ssh-ed25519', 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384',
+            'ecdsa-sha2-nistp521', 'sk-ecdsa-sha2-nistp256@openssh.com', 'sk-ssh-ed25519@openssh.com'"
+
+    CreateOrganizationRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          example: 'Organization'
+          description: Имя организации
+        description:
+          type: string
+          description: Описание организации
+        full_name:
+          type: string
+          description: Полное название организации
+        repo_admin_change_team_access:
+          type: boolean
+          description: Администратор репозитория может добавлять и удалять права доступа команд
+        location:
+          type: string
+          description: Месторасположение организации
+        visibility:
+          type: string
+          description: Видимость организации
+          enum:
+            - public
+            - limited
+            - private
+        website:
+          type: string
+          description: Веб сайт организации
+    OrganizationSettings:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Имя организации
+        description:
+          type: string
+          description: Описание организации
+        full_name:
+          type: string
+          description: Полное название организации
+        repo_admin_change_team_access:
+          type: boolean
+          description: Администратор репозитория может добавлять и удалять права доступа команд
+        location:
+          type: string
+          description: Месторасположение организации
+        visibility:
+          type: string
+          description: Видимость организации
+          enum:
+            - public
+            - limited
+            - private
+        website:
+          type: string
+          description: Веб сайт организации
+        max_repo_creation:
+          type: integer
+          description: Максимальное количество репозиториев, которое может создать участник организации (за исключением владельца и администратора сайта). По умолчанию значение равно -1 (неограниченное количество репозиториев)
+
+    RepoBaseSettings:
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/RepoName"
+        description:
+          type: string
+          description: Описание репозитория
+        website:
+          type: string
+          description: Веб сайт репозитория
+        private:
+          type: boolean
+          description: Сделать репозиторий приватным
+        template:
+          type: boolean
+          description: Сделать репозиторий шаблоном
+    RepoPullsSettings:
+      type: object
+      description: Настройки слияния репозитория
+      properties:
+        enablePulls:
+          type: boolean
+          description: Включить запросы на слияние
+        pullsIgnoreWhiteSpace:
+          type: boolean
+          description: Игнорировать незначительные изменения (пробелы, табуляция) при проверке на конфликты слияния
+        pullsAllowMerge:
+          type: boolean
+          description: Создать коммит на слияние
+        pullsAllowRebase:
+          type: boolean
+          description: Выполнить Rebase, а затем fast-forward слияние
+        pullsAllowRebaseMerge:
+          type: boolean
+          description: Выполнить rebase, а затем создать коммит слияния
+        pullsAllowSquash:
+          type: boolean
+          description: Создать объединенный (squash) коммит
+        pullsAllowManualMerge:
+          type: boolean
+          description: Слито вручную
+        enableAutodetectManualMerge:
+          type: boolean
+          description: Включить автоопределение ручного слияния (Примечание, в некоторых особых случаях могут возникнуть ошибки)
+        pullsAllowRebaseUpdate:
+          type: boolean
+          description: Включить обновление ветки из запроса на слияние путём rebase
+        defaultDeleteBranchAfterMerge:
+          type: boolean
+          description: Удалить ветку запроса после его слияния по умолчанию
+        pullsDefaultMergeStyle:
+          description: Стиль слияния по умолчанию
+          type: string
+          enum:
+            - merge
+            - rebase
+            - rebase-merge
+            - squash
+        defaultAllowMaintainerEdit:
+          type: boolean
+          description: По умолчанию разрешать редактирование сопровождающими
+    CreateRepoRequest:
+      type: object
+      required:
+        - name
+      properties:
+        org_id:
+          description: Идентификатор организации (если репозиторий создается в организации)
+          type: integer
+        name:
+          $ref: "#/components/schemas/RepoName"
+        description:
+          type: string
+          maxLength: 2048
+          description: Описание
+        private:
+          type: boolean
+          description: Приватный ли репо
+        issue_labels:
+          type: string
+          description: Метки
+        auto_init:
+          type: boolean
+          description: Инициализировать ли при создании
+        template:
+          type: boolean
+          description: Является ли шаблоном
+        gitignores:
+          type: string
+        license:
+          type: string
+          description: Лицензия
+        readme:
+          type: string
+          description: Readme создаваемый в репе
+        default_branch:
+          type: string
+          maxLength: 100
+          description: Имя ветки по умолчанию
+        trust_model:
+          type: string
+          enum:
+            - default
+            - collaborator
+            - committer
+            - collaboratorcommitter
+
+    CreateMergePullRequest:
+      type: object
+      required:
+        - do
+      properties:
+        do:
+          type: string
+          enum:
+            - merge
+            - rebase
+            - rebase-merge
+            - squash
+          description: Вид мерджа
+        merge_title_field:
+          type: string
+          description: Заголовок сообщения о слиянии
+        merge_message_field:
+          type: string
+          description: Сообщение слияния
+        head_commit_id:
+          type: string
+          description: Идентификатор коммита
+        force_merge:
+          type: boolean
+          description: Принудительный мердж
+        merge_when_checks_succeed:
+          type: boolean
+          description: Смерджть автоматически через 2 минуты после всех аппрувов
+        delete_branch_after_merge:
+          type: boolean
+          description: Удалять ли ветку после мерджа
+
+    ForkRepoRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Имя дочернего репозитория
+        organization:
+          type: string
+          description: Название организации, если форкаем в организацию
+        description:
+          type: string
+          description: Описание репозитория
+
+    MigrateRepoRequest:
+      type: object
+      required:
+        - clone_addr
+        - repo_name
+      properties:
+        auth_password:
+          type: string
+          description: Пароль для авторизации на удаленном репозитории
+        auth_token:
+          type: string
+          description: Токен авторизации на удаленном репозитории
+        auth_username:
+          type: string
+          description: Имя пользователя для авторизации на удаленном репозитории
+        clone_addr:
+          type: string
+          description: Адрес удаленного репозитория
+        description:
+          type: string
+          description: Описание клонируемого репозитория
+        issues:
+          type: boolean
+          description: Переносить задачи?
+        labels:
+          type: boolean
+          description: Переносить метки?
+        lfs:
+          type: boolean
+        lfs_endpoint:
+          type: string
+        milestones:
+          type: boolean
+        mirror:
+          type: boolean
+          description: Зеркало?
+        mirror_interval:
+          type: string
+        private:
+          type: boolean
+          description: Приватный?
+        pull_requests:
+          type: boolean
+          description: Переносить запросы на слияние?
+        releases:
+          type: boolean
+        repo_name:
+          $ref: "#/components/schemas/RepoName"
+        repo_owner:
+          type: string
+          description: Владелец репозитория, по умолчанию пользователь инициировавший миграцию
+        service:
+          type: string
+          enum:
+            - git
+            - github
+            - gitea
+            - gitlab
+        wiki:
+          type: boolean
+          description: Переносить вики?
+      description: |-
+        Параметры для миграции из удаленного репозитория
+
+    Repo:
+      type: object
+      properties:
+        id:
+          type: integer
+
+    CreateRepoBranchRequest:
+      type: object
+      description: >
+        old_ref_name - Имя ветки/коммита/тега от которого будет ответвление
+        Если не указать old_ref_name новая ветка появится от дефолтовой ветки репозитория
+      required:
+        - new_branch_name
+      properties:
+        new_branch_name:
+          $ref: '#/components/schemas/BranchName'
+        old_ref_name:
+          $ref: '#/components/schemas/BranchName'
+    UpdateBranchNameRequest:
+      type: object
+      required:
+        - newBranchName
+        - oldBranchName
+      properties:
+        newBranchName:
+          $ref: '#/components/schemas/BranchName'
+        oldBranchName:
+          $ref: '#/components/schemas/BranchName'
+    User:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Активаен?
+        avatar_url:
+          type: string
+          description: URL аватара
+        created:
+          type: string
+          format: date-time
+          description: Дата создания
+        description:
+          type: string
+          description: Описание
+        email:
+          type: string
+          format: email
+        followers_count:
+          type: integer
+          format: int64
+        following_count:
+          type: integer
+          format: int64
+        full_name:
+          type: string
+          description: Полное имя
+        id:
+          type: integer
+          format: int64
+          description: ИД
+        is_admin:
+          type: boolean
+          description: Администратор?
+        language:
+          type: string
+          description: Локаль
+          example: ru-RU
+        last_login:
+          type: string
+          format: date-time
+          description: Дата последнего входа
+        location:
+          type: string
+          description: Месторасположение
+        login:
+          type: string
+          description: Логин
+        login_name:
+          type: string
+          description: Имя логина
+        prohibit_login:
+          type: boolean
+          description: Запрещен вход?
+        restricted:
+          type: boolean
+          description: Ограничен доступ?
+        starred_repos_count:
+          type: integer
+          format: int64
+        username:
+          type: string
+          description: Полное имя пользователя
+        visibility:
+          type: string
+          description: Видимость пользователя
+          enum:
+            - public
+            - limited
+            - private
+        website:
+          type: string
+          description: Вебсайт
+
+    UserWithTotalCountInfo:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество пользователей
+        data:
+          description: Список пользователей
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+
+    Collaboration:
+      type: object
+      description: Соавтор с уровнем доступа
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        accessMode:
+          $ref: '#/components/schemas/AccessMode'
+
+    CollaborationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Collaboration'
+
+    AccessMode:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: Уровень доступа
+          enum:
+            - read
+            - write
+            - admin
+        created:
+          type: string
+          description: Дата и время создания доступа
+          format: date-time
+        updated:
+          type: string
+          description: Дата и время последнего обновления доступа
+          format: date-time
+
+    CreatePrRequest:
+      type: object
+      description: Параметры создания запроса на слияние
+      required:
+        - head
+        - base
+        - title
+      properties:
+        head:
+          type: string
+          description: ветка из которой происходит слияние
+        base:
+          type: string
+          description: ветка в которую происходит слияние
+        title:
+          type: string
+          description: Заголовок запроса
+        body:
+          type: string
+          description: Описание запроса
+        assignees:
+          type: array
+          items:
+            type: string
+          description: Список имен ревьюеров
+        due_date:
+          type: string
+          format: date-time
+          description: deadline
+        labels:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Метки
+        milestone:
+          type: integer
+          format: int64
+          description: Идентификатор этапа
+    ReactionRequest:
+      type: object
+      description: Текстовый код реакции (смайла)
+      required:
+        - content
+      properties:
+        content:
+          type: string
+    LockRequest:
+      type: object
+      description: Причина блокировки возможности комментирования
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          example: Spam
+    ChangePrStatusRequest:
+      type: object
+      description: Параметры изменения статуса пулл реквеста
+      required:
+        - status
+      properties:
+        comment:
+          type: string
+          description: Комментарий к операции
+        status:
+          type: string
+          enum:
+            - close
+            - reopen
+          description: Статус (закрыть или переоткрыть)
+    CreateCommentRequest:
+      type: object
+      description: Параметры изменения статуса пулл реквеста
+      properties:
+        content:
+          type: string
+          description: Комментарий к операции
+        status:
+          type: string
+          enum:
+            - close
+            - reopen
+          description: Статус (закрыть или переоткрыть)
+        files:
+          type: array
+          description: Список UUID файлов прикрепленных к комментарию
+          items:
+            type: string
+            format: uuid
+    UpdateCommentRequest:
+      type: object
+      description: Параметры изменения статуса пулл реквеста
+      properties:
+        content:
+          type: string
+          description: Комментарий к операции
+        files:
+          type: array
+          description: Список UUID файлов прикрепленных к комментарию
+          items:
+            type: string
+            format: uuid
+    ChangePullReviewerRequest:
+      type: object
+      description: Запрос на добавление/удаление из списка ревьюеров запроса на слияние
+      required:
+        - reviewerId
+        - action
+      properties:
+        reviewerId:
+          type: integer
+          description: Идентификатор пользователя, которого добавляем в ревьюеров или удаляем из ревьюеров
+        isTeam:
+          type: boolean
+          description: Если идентификатор ревьюера принадлежит команде, которую мы хотим добавить или удалить из ревьюеров. По умолчанию значение равно false
+        action:
+          type: string
+          enum:
+            - attach
+            - detach
+    Reviewer:
+      type: object
+      required:
+        - reviewState
+      properties:
+        reviewState:
+          type: string
+          description: >
+            Типы состояния ревью
+            Approved одобрение пулл реквеста
+            Request_changes запрос на изменения пулл реквеста
+            Request_review запрос на ревью от пользователя
+          enum:
+            - APPROVED
+            - REQUEST_CHANGES
+            - REQUEST_REVIEW
+        reviewer:
+          $ref: "#/components/schemas/User"
+        reviewerTeam:
+          $ref: '#/components/schemas/Team'
+    Avatar:
+      type: object
+      required:
+        - image
+      properties:
+        image:
+          type: string
+          description: Строка в формате Base64
+    UserSettings:
+      type: object
+      properties:
+        username:
+          $ref: "#/components/schemas/UserName"
+        full_name:
+          type: string
+          maxLength: 100
+          description: Полное имя
+        location:
+          type: string
+          maxLength: 50
+          description: Месторасположение
+        website:
+          type: string
+          maxLength: 255
+          description: Вебсайт
+        description:
+          type: string
+          maxLength: 255
+          description: Описание
+        visibility:
+          type: string
+          description: Видимость пользователя
+          enum:
+            - public
+            - limited
+            - private
+        hide_email:
+          type: boolean
+          description: Скрывать ли адрес электронной почты от других пользователей
+        hide_activity:
+          type: boolean
+          description: Скрывать ли активность от других пользователей
+    UserListSshKeyInfo:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserSshKeyInfo'
+    UserSshKeyInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Идентификационный номер публичного ssh ключа
+        key:
+          type: string
+          description: Публичный ключ
+        title:
+          type: string
+          description: Название публичного ssh ключа
+        fingerprint:
+          type: string
+          description: Подпись публичного ssh ключа
+        created_at:
+          type: string
+          format: date-time
+          description: Время создания публичного ssh ключа
+        last_usage_at:
+          type: string
+          format: date-time
+          description: Время последнего использования публичного ssh ключа
+    UserName:
+      type: string
+      minLength: 2
+      maxLength: 50
+      example: 'Ivan'
+      description: >
+        Имя пользователя
+
+    Email:
+      type: string
+      format: email
+      minLength: 5
+      maxLength: 255
+      description: >
+        Электронная почта - логин пользователя зарегистрированного в системе
+
+    Password:
+      type: string
+      writeOnly: true
+      minLength: 8
+      maxLength: 254
+      pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d%*()?@#_№!$^&]{8,254}$'
+      description: >
+        - Минимальные требования к паролю: буквы английского алфавита, обязательно наличие
+        одной заглавной, одной строчной буквы, одной цифры, минимум 8 символов.
+        - Регулярное выражение для средней сложности пароля:
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[%*()?@#_№!$^&])[A-Za-z\d%*()?@#_№!$^&]{8,}$'
+        Требования для средней сложности пароля: буквы английского алфавита, обязательно наличие одной заглавной,
+        одной строчной буквы, одной цифры, один специальный символ, минимум 8 символов
+        - Регулярное выражение для максимальной сложности пароля:
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[%*()?@#_№!$^&])[A-Za-z\d%*()?@#_№!$^&]{12,}$'
+        Требования для максимальной сложности пароля: буквы английского алфавита, обязательно наличие одной заглавной,
+        одной строчной буквы, одной цифры, специальный символ, минимум 12 символов
+
+    OrganizationListWithTotalCount:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество организаций
+        data:
+          description: Список организаций
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+
+    RepoName:
+      type: string
+      maxLength: 100
+      pattern: '^[a-zA-Z0-9_-.]*$'
+      description: >
+        Имя репозитория. Допустимые символы латинская буквы, цифры, -, _ или .
+
+    BranchName:
+      type: string
+      maxLength: 100
+      pattern: '[\000-\037\177 \\~^:?*[]|(?:^[/.])|(?:/\.)|(?:\.lock$)|(?:\.lock/)|(?:\.\.)|(?://)|(?:@{)|(?:[/.]$)|(?:^@$)`)'
+      description: >
+        Имя ветки не должно содержать управляющие символы ASCII (до \040, или \177 DEL),
+        пробел, тильду ~ , каретку ^ , двоеточие : , знак вопроса ? , звездочку * ,
+        открывающую квадратную скобочку [ , две точки подряд .. , два слеша // , собаку и фигурную скобку вместе @{
+        Имя ветки не должно начинаться на слеш / или точку .
+        Имя ветки не должно заканчиваться на .lock/ , .lock , слеш / , точку .
+        Имя не может содержать только символ собаки @
+
+    FilePath:
+      type: string
+      description: >
+        Путь и имя файла для создания или редактирования
+
+    RepoWithTotalCountInfo:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество репозиториев пользователя
+        data:
+          description: Список репозиториев
+          type: array
+          items:
+            $ref: '#/components/schemas/RepoInfo'
+
+    RepoInfo:
+      type: object
+      description: Информация о репозитории
+      properties:
+        allow_merge_commits:
+          description: Разрешен ли мердж-коммит
+          type: boolean
+        allow_rebase:
+          description: Разрешен ли ребейз
+          type: boolean
+        allow_rebase_explicit:
+          description: Разрешен ли явный ребейз
+          type: boolean
+        allow_rebase_update:
+          description: Разрешено ли обновлять пулл-реквест с помощью ребейза
+          type: boolean
+        allow_squash_merge:
+          description: Разрешен ли сквош при мердже
+          type: boolean
+        archived:
+          description: Признак что репозиторий архивный
+          type: boolean
+        archived_at:
+          description: Дата перевода репозитория в архив
+          type: string
+          format: date-time
+        avatar_url:
+          description: Ссылка на авватар репозитория
+          type: string
+        clone_url:
+          description: Ссылка для клонирования репозитория
+          type: string
+        created_at:
+          description: Дата создания репозитория
+          type: string
+          format: date-time
+        default_allow_maintainer_edit:
+          description: Разрешено ли разработчику целевого репозитория менять ветку репозитории на котором основан ПР
+          type: boolean
+        default_branch:
+          description: Ветка по умолчанию
+          type: string
+        default_delete_branch_after_merge:
+          description: Признак автоматического удаления ветки источника при мердже ПРа
+          type: boolean
+        default_merge_style:
+          description: Тип мерджа по умолчанию
+          type: string
+          example: "merge, rebase, rebase-merge, or squash"
+        description:
+          description: Описание
+          type: string
+        empty:
+          type: boolean
+        external_tracker:
+          $ref: '#/components/schemas/ExternalTracker'
+        external_wiki:
+          $ref: '#/components/schemas/ExternalWiki'
+        fork:
+          description: Признак что репозиторий является форком
+          type: boolean
+        forks_count:
+          description: Сколько раз форкнут
+          type: integer
+          format: int64
+        full_name:
+          description: Полное название репозитория
+          type: string
+        has_actions:
+          description: Признак есть ли действия
+          type: boolean
+        has_issues:
+          description: Признак есть ли тикеты
+          type: boolean
+        has_packages:
+          description: Признак есть ли пакеты
+          type: boolean
+        has_projects:
+          description: Признак есть ли проекты
+          type: boolean
+        has_pull_requests:
+          description: Признак есть ли ПРы
+          type: boolean
+        has_releases:
+          description: Признак есть ли релизы
+          type: boolean
+        has_wiki:
+          description: Признак есть ли wiki
+          type: boolean
+        id:
+          description: Уникальный идентификатор репозитория
+          type: integer
+          format: int64
+        ignore_whitespace_conflicts:
+          description: Признак игнорирование конфликтов пробелов
+          type: boolean
+        internal:
+          type: boolean
+        internal_tracker:
+          $ref: '#/components/schemas/InternalTracker'
+        language:
+          description: Язык репозитория
+          type: string
+        link:
+          description: Ссылка
+          type: string
+        mirror:
+          description: Признак что репозиторий является зеркалом другого
+          type: boolean
+        mirror_interval:
+          description: Интервал зеркалирования в виде строки "8h30m0s"
+          type: string
+        mirror_updated:
+          description: Дата последнего обновления зеркала
+          type: string
+          format: date-time
+        name:
+          description: Имя репозитория
+          type: string
+        open_issues_count:
+          description: Количество открытых тикетов
+          type: integer
+          format: int64
+        open_pr_counter:
+          description: Количество открытых ПРов
+          type: integer
+          format: int64
+        owner:
+          $ref: '#/components/schemas/User'
+        parent:
+          $ref: '#/components/schemas/RepoInfo'
+        permissions:
+          $ref: '#/components/schemas/Permission'
+        private:
+          description: Признак приватности репозитория
+          type: boolean
+        release_counter:
+          description: Количество релизов
+          type: integer
+          format: int64
+        repo_transfer:
+          $ref: '#/components/schemas/RepoTransfer'
+        size:
+          description: Размер репозитория в килобайтах
+          type: integer
+          format: int64
+        ssh_url:
+          description: SSH ссылка на репозиторий
+          type: string
+        stars_count:
+          description: Количество звезд
+          type: integer
+          format: int64
+        template:
+          description: Признак что репозиторий является шаблоном
+          type: boolean
+        updated_at:
+          description: Дата последнего обновления
+          type: string
+          format: date-time
+        watchers_count:
+          description: Количество наблюдателей
+          type: integer
+          format: int64
+        website:
+          description: Ссылка на веб-сайт проекта
+          type: string
+        is_starring:
+          description: Репозиторий добавлен в избранное
+          type: boolean
+        is_watching:
+          description: Репозиторий добавлен в отслеживаемое
+          type: boolean
+
+    ExternalTracker:
+      description: ExternalTracker represents settings for external tracker
+      type: object
+      properties:
+        external_tracker_format:
+          description: External Issue Tracker URL Format. Use the placeholders {user}, {repo} and {index} for the username, repository name and issue index.
+          type: string
+        external_tracker_regexp_pattern:
+          description: External Issue Tracker issue regular expression
+          type: string
+        external_tracker_style:
+          description: External Issue Tracker Number Format, either `numeric`, `alphanumeric`, or `regexp`
+          type: string
+        external_tracker_url:
+          description: URL of external issue tracker.
+          type: string
+
+    ExternalWiki:
+      description: ExternalWiki represents setting for external wiki
+      type: object
+      properties:
+        external_wiki_url:
+          description: URL of external wiki.
+          type: string
+
+    InternalTracker:
+      description: InternalTracker represents settings for internal tracker
+      type: object
+      properties:
+        allow_only_contributors_to_track_time:
+          description: Let only contributors track time (Built-in issue tracker)
+          type: boolean
+        enable_issue_dependencies:
+          description: Enable dependencies for issues and pull requests (Built-in issue tracker)
+          type: boolean
+        enable_time_tracker:
+          description: Enable time tracking (Built-in issue tracker)
+          type: boolean
+
+    Permission:
+      description: Permission represents a set of permissions
+      type: object
+      properties:
+        admin:
+          type: boolean
+        pull:
+          type: boolean
+        push:
+          type: boolean
+
+    RepoTransfer:
+      description: RepoTransfer represents a pending repo transfer
+      type: object
+      properties:
+        doer:
+          $ref: '#/components/schemas/User'
+        recipient:
+          $ref: '#/components/schemas/User'
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+    RepoTransferRequest:
+      description: Запрос на передачу прав на репозиторий другому пользователю
+      type: object
+      required:
+        - newOwnerName
+      properties:
+        newOwnerName:
+          $ref: '#/components/schemas/UserName'
+    PullRequestListInfo:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество пулл-реквестов репозитория
+        data:
+          description: Список пулл-реквестов репозитория
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequest'
+    PullRequest:
+      type: object
+      description: Запрос на слияние
+      properties:
+        allow_maintainer_edit:
+          type: boolean
+        reviewers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reviewer'
+        base:
+          $ref: '#/components/schemas/PRBranchInfo'
+        body:
+          type: string
+        closed_at:
+          type: string
+          format: date-time
+        comments:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date-time
+        head:
+          $ref: '#/components/schemas/PRBranchInfo'
+        id:
+          type: integer
+          format: int64
+        is_locked:
+          type: boolean
+        labels:
+          type: array
+          items:
+            type: string
+        merge_base:
+          type: string
+        merge_commit_sha:
+          type: string
+        mergeable:
+          type: boolean
+        merged:
+          type: boolean
+        merged_at:
+          type: string
+          format: date-time
+        merged_by:
+          $ref: '#/components/schemas/User'
+        milestone:
+          type: string
+        number:
+          type: integer
+          format: int64
+        state:
+          type: string
+        title:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/User'
+
+    PRBranchInfo:
+      type: object
+      description: Информация о ветке в запросе на слияние
+      properties:
+        label:
+          type: string
+        ref:
+          type: string
+        repo:
+          $ref: '#/components/schemas/Repo'
+        repo_id:
+          type: integer
+          format: int64
+        sha:
+          type: string
+
+    Team:
+      description: Team represents a team in an organization
+      type: object
+      properties:
+        can_create_org_repo:
+          description: Признак возможности создания репозитория в организации
+          type: boolean
+        description:
+          description: Описание
+          type: string
+        id:
+          description: Уникальный идентификатор
+          type: integer
+          format: int64
+        includes_all_repositories:
+          description: Признак включения всех репозиториев
+          type: boolean
+        name:
+          description: Имя
+          type: string
+        organization:
+          $ref: '#/components/schemas/Organization'
+        permission:
+          description: Права
+          type: string
+          enum:
+            - none
+            - read
+            - write
+            - admin
+            - owner
+        units:
+          description: Элементы репозитория на которые могут быть выданы права
+          type: array
+          items:
+            type: string
+          example:
+            - repo.code
+            - repo.issues
+            - repo.ext_issues
+            - repo.wiki
+            - repo.pulls
+            - repo.releases
+            - repo.projects
+            - repo.ext_wiki
+        units_map:
+          description: Маппинг прав на элементы
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            repo.code: read
+            repo.ext_issues: none
+            repo.ext_wiki: none
+            repo.issues: write
+            repo.projects: none
+            repo.pulls: owner
+            repo.releases: none
+            repo.wiki: admin
+
+    Organization:
+      description: Organization represents an organization
+      type: object
+      properties:
+        avatar_url:
+          description: Ссылка на аватар
+          type: string
+        description:
+          description: Описание
+          type: string
+        full_name:
+          description: Полное имя организации
+          type: string
+        id:
+          description: Уникальный идентификатор организации
+          type: integer
+          format: int64
+        location:
+          description: Месторасположение
+          type: string
+        name:
+          description: Имя
+          type: string
+        repo_admin_change_team_access:
+          description: Признак может ли админ репозитория менять права доступа команде
+          type: boolean
+        visibility:
+          description: Видимость организации
+          type: string
+          enum:
+            - public
+            - limited
+            - private
+        website:
+          description: Веб сайт организации
+          type: string
+
+    DeleteFileOptions:
+      description: |-
+        Данные для создания файла
+        `author` и `committer` опциональны (если указан только один, то эти же данные будут использованы и для второго,
+         а если не указаны оба то будут использованы данные авторизованного пользователя)
+      type: object
+      required:
+        - sha
+      properties:
+        author:
+          $ref: '#/components/schemas/Identity'
+        branch:
+          description: >
+            Ветка репозитория в которой будет удален файл (опциональное поле),
+            если не указано то будет использована ветка по умолчанию
+          type: string
+        committer:
+          $ref: '#/components/schemas/Identity'
+        dates:
+          $ref: '#/components/schemas/CommitDateOptions'
+        message:
+          description: >
+            Сообщение коммита, если не указано будет использовано значение по умолчанию (пример - Delete src/doc/file3.txt)
+          type: string
+        new_branch:
+          description: название новой ветки которая будет создана перед удалением файла от branch
+          type: string
+        sha:
+          description: SHA хеш файл в репозитории
+          type: string
+        signoff:
+          description: Признак нужно ли добавлять подпись к сообщению коммита (пример подписи - Signed-off-by user <user@example.com>)
+          type: boolean
+
+    CreateFileOptions:
+      description: |-
+        Данные для создания файла
+        `author` и `committer` опциональны (если указан только один, то эти же данные будут использованы и для второго,
+         а если не указаны оба то будут использованы данные авторизованного пользователя)
+      type: object
+      required:
+        - content
+      properties:
+        author:
+          $ref: '#/components/schemas/Identity'
+        branch:
+          description: >
+            Ветка репозитория в которой будет создан файл (опциональное поле),
+            если не указано то будет использована ветка по умолчанию
+            если в репозитории еще нет веток то указанная ветка будет автоматически создана
+          type: string
+          maxLength: 100
+        committer:
+          $ref: '#/components/schemas/Identity'
+        content:
+          description: Содержимое файла в кодировке base64
+          type: string
+        dates:
+          $ref: '#/components/schemas/CommitDateOptions'
+        message:
+          description: >
+            Сообщение коммита, если не указано будет использовано значение по умолчанию (пример - Add src/doc/file3.txt)
+          type: string
+        new_branch:
+          description: название новой ветки которая будет создана перед созданием файла от branch
+          type: string
+          maxLength: 100
+        signoff:
+          description: Признак нужно ли добавлять подпись к сообщению коммита (пример подписи - Signed-off-by user <user@example.com>)
+          type: boolean
+
+    UpdateFileOptions:
+      description: |-
+        Данные для изменения файла
+        `author` и `committer` опциональны (если указан только один, то эти же данные будут использованы и для второго,
+         а если не указаны оба то будут использованы данные авторизованного пользователя)
+      type: object
+      required:
+        - sha
+        - content
+      properties:
+        author:
+          $ref: '#/components/schemas/Identity'
+        branch:
+          $ref: '#/components/schemas/BranchName'
+        committer:
+          $ref: '#/components/schemas/Identity'
+        content:
+          description: Содержимое файла в кодировке base64
+          type: string
+        dates:
+          $ref: '#/components/schemas/CommitDateOptions'
+        from_path:
+          description: Прежний путь до файла в случае если он был переменщен или переименован (опционально)
+          type: string
+        message:
+          description: >
+            Сообщение коммита, если не указано будет использовано значение по умолчанию (пример - Update src/doc/file3.txt)
+          type: string
+        new_branch:
+          $ref: '#/components/schemas/BranchName'
+        sha:
+          description: sha хеш файла
+          type: string
+        signoff:
+          description: Признак нужно ли добавлять подпись к сообщению коммита (пример подписи - Signed-off-by user <user@example.com>)
+          type: boolean
+
+    Identity:
+      description: Инфомация об авторе или коммитере
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        name:
+          type: string
+          maxLength: 100
+
+    CommitDateOptions:
+      description: Информация о дате создания автором и/или дате коммита
+      type: object
+      properties:
+        author:
+          type: string
+          format: date-time
+        committer:
+          type: string
+          format: date-time
+
+    FileResponseInfo:
+      description: FileResponse contains information about a repo's file
+      type: object
+      properties:
+        commit:
+          $ref: '#/components/schemas/FileCommitResponse'
+        content:
+          $ref: '#/components/schemas/ContentsResponseInfo'
+
+    FileCommitResponse:
+      type: object
+      description: Информация генерируемая git о файле репозитория
+      properties:
+        author:
+          $ref: '#/components/schemas/CommitUser'
+        committer:
+          $ref: '#/components/schemas/CommitUser'
+        created:
+          type: string
+          format: date-time
+        message:
+          type: string
+        parents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitMeta'
+        sha:
+          type: string
+        tree:
+          $ref: '#/components/schemas/CommitMeta'
+
+    CommitUser:
+      type: object
+      description: Информация о пользователе в контексте коммита
+      properties:
+        date:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+
+    CommitMeta:
+      type: object
+      description: Мета информация о коммите
+      properties:
+        created:
+          type: string
+          format: date-time
+        sha:
+          type: string
+
+    ContentsResponseInfo:
+      description: ContentsResponse contains information about a repo's entry's (dir, file, symlink, submodule) metadata and content
+      type: object
+      properties:
+        content:
+          description: '`content` is populated when `type` is `file`, otherwise null'
+          type: string
+        encoding:
+          description: '`encoding` is populated when `type` is `file`, otherwise null'
+          type: string
+        last_commit_sha:
+          type: string
+          description: SHA хеш последнего коммита
+        last_commit_date:
+          type: string
+          format: date-time
+          description: Даты последнего коммита
+        last_commit_message:
+          type: string
+          description: Текст сообщения последнего коммита
+        name:
+          type: string
+        path:
+          type: string
+        sha:
+          type: string
+        size:
+          type: integer
+          format: int64
+        submodule_git_url:
+          description: '`submodule_git_url` is populated when `type` is `submodule`, otherwise null'
+          type: string
+        target:
+          description: '`target` is populated when `type` is `symlink`, otherwise null'
+          type: string
+        type:
+          description: '`type` will be `file`, `dir`, `symlink`, or `submodule`'
+          type: string
+        language:
+          description: язык программирования использованный в файле (только если тип 'file')
+          type: string
+
+    ContentsListResponseInfo:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContentsResponseInfo'
+
+    RepositoryBranchResponseInfo:
+      type: object
+      description: Информация о ветке репозитория
+      properties:
+        name:
+          $ref: '#/components/schemas/BranchName'
+        commit:
+          $ref: '#/components/schemas/CommitInfo'
+        effective_branch_protection_name:
+          type: string
+        enable_status_check:
+          type: boolean
+        protected:
+          type: boolean
+        required_approvals:
+          type: integer
+        status_check_contexts:
+          type: array
+          items:
+            type: string
+        user_can_merge:
+          type: boolean
+        user_can_push:
+          type: boolean
+
+    PayloadUser:
+      type: object
+      description: Информация о пользователе в контексте коммита
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+    PayloadCommitVerification:
+      type: object
+      description: GPG верификация коммита
+      properties:
+        payload:
+          type: string
+        reason:
+          type: string
+        signature:
+          type: string
+        signer:
+          $ref: '#/components/schemas/PayloadUser'
+        verified:
+          type: boolean
+
+    CommitInfo:
+      type: object
+      description: Информация о коммите
+      properties:
+        id:
+          type: string
+        author:
+          $ref: '#/components/schemas/PayloadUser'
+        committer:
+          $ref: '#/components/schemas/PayloadUser'
+        added:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+        modified:
+          type: array
+          items:
+            type: string
+        removed:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+        verification:
+          $ref: '#/components/schemas/PayloadCommitVerification'
+
+    RepositoryBranchesWithTotalCount:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество веток репозитория
+        data:
+          description: Список веток репозитория
+          type: array
+          items:
+            $ref: '#/components/schemas/RepositoryBranchResponseInfo'
+
+    ActionsWithTotalCount:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество активностей
+        data:
+          description: Список активностей
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+    ActionsHeatmap:
+      type: object
+      additionalProperties:
+        type: string
+
+    RepositoryBranchNameList:
+      type: array
+      items:
+        type: string
+    CommitStats:
+      type: object
+      description: Статистика коммита (сколько строк было добавлено/удалено/общее число измененных строк)
+      properties:
+        additions:
+          type: integer
+        deletions:
+          type: integer
+        total:
+          type: integer
+        numFiles:
+          type: integer
+
+    RepoCommit:
+      type: object
+      description: Информация о самом коммите
+      properties:
+        author:
+          $ref: '#/components/schemas/CommitUser'
+        committer:
+          $ref: '#/components/schemas/CommitUser'
+        message:
+          type: string
+        tree:
+          $ref: '#/components/schemas/CommitMeta'
+
+    RepositoryCommitInfo:
+      type: object
+      description: Общая информация о коммите репозитория
+      required:
+        - commit
+        - created
+        - parents
+        - sha
+        - stats
+      properties:
+        commit:
+          $ref: '#/components/schemas/RepoCommit'
+        branch:
+          $ref: '#/components/schemas/BranchName'
+        created:
+          type: string
+          format: 'date-time'
+        parents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommitMeta'
+        sha:
+          type: string
+        stats:
+          $ref: '#/components/schemas/CommitStats'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileWithStat'
+          description: Список файлов затронутых коммитом
+    FileWithStat:
+      type: object
+      properties:
+        file:
+          type: string
+        status:
+          type: integer
+          enum: [ 1,2,3,4,5,6 ]
+          description: >
+            dictionary:
+            * 1 Файл был добавлен
+            * 2 Файл был скопирован
+            * 3 Файл был удален
+            * 4 Файл был изменен
+            * 5 Файл был переименован
+            * 6 Неизвестно что произишло с файлом
+
+    RepositoryCommitsList:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество коммитов репозитория
+        data:
+          description: Список коммитов репозитория
+          type: array
+          items:
+            $ref: '#/components/schemas/RepositoryCommitInfo'
+
+    FileSectionDiffInfo:
+      type: object
+      description: Инфо о diff секции измененного файла
+      properties:
+        Path:
+          type: string
+          description: Путь до измененного файла чья секция тут представлена
+        LastLeftIdx:
+          type: integer
+          description: Номер левого крайнего индекса, от которого начинается скрытие части не измененного файла
+        LastRightIdx:
+          type: integer
+          description: Номер правого карайнего индекса, от которого начинается скрытие части не измененного файла
+        LeftIdx:
+          type: integer
+          description: Номер левого индекса, старый номер последней строки до изменения файла
+        RightIdx:
+          type: integer
+          description: Номер правого индекса, новый номер последней строки после изменения файла
+        LeftHunkSize:
+          type: integer
+          description: Разница между началом и концом секции по левому индексу
+        RightHunkSize:
+          type: integer
+          description: Разница между началом и концом секции по правому индексу
+
+    SectionLineDiff:
+      type: object
+      description: Строка diff изменений в файле
+      properties:
+        LeftIdx:
+          type: integer
+          description: Номер левого индекса, номер строки до изменения файла
+        RightIdx:
+          type: integer
+          description: Номер правого индекса, новый номер строки после изменения
+        Match:
+          type: integer
+          description: Представленная строка была добавлена или удалена (то есть есть ли в начале строки +/-)
+        Type:
+          type: integer
+          enum: [ 1, 2, 3, 4 ]
+          description: >
+            dictionary:
+              * 1 Строка не изменена
+              * 2 Строка была добавлена
+              * 3 Строка была удалена
+              * 4 Строка информации о секции. Там где есть эта строка есть FileSectionDiffInfo
+        Content:
+          type: string
+          description: Изменения файла
+        Comments:
+          type: string
+          description: Дописать при написании ручки на комменты к ПР! Это комментарии к изменениям
+        SectionInfo:
+          $ref: '#/components/schemas/FileSectionDiffInfo'
+
+    FileSectionDiff:
+      type: object
+      description: Diff измененной секции файла
+      properties:
+        FileName:
+          type: string
+          description: Имя файла, включающее путь до файла
+        Name:
+          type: string
+        Lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/SectionLineDiff'
+
+    FileDiffInfo:
+      type: object
+      description: Diff измененного файла
+      properties:
+        Name:
+          type: string
+          description: Имя файла
+        NameHash:
+          type: string
+          description: Hash имени файла
+        OldName:
+          type: string
+          description: Старое имя файла
+        Index:
+          type: integer
+          description: Порядковый номер измененного файла в списке измененных файлов
+        Addition:
+          type: integer
+          description: Количество добавленных строк в файле
+        Deletion:
+          type: integer
+          description: Количество удаленных строк в файле
+        Type:
+          type: integer
+          enum: [ 1,2,3,4,5 ]
+          description: >
+            dictionary:
+              * 1 В файле производится только добавление строк
+              * 2 В файле производятся изменения строк как удаление так и добавление
+              * 3 В файле только удаление строк
+              * 4 Переименование имени файла
+              * 5 Копирование файла
+        IsCreated:
+          type: boolean
+          description: Файл был создан
+        IsDeleted:
+          type: boolean
+          description: Файл был удален
+        IsBin:
+          type: boolean
+          description: Файл бинарный
+        IsLFSFile:
+          type: boolean
+          description: Файл LFS
+        IsRenamed:
+          type: boolean
+          description: Файл переименован
+        IsAmbiguous:
+          type: boolean
+        IsSubmodule:
+          type: boolean
+        Sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileSectionDiff'
+        IsIncomplete:
+          type: boolean
+          description: >
+            Прогруженность файла. Файлы в которых изменений больше чем лимит (по дефолту 1000 строк) не прогрузились.
+            Нуждается в отдельном запросе для загрузки
+        IsIncompleteLineTooLong:
+          type: boolean
+          description: >
+            Прогруженность строки файла. Строка в которой знаков больше чем лимит (по дефолту 5000 символов) не прогружается.
+            Нуждается в отдельном запросе для загрузки
+        IsProtected:
+          type: boolean
+          description: Файл был защищен
+        IsGenerated:
+          type: boolean
+        IsVendored:
+          type: boolean
+        IsViewed:
+          type: boolean
+          description: Файл был просмотрен
+        HasChangedSinceLastReview:
+          type: boolean
+          description: Файл содержит изменения после последнего ревью
+        Language:
+          type: string
+
+    CommitDiffInfo:
+      type: object
+      description: Diff коммита
+      properties:
+        Start:
+          type: string
+          description: Имя файла с которого начинается diff, в случае если это пустая строка значит diff с первого измененного файла
+        End:
+          type: string
+          description: Имя последнего файла в diff в случае если это пустая строка значит diff показан до конца файла
+        NumFiles:
+          type: string
+          description: Количество файлов затронутых коммитом
+        TotalAddition:
+          type: integer
+          description: Общее число добавленных строк
+        TotalDeletion:
+          type: integer
+          description: Общее число удаленных строк
+        Files:
+          $ref: '#/components/schemas/FileDiffInfo'
+        IsIncomplete:
+          type: boolean
+          description: Если последний измененный файл был возвращен, то значение будет равно false
+        NumViewedFiles:
+          type: integer
+          description: Число раз сколько файл был просмотрен
+
+    Action:
+      type: object
+      description: Активность (действие) пользователя
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum:
+            - create_repo
+            - rename_repo
+            - star_repo
+            - watch_repo
+            - commit_repo
+            - create_issue
+            - create_pull_request
+            - transfer_repo
+            - push_tag
+            - comment_issue
+            - merge_pull_request
+            - close_issue
+            - reopen_issue
+            - close_pull_request
+            - reopen_pull_request
+            - delete_tag
+            - delete_branch
+            - mirror_sync_push
+            - mirror_sync_create
+            - mirror_sync_delete
+            - approve_pull_request
+            - reject_pull_request
+            - comment_pull
+            - publish_release
+            - pull_review_dismissed
+            - pull_request_ready_for_review
+            - auto_merge_pull_request
+            - create_branch
+        userId:
+          type: integer
+        userName:
+          type: string
+        repoId:
+          type: integer
+        repoName:
+          type: string
+        repoOwnerName:
+          type: string
+        comment:
+          type: string
+        isDeleted:
+          type: boolean
+        refName:
+          type: string
+        isPrivate:
+          type: boolean
+        content:
+          type: string
+        created:
+          type: string
+          format: date-time
+        additionalInfo:
+          type: string
+    Attachment:
+      type: object
+      description: Описание вложенного файла
+      properties:
+        uuid:
+          type: integer
+          description: Идентификатор файла
+          format: uuid
+        name:
+          type: string
+          description: Имя файла
+        size:
+          type: integer
+          description: Размер файла в байтах
+        downloadCount:
+          type: integer
+          description: Количество скачиваний
+        createdAt:
+          type: string
+          format: datetime
+          description: Время загрузки файла
+        uploaderId:
+          type: integer
+          description: Идентификатор пользователя загрузившего файл
+    Reaction:
+      type: object
+      description: Реакция (смайлик) к комментарию. Реакции являлются заранее задаваемыми в конфиге значениями
+      properties:
+        content:
+          type: string
+          description: Текст реакции
+          example: +1
+        userId:
+          type: integer
+          description: Идентификатор пользователя
+        userName:
+          type: string
+          description: Имя пользователя
+        userFullName:
+          type: string
+          description: Полное имя пользователя
+    Comment:
+      type: object
+      description: Комментарий к пулл реквесту. Комментарий может быть и событием( Например закрытие пулл рекеста)
+      properties:
+        id:
+          type: integer
+          description: Идентификатор комментария
+        type:
+          type: string
+          description: Тип комментария
+          enum:
+            - comment
+            - reopen
+            - close
+            - issue_ref
+            - commit_ref
+            - comment_ref
+            - pull_ref
+            - label
+            - milestone
+            - assignees
+            - change_title
+            - delete_branch
+            - start_tracking
+            - stop_tracking
+            - add_time_manual
+            - cancel_tracking
+            - added_deadline
+            - modified_deadline
+            - removed_deadline
+            - add_dependency
+            - remove_dependency
+            - code
+            - review
+            - lock
+            - unlock
+            - change_target_branch
+            - delete_time_manual
+            - review_request
+            - merge_pull
+            - pull_push
+            - project
+            - project_board
+            - dismiss_review
+            - change_issue_ref
+            - pull_scheduled_merge
+            - pull_cancel_scheduled_merge
+        poster:
+          $ref: "#/components/schemas/User"
+        body:
+          type: string
+          description: Содержимое комментария, событие не имеет содержимого
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attachment"
+        patch:
+          type: string
+        reactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reaction"
+        treePath:
+          type: string
+          description: Путь в дереве
+        createdAt:
+          type: string
+          format: datetime
+          description: Время создания комментария
+        updatedAt:
+          type: string
+          format: datetime
+          description: Время последнего изменения комментария
+        editCounts:
+          type: integer
+          description: Количество изменений комментария
+        isOwner:
+          type: boolean
+          description: Признак - является ли автор комментария владельцем репозитория
+        isAuthor:
+          type: boolean
+          description: Признак - является ли автор комментария автором пулл реквеста
+        isCollaborator:
+          type: boolean
+          description: Признак - является ли автор комментария соавтором репозитория
+    CommentHistory:
+      type: object
+      description: История изменений комментария
+      properties:
+        historyId:
+          type: integer
+          description: Идентификатор изменения в истории редактирования
+        action:
+          type: string
+          description: Тип изменения
+          enum:
+            - deleted
+            - created
+            - edited
+        userId:
+          type: integer
+          description: Идентификатор пользователя
+        userName:
+          type: string
+          description: Имя пользователя
+        userFullName:
+          type: string
+          description: Полное имя пользователя
+        updatedAt:
+          type: string
+          format: datetime
+          description: Время изменения комментария
+    CommentDiff:
+      type: object
+      description: diff текущего и предыдущего комментария
+      properties:
+        type:
+          type: string
+          description: Тип изменения
+          enum:
+            - Insert
+            - Delete
+            - Equal
+        text:
+          type: string
+          description: Текст изменений
+    CommentHistoryDetail:
+      type: object
+      description: Детали изменения в истории редактирования комментария содержащие diff
+      properties:
+        current:
+          type: string
+          description: Текущий комментарий (относительно идентификатора истории)
+        previous:
+          type: string
+          description: Предущий комментарий (на шаг назад отсноительно идентификатора истории)
+        previousId:
+          type: integer
+          description: Идентификатор предыдущего изменения
+        diff:
+          type: array
+          description: Diff между текущим и предыдущим изменением комментария
+          items:
+            $ref: "#/components/schemas/CommentDiff"
+        canSoftDelete:
+          type: boolean
+          description: Может ли быть удален текущим пользователем (история изменения затрется, но событие удаления останется)
+
+
+

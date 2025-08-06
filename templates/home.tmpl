@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{AssetUrlPrefix}}/img/favicon.svg" type="image/svg+xml">
+	<link rel="alternate icon" href="{{AssetUrlPrefix}}/img/favicon.png" type="image/png">
+	<link rel="stylesheet" href="{{AssetUrlPrefix}}/css/home-page.css?v={{AssetVersion}}">
+    <title>SourceControl</title>
+</head>
+<body>
+   <main class="home-page {{if .OneWork.Enabled}}home-page-ow{{end}}">
+		{{if not .OneWork.Enabled}}
+			<nav class="home-page-navbar">
+				<ul class="home-page-navbar__list">
+					{{if .ShowRegistrationButton}}
+						<li>
+							<a class="home-page-navbar__item{{if .PageIsSignUp}} home-page-navbar__item_active{{end}}" href="{{AppSubUrl}}/user/sign_up">
+								{{.locale.Tr "register"}}
+							</a>
+						</li>
+					{{end}}
+					<li>
+						<a class="home-page-navbar__item{{if .PageIsSignIn}} home-page-navbar__item_active{{end}}" rel="nofollow" href="{{AppSubUrl}}/user/login{{if not .PageIsSignIn}}?redirect_to={{.CurrentURL}}{{end}}">
+							{{.locale.Tr "sign_in"}}
+						</a>
+					</li>
+				</ul>
+			</nav>
+		{{end}}
+		<div class="home-page__content">
+			<h1 class="home-page-title">SourceControl</h1>
+
+			<h2 class="home-page-subtitle">#комфортный хостинг репозиториев Git</h2>
+
+			<ul class="home-page-list">
+				<li class="home-page-list__item">Работает на любой платформе Windows, macOS, Linux, ARM</li>
+				<li class="home-page-list__item">Автоматизация процесса доставки программного обеспечения</li>
+				<li class="home-page-list__item">Единая платформа для совместной работы</li>
+			</ul>
+			{{if .OneWork.Enabled}}
+				<a class="home-page__link" href="{{.OneWork.LoginLink}}">
+					{{svg "sc-login"}}
+					Вход
+				</a>
+			{{end}}
+		</div>
+	</main>
+</body>
+</html>

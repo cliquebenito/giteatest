@@ -1,0 +1,23 @@
+{{template "base/head" .}}
+<div
+	role="main"
+	aria-label="{{.Title}}"
+	class="relative page-content organization privileges"
+>
+	<script>
+		window.config.pageData = {
+			baseLink: {{.Link}},
+			priv:{{.Privileges}},
+			roles:{{.Roles}},
+			tenantId:{{.TenantID}},
+			orgId:{{.Org.ID}},
+			currentUser:{{.SignedUser}},
+			enablePrivilegeManagement: {{EnablePrivilegeManagement}}
+		};
+	</script>
+	{{template "org/header" .}}
+	<div class="container ui">
+		<div id="privileges" class="list"></div>
+	</div>
+</div>
+{{template "base/footer" .}}

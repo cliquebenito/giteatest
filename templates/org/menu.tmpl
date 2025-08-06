@@ -1,0 +1,79 @@
+<div class="container ui tabs">
+	<div class="sc-tabs-nav">
+		<a
+			class="{{if .PageIsViewRepositories}}sc-tabs-nav__item_active {{ end }}sc-tabs-nav__item"
+			href="{{ $.Org.HomeLink }}"
+		>
+			{{svg "octicon-repo"}} {{.locale.Tr "user.repositories"}}
+			{{if .VisibleReposCount}}
+			<div class="sc-badge sc-badge_info">{{.VisibleReposCount}}</div>
+			{{ end }}
+		</a>
+		{{if and .IsRepoIndexerEnabled .CanReadCode}}
+		<a class="sc-tabs-nav__item" href="{{ $.Org.HomeLink }}/-/code">
+			{{svg "octicon-code"}}&nbsp;{{$.locale.Tr "org.code"}}
+		</a>
+		{{ end }}
+
+		{{if EnableRoleModel }}
+				{{if EnablePrivilegeManagement }}
+							{{if CheckPrivileges .TraceID .TraceEndpoint .SignedUser.ID .TenantID .Org.ID "own"}}
+								<a
+									class="{{if $.PageIsOrgPrivileges}}sc-tabs-nav__item_active {{ end }}sc-tabs-nav__item"
+									href="{{ $.OrgLink }}/privileges"
+								>
+									{{svg "octicon-people"}}&nbsp;{{$.locale.Tr "org.privileges"}}
+								</a>
+							{{end}}
+				{{end}}
+		{{else}}
+			<a
+				class="{{if $.PageIsOrgMembers}}sc-tabs-nav__item_active {{ end }}sc-tabs-nav__item"
+				href="{{ $.OrgLink }}/members"
+			>
+          {{svg "octicon-person"}}&nbsp;{{$.locale.Tr "org.members"}}
+          {{if .NumMembers}}
+						<div class="sc-badge sc-badge_info">{{.NumMembers}}</div>
+          {{ end }}
+			</a>
+		{{ end }}
+		{{if .IsOrganizationMember}}
+			{{if CheckPrivileges .TraceID .TraceEndpoint .SignedUser.ID .TenantID .Org.ID "own"}}
+				<script>
+					window.config.isProjectManager = {{CheckPrivileges .TraceID .TraceEndpoint .SignedUser.ID .TenantID .Org.ID "own"}} && {{.IsOrganizationMember}}
+				</script>
+				<a
+					class="{{if $.PageIsOrgTeams}}sc-tabs-nav__item_active {{ end }}sc-tabs-nav__item"
+					href="{{ $.OrgLink }}/teams"
+				>
+					{{svg "octicon-people"}}&nbsp;{{$.locale.Tr "org.teams"}}
+					{{if .NumTeams}}
+						<div class="sc-badge sc-badge_info">{{.NumTeams}}</div>
+					{{ end }}
+				</a>
+			{{ end }}
+		{{ end }}
+
+		{{if EnableRoleModel }}
+			{{if CheckPrivileges .TraceID .TraceEndpoint .SignedUser.ID .TenantID .Org.ID "edit_project"}}
+				<div class="sc-tabs-nav__right-menu">
+					<a
+						class="{{if .PageIsOrgSettings}}sc-tabs-nav__item_active {{ end }}sc-tabs-nav__item"
+						href="{{.OrgLink}}/settings"
+					>
+					{{svg "octicon-tools"}} {{.locale.Tr "repo.settings"}}
+					</a>
+				</div>
+			{{ end }}
+		{{else}}
+			<div class="sc-tabs-nav__right-menu">
+				<a
+					class="{{if .PageIsOrgSettings}}sc-tabs-nav__item_active {{ end }}sc-tabs-nav__item"
+					href="{{.OrgLink}}/settings"
+				>
+            {{svg "octicon-tools"}} {{.locale.Tr "repo.settings"}}
+				</a>
+			</div>
+    {{ end }}
+	</div>
+</div>

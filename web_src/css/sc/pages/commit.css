@@ -1,0 +1,75 @@
+.commit-header-row  {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 32px;
+    justify-content: space-between;
+}
+
+.commit-header__author{
+    display: flex;
+    align-items: center;
+    column-gap: 32px;
+}
+
+.commit-header__hash-list {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+}
+
+.commit-author {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    grid-template-rows: 18px auto;
+    column-gap: 16px;
+    align-items: start;
+}
+
+.commit-author__avatar {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    grid-column: 1;
+    grid-row: 1 / 3;
+    border-radius: 8px;
+}
+
+.commit-author__full-name {
+    color: var(--sc-color-text);
+    grid-column: 2;
+}
+
+.commit-author__time {
+    grid-column: 2;
+    color: var(--sc-color-text-secondary);
+}
+
+
+.file-code.code-diff table {
+    border: 1px solid var(--sc-color-stroke);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.file-code.code-diff table .del-code .lines-num {
+    background-color: var(--sc-color-red-30);
+}
+.file-code.code-diff table .del-code .lines-num:before {
+    color: var(--sc-color-red-100);
+}
+
+.file-code.code-diff table .add-code .lines-num {
+    background-color: var(--sc-color-green-20);
+}
+.file-code.code-diff table .add-code .lines-num:before {
+    color: var(--sc-color-green-100);
+}
+
+.file-code.code-diff table .tag-code > * {
+    background-color: var(--sc-color-blue-10);
+}
+
+.file-code.code-diff table .code-expander-button {
+    background-color: var(--sc-color-blue-30);
+}

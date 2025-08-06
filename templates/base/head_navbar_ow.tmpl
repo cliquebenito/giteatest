@@ -1,0 +1,68 @@
+<nav class="sc-ow-navbar" id="navbar" aria-label="{{.locale.Tr "aria.navbar"}}">
+	{{$notificationUnreadCount := 0}}
+	{{if .NotificationUnreadCount}}{{$notificationUnreadCount = call .NotificationUnreadCount}}{{end}}
+
+		<ul class="sc-ow-navbar__list">
+			<li>
+				<a href="{{AppSubUrl}}/notifications" class="sc-ow-navbar__item sc-button sc-button_icon item not-mobile gt-mx-0 sc-header-btn" data-tooltip-content="{{.locale.Tr "notifications"}}" aria-label="{{.locale.Tr "notifications"}}">
+					<span class="fitted item">
+						{{svg "octicon-bell"}}
+						<span class="notification_count{{if not $notificationUnreadCount}} gt-hidden{{end}}">
+							{{$notificationUnreadCount}}
+						</span>
+					</span>
+				</a>
+			</li>
+			<li>
+			<button class="sc-ow-navbar__item  sc-button sc-button_icon ui dropdown jump item gt-mx-0 sc-header-btn" data-tooltip-content="{{.locale.Tr "user_profile_and_more"}}">
+				<span class="text">
+					{{svg "octicon-gear"}}
+					<span class="sr-only">{{.locale.Tr "user_profile_and_more"}}</span>
+					<span class="mobile-only">{{.SignedUser.Name}}</span>
+				</span>
+				<div class="sc-dropdown-menu menu user-menu left" tabindex="-1">
+					<div class="ui header">
+						{{.locale.Tr "signed_in_as"}} <strong>{{.SignedUser.Name}}</strong>
+					</div>
+
+					<div class="divider"></div>
+					<a class="item" href="{{.SignedUser.HomeLink}}">
+						{{svg "octicon-person"}}
+						{{.locale.Tr "your_profile"}}<!-- Your profile -->
+					</a>
+					{{if not .DisableStars}}
+						<a class="item" href="{{.SignedUser.HomeLink}}?tab=stars">
+							{{svg "octicon-star"}}
+							{{.locale.Tr "your_starred"}}
+						</a>
+					{{end}}
+					<a class="item" href="{{AppSubUrl}}/notifications/subscriptions">
+						{{svg "octicon-bell"}}
+						{{.locale.Tr "notification.subscriptions"}}<!-- Subscriptions -->
+					</a>
+					<a class="{{if .PageIsUserSettings}}active {{end}}item" href="{{AppSubUrl}}/user/settings">
+						{{svg "octicon-tools"}}
+						{{.locale.Tr "your_settings"}}<!-- Your settings -->
+					</a>
+
+					{{if .IsAdmin}}
+						<div class="divider"></div>
+
+						<a class="{{if .PageIsAdmin}}active {{end}}item" href="{{AppSubUrl}}/admin">
+							{{svg "octicon-server"}}
+							{{.locale.Tr "admin_panel"}}
+						</a>
+					{{end}}
+
+					{{if not EnableOneWork }}
+						<div class="divider"></div>
+						<a class="item link-action" href data-url="{{AppSubUrl}}/user/logout" data-redirect="{{AppSubUrl}}/">
+							{{svg "octicon-sign-out"}}
+							{{.locale.Tr "sign_out"}}
+						</a>
+					{{end}}
+				</div><!-- end content avatar menu -->
+			</button>
+			</li>
+		</ul>
+</nav>

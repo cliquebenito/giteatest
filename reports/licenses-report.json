@@ -1,0 +1,1480 @@
+{
+  "libs": [
+    {
+      "name": "cloud.google.com/go/compute/metadata",
+      "version": "v0.2.3",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/googleapis/google-cloud-go/blob/compute/metadata/v0.2.3/compute/metadata/LICENSE"
+    },
+    {
+      "name": "code.gitea.io/actions-proto-go",
+      "version": "v0.2.1",
+      "type": "MIT",
+      "licenseUrl": "https://gitea.com/gitea/actions-proto-go/src/tag/v0.2.1/LICENSE"
+    },
+    {
+      "name": "code.gitea.io/gitea",
+      "version": "Unknown",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-gitea/gitea/blob/HEAD/LICENSE"
+    },
+    {
+      "name": "code.gitea.io/gitea/modules/lfs",
+      "version": "Unknown",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-gitea/gitea/blob/HEAD/modules/lfs/LICENSE"
+    },
+    {
+      "name": "code.gitea.io/gitea/modules/repository",
+      "version": "Unknown",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-gitea/gitea/blob/HEAD/modules/repository/license_test.go"
+    },
+    {
+      "name": "code.gitea.io/sdk/gitea",
+      "version": "v0.15.1",
+      "type": "MIT",
+      "licenseUrl": "https://gitea.com/gitea/go-sdk/src/tag/gitea/v0.15.1/gitea/LICENSE"
+    },
+    {
+      "name": "codeberg.org/gusted/mcaptcha",
+      "version": "v0.0.0-20220723083913-4f3072e1d570",
+      "type": "MIT",
+      "licenseUrl": "https://codeberg.org/gusted/mcaptcha/src/commit/4f3072e1d570/LICENSE"
+    },
+    {
+      "name": "git.sr.ht/~mariusor/go-xsd-duration",
+      "version": "v0.0.0-20220703122237-02e73435a078",
+      "type": "MIT",
+      "licenseUrl": "https://git.sr.ht/~mariusor/go-xsd-duration/tree/02e73435a078/LICENSE"
+    },
+    {
+      "name": "gitea.com/go-chi/binding",
+      "version": "v0.0.0-20230415142243-04b515c6d669",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://gitea.com/go-chi/binding/src/commit/04b515c6d669/LICENSE"
+    },
+    {
+      "name": "gitea.com/go-chi/cache",
+      "version": "v0.2.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://gitea.com/go-chi/cache/src/tag/v0.2.0/LICENSE"
+    },
+    {
+      "name": "gitea.com/go-chi/captcha",
+      "version": "v0.0.0-20230415143339-2c0754df4384",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://gitea.com/go-chi/captcha/src/commit/2c0754df4384/LICENSE"
+    },
+    {
+      "name": "gitea.com/go-chi/session",
+      "version": "v0.0.0-20230415140235-3182bcc14852",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://gitea.com/go-chi/session/src/commit/3182bcc14852/LICENSE"
+    },
+    {
+      "name": "gitea.com/lunny/dingtalk_webhook",
+      "version": "v0.0.0-20171025031554-e3534c89ef96",
+      "type": "MIT",
+      "licenseUrl": "https://gitea.com/lunny/dingtalk_webhook/src/commit/e3534c89ef96/LICENSE"
+    },
+    {
+      "name": "gitea.com/lunny/levelqueue",
+      "version": "v0.4.2-0.20220729054728-f020868cc2f7",
+      "type": "MIT",
+      "licenseUrl": "https://gitea.com/lunny/levelqueue/src/commit/f020868cc2f7/LICENSE"
+    },
+    {
+      "name": "github.com/42wim/sshsig",
+      "version": "v0.0.0-20211121163825-841cf5bbc121",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/42wim/sshsig/blob/841cf5bbc121/LICENSE"
+    },
+    {
+      "name": "github.com/Azure/go-ntlmssp",
+      "version": "v0.0.0-20221128193559-754e69321358",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/Azure/go-ntlmssp/blob/754e69321358/LICENSE"
+    },
+    {
+      "name": "github.com/ClickHouse/ch-go",
+      "version": "v0.55.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/ClickHouse/ch-go/blob/v0.55.0/LICENSE"
+    },
+    {
+      "name": "github.com/ClickHouse/clickhouse-go/v2",
+      "version": "v2.9.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/ClickHouse/clickhouse-go/blob/v2.9.1/LICENSE"
+    },
+    {
+      "name": "github.com/DataDog/zstd",
+      "version": "v1.4.5",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/DataDog/zstd/blob/v1.4.5/LICENSE"
+    },
+    {
+      "name": "github.com/KyleBanks/depth",
+      "version": "v1.2.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/KyleBanks/depth/blob/v1.2.1/LICENSE"
+    },
+    {
+      "name": "github.com/NYTimes/gziphandler",
+      "version": "v1.1.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/NYTimes/gziphandler/blob/v1.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/ProtonMail/go-crypto",
+      "version": "v0.0.0-20230426101702-58e86b294756",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/ProtonMail/go-crypto/blob/58e86b294756/LICENSE"
+    },
+    {
+      "name": "github.com/RoaringBitmap/roaring",
+      "version": "v1.2.3",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/RoaringBitmap/roaring/blob/v1.2.3/LICENSE"
+    },
+    {
+      "name": "github.com/alecthomas/chroma/v2",
+      "version": "v2.7.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/alecthomas/chroma/blob/v2.7.0/COPYING"
+    },
+    {
+      "name": "github.com/andybalholm/brotli",
+      "version": "v1.0.5",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/andybalholm/brotli/blob/v1.0.5/LICENSE"
+    },
+    {
+      "name": "github.com/anmitsu/go-shlex",
+      "version": "v0.0.0-20200514113438-38f4b401e2be",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/anmitsu/go-shlex/blob/38f4b401e2be/LICENSE"
+    },
+    {
+      "name": "github.com/aymerick/douceur",
+      "version": "v0.2.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/aymerick/douceur/blob/v0.2.0/LICENSE"
+    },
+    {
+      "name": "github.com/beorn7/perks/quantile",
+      "version": "v1.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/beorn7/perks/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/bits-and-blooms/bitset",
+      "version": "v1.7.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/bits-and-blooms/bitset/blob/v1.7.0/LICENSE"
+    },
+    {
+      "name": "github.com/blakesmith/ar",
+      "version": "v0.0.0-20190502131153-809d4375e1fb",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/blakesmith/ar/blob/809d4375e1fb/COPYING"
+    },
+    {
+      "name": "github.com/blevesearch/bleve/v2",
+      "version": "v2.3.7",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/bleve/blob/v2.3.7/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/bleve_index_api",
+      "version": "v1.0.5",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/bleve_index_api/blob/v1.0.5/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/geo",
+      "version": "v0.1.17",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/geo/blob/v0.1.17/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/go-porterstemmer",
+      "version": "v1.0.3",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/blevesearch/go-porterstemmer/blob/v1.0.3/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/gtreap",
+      "version": "v0.1.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/blevesearch/gtreap/blob/v0.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/mmap-go",
+      "version": "v1.0.4",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/blevesearch/mmap-go/blob/v1.0.4/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/scorch_segment_api/v2",
+      "version": "v2.1.4",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/scorch_segment_api/blob/v2.1.4/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/segment",
+      "version": "v0.9.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/segment/blob/v0.9.1/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/snowballstem",
+      "version": "v0.9.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/blevesearch/snowballstem/blob/v0.9.0/COPYING"
+    },
+    {
+      "name": "github.com/blevesearch/upsidedown_store_api",
+      "version": "v1.0.2",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/upsidedown_store_api/blob/v1.0.2/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/vellum",
+      "version": "v1.0.9",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/vellum/blob/v1.0.9/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/vellum/levenshtein",
+      "version": "v1.0.9",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/vellum/blob/v1.0.9/levenshtein/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/zapx/v11",
+      "version": "v11.3.7",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/zapx/blob/v11.3.7/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/zapx/v12",
+      "version": "v12.3.7",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/zapx/blob/v12.3.7/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/zapx/v13",
+      "version": "v13.3.7",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/zapx/blob/v13.3.7/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/zapx/v14",
+      "version": "v14.3.7",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/zapx/blob/v14.3.7/LICENSE"
+    },
+    {
+      "name": "github.com/blevesearch/zapx/v15",
+      "version": "v15.3.10",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/blevesearch/zapx/blob/v15.3.10/LICENSE"
+    },
+    {
+      "name": "github.com/boombuler/barcode",
+      "version": "v1.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/boombuler/barcode/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/bradfitz/gomemcache/memcache",
+      "version": "v0.0.0-20190913173617-a41fca850d0b",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/bradfitz/gomemcache/blob/a41fca850d0b/LICENSE"
+    },
+    {
+      "name": "github.com/bufbuild/connect-go",
+      "version": "v1.7.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/bufbuild/connect-go/blob/v1.7.0/LICENSE"
+    },
+    {
+      "name": "github.com/buildkite/terminal-to-html/v3",
+      "version": "v3.7.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/buildkite/terminal-to-html/blob/v3.7.0/LICENSE"
+    },
+    {
+      "name": "github.com/caddyserver/certmagic",
+      "version": "v0.17.2",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/caddyserver/certmagic/blob/v0.17.2/LICENSE.txt"
+    },
+    {
+      "name": "github.com/cention-sany/utf7",
+      "version": "v0.0.0-20170124080048-26cad61bd60a",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/cention-sany/utf7/blob/26cad61bd60a/LICENSE"
+    },
+    {
+      "name": "github.com/cespare/xxhash/v2",
+      "version": "v2.2.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/cespare/xxhash/blob/v2.2.0/LICENSE.txt"
+    },
+    {
+      "name": "github.com/chi-middleware/proxy",
+      "version": "v1.1.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/chi-middleware/proxy/blob/v1.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/cloudflare/circl",
+      "version": "v1.3.3",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/cloudflare/circl/blob/v1.3.3/LICENSE"
+    },
+    {
+      "name": "github.com/couchbase/go-couchbase",
+      "version": "v0.0.0-20210224140812-5740cd35f448",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/couchbase/go-couchbase/blob/5740cd35f448/LICENSE"
+    },
+    {
+      "name": "github.com/couchbase/gomemcached",
+      "version": "v0.1.2",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/couchbase/gomemcached/blob/v0.1.2/LICENSE"
+    },
+    {
+      "name": "github.com/couchbase/goutils",
+      "version": "v0.0.0-20210118111533-e33d3ffb5401",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/couchbase/goutils/blob/e33d3ffb5401/LICENSE.md"
+    },
+    {
+      "name": "github.com/cpuguy83/go-md2man/v2/md2man",
+      "version": "v2.0.2",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/cpuguy83/go-md2man/blob/v2.0.2/LICENSE.md"
+    },
+    {
+      "name": "github.com/davecgh/go-spew/spew",
+      "version": "v1.1.1",
+      "type": "ISC",
+      "licenseUrl": "https://github.com/davecgh/go-spew/blob/v1.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/denisenkom/go-mssqldb",
+      "version": "v0.12.3",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/denisenkom/go-mssqldb/blob/v0.12.3/LICENSE.txt"
+    },
+    {
+      "name": "github.com/dgryski/go-rendezvous",
+      "version": "v0.0.0-20200823014737-9f7001d12a5f",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/dgryski/go-rendezvous/blob/9f7001d12a5f/LICENSE"
+    },
+    {
+      "name": "github.com/dimiro1/reply",
+      "version": "v0.0.0-20200315094148-d0136a4c9e21",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/dimiro1/reply/blob/d0136a4c9e21/LICENSE"
+    },
+    {
+      "name": "github.com/djherbis/buffer",
+      "version": "v1.2.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/djherbis/buffer/blob/v1.2.0/LICENSE.txt"
+    },
+    {
+      "name": "github.com/djherbis/nio/v3",
+      "version": "v3.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/djherbis/nio/blob/v3.0.1/LICENSE.txt"
+    },
+    {
+      "name": "github.com/dlclark/regexp2",
+      "version": "v1.9.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/dlclark/regexp2/blob/v1.9.0/LICENSE"
+    },
+    {
+      "name": "github.com/dsnet/compress",
+      "version": "v0.0.2-0.20210315054119-f66993602bf5",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/dsnet/compress/blob/f66993602bf5/LICENSE.md"
+    },
+    {
+      "name": "github.com/dustin/go-humanize",
+      "version": "v1.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/dustin/go-humanize/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/editorconfig/editorconfig-core-go/v2",
+      "version": "v2.5.2",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/editorconfig/editorconfig-core-go/blob/v2.5.2/LICENSE"
+    },
+    {
+      "name": "github.com/emersion/go-imap",
+      "version": "v1.2.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/emersion/go-imap/blob/v1.2.1/LICENSE"
+    },
+    {
+      "name": "github.com/emersion/go-sasl",
+      "version": "v0.0.0-20200509203442-7bfe0ed36a21",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/emersion/go-sasl/blob/7bfe0ed36a21/LICENSE"
+    },
+    {
+      "name": "github.com/emirpasic/gods",
+      "version": "v1.18.1",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/emirpasic/gods/blob/v1.18.1/LICENSE"
+    },
+    {
+      "name": "github.com/ethantkoenig/rupture",
+      "version": "v1.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/ethantkoenig/rupture/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/fatih/color",
+      "version": "v1.15.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/fatih/color/blob/v1.15.0/LICENSE.md"
+    },
+    {
+      "name": "github.com/felixge/fgprof",
+      "version": "v0.9.3",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/felixge/fgprof/blob/v0.9.3/LICENSE.txt"
+    },
+    {
+      "name": "github.com/fsnotify/fsnotify",
+      "version": "v1.6.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/fsnotify/fsnotify/blob/v1.6.0/LICENSE"
+    },
+    {
+      "name": "github.com/fxamacker/cbor/v2",
+      "version": "v2.4.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/fxamacker/cbor/blob/v2.4.0/LICENSE"
+    },
+    {
+      "name": "github.com/gliderlabs/ssh",
+      "version": "v0.3.5",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/gliderlabs/ssh/blob/v0.3.5/LICENSE"
+    },
+    {
+      "name": "github.com/go-ap/activitypub",
+      "version": "v0.0.0-20230331173947-f5b96d9450d4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-ap/activitypub/blob/f5b96d9450d4/LICENSE"
+    },
+    {
+      "name": "github.com/go-ap/errors",
+      "version": "v0.0.0-20221205040414-01c1adfc98ea",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-ap/errors/blob/01c1adfc98ea/LICENSE"
+    },
+    {
+      "name": "github.com/go-ap/jsonld",
+      "version": "v0.0.0-20221030091449-f2a191312c73",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-ap/jsonld/blob/f2a191312c73/LICENSE"
+    },
+    {
+      "name": "github.com/go-asn1-ber/asn1-ber",
+      "version": "v1.5.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-asn1-ber/asn1-ber/blob/v1.5.4/LICENSE"
+    },
+    {
+      "name": "github.com/go-chi/chi/v5",
+      "version": "v5.0.8",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-chi/chi/blob/v5.0.8/LICENSE"
+    },
+    {
+      "name": "github.com/go-chi/cors",
+      "version": "v1.2.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-chi/cors/blob/v1.2.1/LICENSE"
+    },
+    {
+      "name": "github.com/go-enry/go-enry/v2",
+      "version": "v2.8.4",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-enry/go-enry/blob/v2.8.4/LICENSE"
+    },
+    {
+      "name": "github.com/go-faster/city",
+      "version": "v1.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-faster/city/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/go-faster/errors",
+      "version": "v0.6.1",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/go-faster/errors/blob/v0.6.1/LICENSE"
+    },
+    {
+      "name": "github.com/go-fed/httpsig",
+      "version": "v1.1.1-0.20201223112313-55836744818e",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/go-fed/httpsig/blob/55836744818e/LICENSE"
+    },
+    {
+      "name": "github.com/go-git/gcfg",
+      "version": "v1.5.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/go-git/gcfg/blob/v1.5.0/LICENSE"
+    },
+    {
+      "name": "github.com/go-git/go-billy/v5",
+      "version": "v5.4.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-git/go-billy/blob/v5.4.1/LICENSE"
+    },
+    {
+      "name": "github.com/go-git/go-git/v5",
+      "version": "v5.6.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-git/go-git/blob/v5.6.1/LICENSE"
+    },
+    {
+      "name": "github.com/go-ldap/ldap/v3",
+      "version": "v3.4.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-ldap/ldap/blob/v3.4.4/v3/LICENSE"
+    },
+    {
+      "name": "github.com/go-openapi/jsonpointer",
+      "version": "v0.19.5",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-openapi/jsonpointer/blob/v0.19.5/LICENSE"
+    },
+    {
+      "name": "github.com/go-openapi/jsonreference",
+      "version": "v0.20.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-openapi/jsonreference/blob/v0.20.0/LICENSE"
+    },
+    {
+      "name": "github.com/go-openapi/spec",
+      "version": "v0.20.8",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-openapi/spec/blob/v0.20.8/LICENSE"
+    },
+    {
+      "name": "github.com/go-openapi/swag",
+      "version": "v0.22.3",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-openapi/swag/blob/v0.22.3/LICENSE"
+    },
+    {
+      "name": "github.com/go-sql-driver/mysql",
+      "version": "v1.7.1",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/go-sql-driver/mysql/blob/v1.7.1/LICENSE"
+    },
+    {
+      "name": "github.com/go-testfixtures/testfixtures/v3",
+      "version": "v3.9.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-testfixtures/testfixtures/blob/v3.9.0/LICENSE"
+    },
+    {
+      "name": "github.com/go-webauthn/revoke",
+      "version": "v0.1.9",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/go-webauthn/revoke/blob/v0.1.9/LICENSE"
+    },
+    {
+      "name": "github.com/go-webauthn/webauthn",
+      "version": "v0.8.2",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/go-webauthn/webauthn/blob/v0.8.2/LICENSE"
+    },
+    {
+      "name": "github.com/gobwas/glob",
+      "version": "v0.2.3",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/gobwas/glob/blob/v0.2.3/LICENSE"
+    },
+    {
+      "name": "github.com/goccy/go-json",
+      "version": "v0.10.2",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/goccy/go-json/blob/v0.10.2/LICENSE"
+    },
+    {
+      "name": "github.com/gogs/chardet",
+      "version": "v0.0.0-20211120154057-b7413eaefb8f",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/gogs/chardet/blob/b7413eaefb8f/LICENSE"
+    },
+    {
+      "name": "github.com/gogs/cron",
+      "version": "v0.0.0-20171120032916-9f6c956d3e14",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/gogs/cron/blob/9f6c956d3e14/LICENSE"
+    },
+    {
+      "name": "github.com/gogs/go-gogs-client",
+      "version": "v0.0.0-20210131175652-1d7215cd8d85",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/gogs/go-gogs-client/blob/1d7215cd8d85/LICENSE"
+    },
+    {
+      "name": "github.com/golang-jwt/jwt/v4",
+      "version": "v4.5.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/golang-jwt/jwt/blob/v4.5.0/LICENSE"
+    },
+    {
+      "name": "github.com/golang-sql/civil",
+      "version": "v0.0.0-20220223132316-b832511892a9",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/golang-sql/civil/blob/b832511892a9/LICENSE"
+    },
+    {
+      "name": "github.com/golang-sql/sqlexp",
+      "version": "v0.1.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/golang-sql/sqlexp/blob/v0.1.0/LICENSE"
+    },
+    {
+      "name": "github.com/golang/geo",
+      "version": "v0.0.0-20230421003525-6adc56603217",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/golang/geo/blob/6adc56603217/LICENSE"
+    },
+    {
+      "name": "github.com/golang/protobuf",
+      "version": "v1.5.3",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/golang/protobuf/blob/v1.5.3/LICENSE"
+    },
+    {
+      "name": "github.com/golang/snappy",
+      "version": "v0.0.4",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/golang/snappy/blob/v0.0.4/LICENSE"
+    },
+    {
+      "name": "github.com/google/go-github/v51/github",
+      "version": "v51.0.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/google/go-github/blob/v51.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/google/go-querystring/query",
+      "version": "v1.1.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/google/go-querystring/blob/v1.1.0/LICENSE"
+    },
+    {
+      "name": "github.com/google/go-tpm",
+      "version": "v0.3.3",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/google/go-tpm/blob/v0.3.3/LICENSE"
+    },
+    {
+      "name": "github.com/google/pprof/profile",
+      "version": "v0.0.0-20230502171905-255e3b9b56de",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/google/pprof/blob/255e3b9b56de/LICENSE"
+    },
+    {
+      "name": "github.com/google/uuid",
+      "version": "v1.3.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/google/uuid/blob/v1.3.0/LICENSE"
+    },
+    {
+      "name": "github.com/gorilla/css/scanner",
+      "version": "v1.0.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/gorilla/css/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/gorilla/feeds",
+      "version": "v1.1.1",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/gorilla/feeds/blob/v1.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/gorilla/mux",
+      "version": "v1.8.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/gorilla/mux/blob/v1.8.0/LICENSE"
+    },
+    {
+      "name": "github.com/gorilla/securecookie",
+      "version": "v1.1.1",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/gorilla/securecookie/blob/v1.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/gorilla/sessions",
+      "version": "v1.2.1",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/gorilla/sessions/blob/v1.2.1/LICENSE"
+    },
+    {
+      "name": "github.com/hashicorp/errwrap",
+      "version": "v1.1.0",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/hashicorp/errwrap/blob/v1.1.0/LICENSE"
+    },
+    {
+      "name": "github.com/hashicorp/go-cleanhttp",
+      "version": "v0.5.2",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/hashicorp/go-cleanhttp/blob/v0.5.2/LICENSE"
+    },
+    {
+      "name": "github.com/hashicorp/go-multierror",
+      "version": "v1.1.1",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/hashicorp/go-multierror/blob/v1.1.1/LICENSE"
+    },
+    {
+      "name": "github.com/hashicorp/go-retryablehttp",
+      "version": "v0.7.2",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/hashicorp/go-retryablehttp/blob/v0.7.2/LICENSE"
+    },
+    {
+      "name": "github.com/hashicorp/go-version",
+      "version": "v1.3.1",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/6543/go-version/blob/v1.3.1/LICENSE"
+    },
+    {
+      "name": "github.com/hashicorp/golang-lru",
+      "version": "v0.6.0",
+      "type": "MPL-2.0",
+      "licenseUrl": "https://github.com/hashicorp/golang-lru/blob/v0.6.0/LICENSE"
+    },
+    {
+      "name": "github.com/huandu/xstrings",
+      "version": "v1.4.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/huandu/xstrings/blob/v1.4.0/LICENSE"
+    },
+    {
+      "name": "github.com/imdario/mergo",
+      "version": "v0.3.15",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/imdario/mergo/blob/v0.3.15/LICENSE"
+    },
+    {
+      "name": "github.com/jaytaylor/html2text",
+      "version": "v0.0.0-20230321000545-74c2419ad056",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/jaytaylor/html2text/blob/74c2419ad056/LICENSE"
+    },
+    {
+      "name": "github.com/jbenet/go-context/io",
+      "version": "v0.0.0-20150711004518-d14ea06fba99",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/jbenet/go-context/blob/d14ea06fba99/LICENSE"
+    },
+    {
+      "name": "github.com/jhillyerd/enmime",
+      "version": "v0.11.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/jhillyerd/enmime/blob/v0.11.1/LICENSE"
+    },
+    {
+      "name": "github.com/josharian/intern",
+      "version": "v1.0.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/josharian/intern/blob/v1.0.0/license.md"
+    },
+    {
+      "name": "github.com/json-iterator/go",
+      "version": "v1.1.12",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/json-iterator/go/blob/v1.1.12/LICENSE"
+    },
+    {
+      "name": "github.com/kballard/go-shellquote",
+      "version": "v0.0.0-20180428030007-95032a82bc51",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/kballard/go-shellquote/blob/95032a82bc51/LICENSE"
+    },
+    {
+      "name": "github.com/kevinburke/ssh_config",
+      "version": "v1.2.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/kevinburke/ssh_config/blob/v1.2.0/LICENSE"
+    },
+    {
+      "name": "github.com/keybase/go-crypto",
+      "version": "v0.0.0-20200123153347-de78d2cb44f4",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/keybase/go-crypto/blob/de78d2cb44f4/LICENSE"
+    },
+    {
+      "name": "github.com/klauspost/compress",
+      "version": "v1.16.5",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/klauspost/compress/blob/v1.16.5/LICENSE"
+    },
+    {
+      "name": "github.com/klauspost/compress/internal/snapref",
+      "version": "v1.16.5",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/klauspost/compress/blob/v1.16.5/internal/snapref/LICENSE"
+    },
+    {
+      "name": "github.com/klauspost/compress/s2",
+      "version": "v1.16.5",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/klauspost/compress/blob/v1.16.5/s2/LICENSE"
+    },
+    {
+      "name": "github.com/klauspost/compress/zstd/internal/xxhash",
+      "version": "v1.16.5",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/klauspost/compress/blob/v1.16.5/zstd/internal/xxhash/LICENSE.txt"
+    },
+    {
+      "name": "github.com/klauspost/cpuid/v2",
+      "version": "v2.2.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/klauspost/cpuid/blob/v2.2.4/LICENSE"
+    },
+    {
+      "name": "github.com/klauspost/pgzip",
+      "version": "v1.2.6",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/klauspost/pgzip/blob/v1.2.6/LICENSE"
+    },
+    {
+      "name": "github.com/lib/pq",
+      "version": "v1.10.9",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/lib/pq/blob/v1.10.9/LICENSE.md"
+    },
+    {
+      "name": "github.com/libdns/libdns",
+      "version": "v0.2.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/libdns/libdns/blob/v0.2.1/LICENSE"
+    },
+    {
+      "name": "github.com/mailru/easyjson",
+      "version": "v0.7.7",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/mailru/easyjson/blob/v0.7.7/LICENSE"
+    },
+    {
+      "name": "github.com/markbates/going/defaults",
+      "version": "v1.0.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/markbates/going/blob/v1.0.0/LICENSE.txt"
+    },
+    {
+      "name": "github.com/markbates/goth",
+      "version": "v1.77.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/markbates/goth/blob/v1.77.0/LICENSE.txt"
+    },
+    {
+      "name": "github.com/mattn/go-colorable",
+      "version": "v0.1.13",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/mattn/go-colorable/blob/v0.1.13/LICENSE"
+    },
+    {
+      "name": "github.com/mattn/go-isatty",
+      "version": "v0.0.18",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/mattn/go-isatty/blob/v0.0.18/LICENSE"
+    },
+    {
+      "name": "github.com/mattn/go-runewidth",
+      "version": "v0.0.14",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/mattn/go-runewidth/blob/v0.0.14/LICENSE"
+    },
+    {
+      "name": "github.com/matttproud/golang_protobuf_extensions/pbutil",
+      "version": "v1.0.4",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/matttproud/golang_protobuf_extensions/blob/v1.0.4/LICENSE"
+    },
+    {
+      "name": "github.com/meilisearch/meilisearch-go",
+      "version": "v0.24.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/meilisearch/meilisearch-go/blob/v0.24.0/LICENSE"
+    },
+    {
+      "name": "github.com/mholt/acmez",
+      "version": "v1.1.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/mholt/acmez/blob/v1.1.0/LICENSE"
+    },
+    {
+      "name": "github.com/mholt/archiver/v3",
+      "version": "v3.5.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/mholt/archiver/blob/v3.5.1/LICENSE"
+    },
+    {
+      "name": "github.com/microcosm-cc/bluemonday",
+      "version": "v1.0.24",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/microcosm-cc/bluemonday/blob/v1.0.24/LICENSE.md"
+    },
+    {
+      "name": "github.com/miekg/dns",
+      "version": "v1.1.54",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/miekg/dns/blob/v1.1.54/LICENSE"
+    },
+    {
+      "name": "github.com/minio/md5-simd",
+      "version": "v1.1.2",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/minio/md5-simd/blob/v1.1.2/LICENSE"
+    },
+    {
+      "name": "github.com/minio/minio-go/v7",
+      "version": "v7.0.52",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/minio/minio-go/blob/v7.0.52/LICENSE"
+    },
+    {
+      "name": "github.com/minio/sha256-simd",
+      "version": "v1.0.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/minio/sha256-simd/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/mitchellh/mapstructure",
+      "version": "v1.5.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/mitchellh/mapstructure/blob/v1.5.0/LICENSE"
+    },
+    {
+      "name": "github.com/modern-go/concurrent",
+      "version": "v0.0.0-20180306012644-bacd9c7ef1dd",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/modern-go/concurrent/blob/bacd9c7ef1dd/LICENSE"
+    },
+    {
+      "name": "github.com/modern-go/reflect2",
+      "version": "v1.0.2",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/modern-go/reflect2/blob/v1.0.2/LICENSE"
+    },
+    {
+      "name": "github.com/nektos/act/pkg",
+      "version": "v0.243.4",
+      "type": "MIT",
+      "licenseUrl": "https://gitea.com/gitea/act/src/tag/v0.243.4/LICENSE"
+    },
+    {
+      "name": "github.com/nfnt/resize",
+      "version": "v0.0.0-20180221191011-83c6a9932646",
+      "type": "ISC",
+      "licenseUrl": "https://github.com/nfnt/resize/blob/83c6a9932646/LICENSE"
+    },
+    {
+      "name": "github.com/niklasfasching/go-org/org",
+      "version": "v1.6.5",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/niklasfasching/go-org/blob/v1.6.5/LICENSE"
+    },
+    {
+      "name": "github.com/nwaples/rardecode",
+      "version": "v1.1.3",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/nwaples/rardecode/blob/v1.1.3/LICENSE"
+    },
+    {
+      "name": "github.com/olekukonko/tablewriter",
+      "version": "v0.0.5",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/olekukonko/tablewriter/blob/v0.0.5/LICENSE.md"
+    },
+    {
+      "name": "github.com/oliamb/cutter",
+      "version": "v0.2.2",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/oliamb/cutter/blob/v0.2.2/LICENSE"
+    },
+    {
+      "name": "github.com/olivere/elastic/v7",
+      "version": "v7.0.32",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/olivere/elastic/blob/v7.0.32/LICENSE"
+    },
+    {
+      "name": "github.com/olivere/elastic/v7/uritemplates",
+      "version": "v7.0.32",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/olivere/elastic/blob/v7.0.32/uritemplates/LICENSE"
+    },
+    {
+      "name": "github.com/opencontainers/go-digest",
+      "version": "v1.0.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/opencontainers/go-digest/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/opencontainers/image-spec/specs-go",
+      "version": "v1.1.0-rc3",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/opencontainers/image-spec/blob/v1.1.0-rc3/LICENSE"
+    },
+    {
+      "name": "github.com/paulmach/orb",
+      "version": "v0.9.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/paulmach/orb/blob/v0.9.1/LICENSE.md"
+    },
+    {
+      "name": "github.com/pierrec/lz4/v4",
+      "version": "v4.1.17",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/pierrec/lz4/blob/v4.1.17/LICENSE"
+    },
+    {
+      "name": "github.com/pjbgf/sha1cd",
+      "version": "v0.3.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/pjbgf/sha1cd/blob/v0.3.0/LICENSE"
+    },
+    {
+      "name": "github.com/pkg/errors",
+      "version": "v0.9.1",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/pkg/errors/blob/v0.9.1/LICENSE"
+    },
+    {
+      "name": "github.com/pmezard/go-difflib/difflib",
+      "version": "v1.0.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/pmezard/go-difflib/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/pquerna/otp",
+      "version": "v1.4.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/pquerna/otp/blob/v1.4.0/LICENSE"
+    },
+    {
+      "name": "github.com/prometheus/client_golang/prometheus",
+      "version": "v1.15.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/prometheus/client_golang/blob/v1.15.1/LICENSE"
+    },
+    {
+      "name": "github.com/prometheus/client_model/go",
+      "version": "v0.3.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/prometheus/client_model/blob/v0.3.0/LICENSE"
+    },
+    {
+      "name": "github.com/prometheus/common",
+      "version": "v0.42.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/prometheus/common/blob/v0.42.0/LICENSE"
+    },
+    {
+      "name": "github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg",
+      "version": "v0.42.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/prometheus/common/blob/v0.42.0/internal/bitbucket.org/ww/goautoneg/README.txt"
+    },
+    {
+      "name": "github.com/prometheus/procfs",
+      "version": "v0.9.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/prometheus/procfs/blob/v0.9.0/LICENSE"
+    },
+    {
+      "name": "github.com/redis/go-redis/v9",
+      "version": "v9.0.4",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/redis/go-redis/blob/v9.0.4/LICENSE"
+    },
+    {
+      "name": "github.com/rhysd/actionlint",
+      "version": "v1.6.24",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/rhysd/actionlint/blob/v1.6.24/LICENSE.txt"
+    },
+    {
+      "name": "github.com/rivo/uniseg",
+      "version": "v0.4.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/rivo/uniseg/blob/v0.4.4/LICENSE.txt"
+    },
+    {
+      "name": "github.com/robfig/cron",
+      "version": "v1.2.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/robfig/cron/blob/v1.2.0/LICENSE"
+    },
+    {
+      "name": "github.com/rs/xid",
+      "version": "v1.5.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/rs/xid/blob/v1.5.0/LICENSE"
+    },
+    {
+      "name": "github.com/russross/blackfriday/v2",
+      "version": "v2.1.0",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/russross/blackfriday/blob/v2.1.0/LICENSE.txt"
+    },
+    {
+      "name": "github.com/santhosh-tekuri/jsonschema/v5",
+      "version": "v5.3.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/santhosh-tekuri/jsonschema/blob/v5.3.0/LICENSE"
+    },
+    {
+      "name": "github.com/sassoftware/go-rpmutils",
+      "version": "v0.2.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/sassoftware/go-rpmutils/blob/v0.2.0/LICENSE"
+    },
+    {
+      "name": "github.com/segmentio/asm",
+      "version": "v1.2.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/segmentio/asm/blob/v1.2.0/LICENSE"
+    },
+    {
+      "name": "github.com/sergi/go-diff/diffmatchpatch",
+      "version": "v1.3.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/sergi/go-diff/blob/v1.3.1/LICENSE"
+    },
+    {
+      "name": "github.com/shopspring/decimal",
+      "version": "v1.3.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/shopspring/decimal/blob/v1.3.1/LICENSE"
+    },
+    {
+      "name": "github.com/sirupsen/logrus",
+      "version": "v1.9.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/sirupsen/logrus/blob/v1.9.0/LICENSE"
+    },
+    {
+      "name": "github.com/skeema/knownhosts",
+      "version": "v1.1.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/skeema/knownhosts/blob/v1.1.0/LICENSE"
+    },
+    {
+      "name": "github.com/ssor/bom",
+      "version": "v0.0.0-20170718123548-6386211fdfcf",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/ssor/bom/blob/6386211fdfcf/LICENSE"
+    },
+    {
+      "name": "github.com/stretchr/testify/assert",
+      "version": "v1.8.2",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/stretchr/testify/blob/v1.8.2/LICENSE"
+    },
+    {
+      "name": "github.com/swaggo/files/v2",
+      "version": "v2.0.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/swaggo/files/blob/v2.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/swaggo/http-swagger/v2",
+      "version": "v2.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/swaggo/http-swagger/blob/v2.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/swaggo/swag",
+      "version": "v1.8.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/swaggo/swag/blob/v1.8.1/license"
+    },
+    {
+      "name": "github.com/syndtr/goleveldb/leveldb",
+      "version": "v1.0.0",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/syndtr/goleveldb/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/tstranex/u2f",
+      "version": "v1.0.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/tstranex/u2f/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/ulikunitz/xz",
+      "version": "v0.5.10",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/ulikunitz/xz/blob/v0.5.10/LICENSE"
+    },
+    {
+      "name": "github.com/unknwon/com",
+      "version": "v1.0.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/unknwon/com/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/urfave/cli",
+      "version": "v1.22.13",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/urfave/cli/blob/v1.22.13/LICENSE"
+    },
+    {
+      "name": "github.com/valyala/bytebufferpool",
+      "version": "v1.0.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/valyala/bytebufferpool/blob/v1.0.0/LICENSE"
+    },
+    {
+      "name": "github.com/valyala/fasthttp",
+      "version": "v1.47.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/valyala/fasthttp/blob/v1.47.0/LICENSE"
+    },
+    {
+      "name": "github.com/valyala/fastjson",
+      "version": "v1.6.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/valyala/fastjson/blob/v1.6.4/LICENSE"
+    },
+    {
+      "name": "github.com/x448/float16",
+      "version": "v0.8.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/x448/float16/blob/v0.8.4/LICENSE"
+    },
+    {
+      "name": "github.com/xanzy/go-gitlab",
+      "version": "v0.83.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/xanzy/go-gitlab/blob/v0.83.0/LICENSE"
+    },
+    {
+      "name": "github.com/xanzy/ssh-agent",
+      "version": "v0.3.3",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/xanzy/ssh-agent/blob/v0.3.3/LICENSE"
+    },
+    {
+      "name": "github.com/yohcop/openid-go",
+      "version": "v1.0.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/yohcop/openid-go/blob/v1.0.1/LICENSE"
+    },
+    {
+      "name": "github.com/yuin/goldmark",
+      "version": "v1.5.4",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/yuin/goldmark/blob/v1.5.4/LICENSE"
+    },
+    {
+      "name": "github.com/yuin/goldmark-highlighting/v2",
+      "version": "v2.0.0-20220924101305-151362477c87",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/yuin/goldmark-highlighting/blob/151362477c87/LICENSE"
+    },
+    {
+      "name": "github.com/yuin/goldmark-meta",
+      "version": "v1.1.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/yuin/goldmark-meta/blob/v1.1.0/LICENSE"
+    },
+    {
+      "name": "go.etcd.io/bbolt",
+      "version": "v1.3.7",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/etcd-io/bbolt/blob/v1.3.7/LICENSE"
+    },
+    {
+      "name": "go.opentelemetry.io/otel",
+      "version": "v1.15.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-go/blob/v1.15.1/LICENSE"
+    },
+    {
+      "name": "go.opentelemetry.io/otel/trace",
+      "version": "v1.15.1",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-go/blob/trace/v1.15.1/trace/LICENSE"
+    },
+    {
+      "name": "go.uber.org/atomic",
+      "version": "v1.11.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/uber-go/atomic/blob/v1.11.0/LICENSE.txt"
+    },
+    {
+      "name": "go.uber.org/multierr",
+      "version": "v1.11.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/uber-go/multierr/blob/v1.11.0/LICENSE.txt"
+    },
+    {
+      "name": "go.uber.org/zap",
+      "version": "v1.24.0",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/uber-go/zap/blob/v1.24.0/LICENSE.txt"
+    },
+    {
+      "name": "golang.org/x/crypto",
+      "version": "v0.12.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/crypto/+/v0.12.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/image",
+      "version": "v0.7.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/image/+/v0.7.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/mod/semver",
+      "version": "v0.12.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/mod/+/v0.12.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/net",
+      "version": "v0.14.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/net/+/v0.14.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/oauth2",
+      "version": "v0.7.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/oauth2/+/v0.7.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/sync",
+      "version": "v0.3.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/sync/+/v0.3.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/sys",
+      "version": "v0.11.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/sys/+/v0.11.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/text",
+      "version": "v0.12.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/text/+/v0.12.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/time/rate",
+      "version": "v0.3.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/time/+/v0.3.0:LICENSE"
+    },
+    {
+      "name": "golang.org/x/tools",
+      "version": "v0.12.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://cs.opensource.google/go/x/tools/+/v0.12.0:LICENSE"
+    },
+    {
+      "name": "google.golang.org/genproto/googleapis/rpc/status",
+      "version": "v0.0.0-20230306155012-7f2fa6fef1f4",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/googleapis/go-genproto/blob/7f2fa6fef1f4/LICENSE"
+    },
+    {
+      "name": "google.golang.org/grpc",
+      "version": "v1.53.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/grpc/grpc-go/blob/v1.53.0/LICENSE"
+    },
+    {
+      "name": "google.golang.org/protobuf",
+      "version": "v1.30.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/protocolbuffers/protobuf-go/blob/v1.30.0/LICENSE"
+    },
+    {
+      "name": "gopkg.in/gomail.v2",
+      "version": "v2.0.0-20160411212932-81ebce5c23df",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-gomail/gomail/blob/81ebce5c23df/LICENSE"
+    },
+    {
+      "name": "gopkg.in/ini.v1",
+      "version": "v1.67.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-ini/ini/blob/v1.67.0/LICENSE"
+    },
+    {
+      "name": "gopkg.in/warnings.v0",
+      "version": "v0.1.2",
+      "type": "BSD-2-Clause",
+      "licenseUrl": "https://github.com/go-warnings/warnings/blob/v0.1.2/LICENSE"
+    },
+    {
+      "name": "gopkg.in/yaml.v2",
+      "version": "v2.4.0",
+      "type": "Apache-2.0",
+      "licenseUrl": "https://github.com/go-yaml/yaml/blob/v2.4.0/LICENSE"
+    },
+    {
+      "name": "gopkg.in/yaml.v3",
+      "version": "v3.0.1",
+      "type": "MIT",
+      "licenseUrl": "https://github.com/go-yaml/yaml/blob/v3.0.1/LICENSE"
+    },
+    {
+      "name": "mvdan.cc/xurls/v2",
+      "version": "v2.4.0",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/mvdan/xurls/blob/v2.4.0/LICENSE"
+    },
+    {
+      "name": "strk.kbt.io/projects/go/libravatar",
+      "version": "v0.0.0-20191008002943-06d1c002b251",
+      "type": "MIT",
+      "licenseUrl": ""
+    },
+    {
+      "name": "xorm.io/builder",
+      "version": "v0.3.12",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://gitea.com/xorm/builder/src/tag/v0.3.12/LICENSE"
+    },
+    {
+      "name": "xorm.io/xorm",
+      "version": "v1.3.3-0.20230219231735-056cecc97e9e",
+      "type": "BSD-3-Clause",
+      "licenseUrl": "https://gitea.com/xorm/xorm/src/commit/056cecc97e9e/LICENSE"
+    }
+  ]
+}

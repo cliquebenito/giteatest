@@ -1,0 +1,56 @@
+# Лежит не в таргетном месте, необходимо переместить, когда будет понимание куда класть и куда генерить
+# Команда для генерации: oapi-codegen -generate types -config api/openapi/producers/v2/generic/meta.cfg.yaml api/openapi/producers/v2/generic/meta.yaml
+openapi: 3.0.0
+info:
+  title: Metadata of event
+  version: 2.0.0
+
+paths:
+  /:
+    get:
+      description: Fake endpoint to create a repository event
+      responses:
+        200:
+          description: Fake response to create a repository event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+
+components:
+  schemas:
+    Metadata:
+      description: Metadata
+      type: object
+      properties:
+        message_id:
+          type: string
+          description: Message UUID
+        correlation_message_id:
+          type: string
+          description: Message UUID for correlation
+        message_create_ts:
+          type: string
+          format: timestamp
+          description: Message creation timestamp in UTC
+        version:
+          type: string
+          description: Message version
+          default: 2.0.0
+        producer:
+          $ref: '#/components/schemas/Producer'
+      required:
+        - message_id
+        - message_create_ts
+        - version
+        - producer
+    Producer:
+      description: Producer metadata
+      type: object
+      properties:
+        id:
+          type: string
+          description: Producer ID
+      required:
+        - id
+

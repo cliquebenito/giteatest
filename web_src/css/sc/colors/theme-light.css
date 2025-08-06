@@ -1,0 +1,16 @@
+.theme-light {
+    --sc-color-text-primary: var(--sc-color-grey-100);
+    --sc-color-text-secondary: var(--sc-color-grey-50);
+
+    --sc-color-stroke: var(--sc-color-grey-20);
+    --sc-color-fill: var(--sc-color-grey-10);
+    --sc-color-fill-secondary: var(--sc-color-grey-20);
+    --sc-color-bg: var(--sc-color-white);
+    --sc-color-bg-secondary: var(--sc-color-white);
+    --sc-color-bg-input: var(--sc-color-white);
+    --sc-button-bg-hover: #e7eaeb;
+
+    --sc-color-box: var(--sc-color-bg);
+
+    --color-primary: var(--sc-color-primary);
+}

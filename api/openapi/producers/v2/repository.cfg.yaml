@@ -1,0 +1,7 @@
+package: events
+output: models/events/v2/repository.gen.go
+generate:
+  models: true
+import-mapping:
+  ./generic/meta.yaml: "code.gitea.io/gitea/models/events/v2/generic"
+  ./generic/context.yaml: "code.gitea.io/gitea/models/events/v2/generic"

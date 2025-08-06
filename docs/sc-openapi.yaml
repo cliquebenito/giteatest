@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: REST API SourceControl
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:3000
+    description: local
+
+paths:
+  /{ownerName}/{repoName}/pulls/{number}/state:
+    get:
+      tags:
+        - Repository
+      summary: Получение статуса сборки последнего коммита ПРа
+      operationId: GetPullRequestStatusState
+      security:
+        - cookieAuth: [ ]
+      parameters:
+        - name: ownerName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+        - name: repoName
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RepoName'
+        - name: number
+          in: path
+          required: true
+          description: Номер пулл-реквеста
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/PullRequestStateResponse'
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+  /{ownerName}/{repoName}/settings/sonar:
+   post:
+     tags:
+       - Repository settings
+     summary: Добавление или обновление настроек интеграции с Sonar
+     operationId: PostSonarSettings
+     security:
+       - cookieAuth: [ ]
+     parameters:
+       - name: ownerName
+         in: path
+         required: true
+         schema:
+           $ref: '#/components/schemas/UserName'
+       - name: repoName
+         in: path
+         required: true
+         schema:
+           $ref: '#/components/schemas/RepoName'
+     requestBody:
+       content:
+         application/json:
+           schema:
+             $ref: '#/components/schemas/SonarSettings'
+     responses:
+       '200':
+         description: Ok
+       '500':
+         description: Internal server error
+   delete:
+     tags:
+       - Repository settings
+     summary: Удаление настроек интеграции с Sonar
+     operationId: DeleteSonarSettings
+     security:
+       - cookieAuth: [ ]
+     parameters:
+       - name: ownerName
+         in: path
+         required: true
+         schema:
+           $ref: '#/components/schemas/UserName'
+       - name: repoName
+         in: path
+         required: true
+         schema:
+           $ref: '#/components/schemas/RepoName'
+     responses:
+       '204':
+         description: No Content
+       '500':
+         description: Internal server error
+
+components:
+  responses:
+    PullRequestStateResponse:
+      description: Статус ПРа
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PullRequestState'
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: auth
+
+  schemas:
+    UserName:
+      type: string
+      minLength: 2
+      maxLength: 50
+      example: 'Ivan'
+      description: >
+        Имя пользователя
+
+    RepoName:
+      type: string
+      maxLength: 100
+      pattern: '^[a-zA-Z0-9_-.]*$'
+      description: >
+        Имя репозитория. Допустимые символы латинская буквы, цифры, -, _ или .
+
+    PullRequestState:
+      type: object
+      required:
+        - state
+      properties:
+        state:
+          type: string
+          enum:
+            - pending
+            - success
+            - failure
+            - error
+            - unknown
+          description:  Статус ПРа
+        updated:
+          type: string
+          format: date-time
+          description: Время последнего обновления статуса, UTC
+
+    SonarSettings:
+      type: object
+      required:
+        - url
+        - token
+        - project_key
+      properties:
+        url:
+          type: string
+          description: URL для подлючения к API Sonar
+        token:
+          type: string
+          description: Токен для подлючения к API Sonar
+        project_key:
+          type: string
+          description: Ключ проекта в Sonar

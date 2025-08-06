@@ -1,0 +1,29 @@
+/* .override .timeline-item .ui.segment  {
+  border: 1px solid var(--color-secondary)
+}
+
+.override .ui.buttons.basic.rounded-button-group,
+.override .ui.buttons.basic.rounded-button {
+  border: none;
+}
+
+.override .ui.buttons.basic.rounded-button-group > .ui.button {
+  border-radius: 8px 0 0 8px;
+}
+.override .ui.buttons.basic.rounded-button-group > .ui.button.dropdown {
+  border-radius: 0 8px 8px 0;
+}
+
+.override .ui.buttons.basic.rounded-button > .ui.button {
+  border-radius: 8px;
+}
+
+.override .page-content.compare.pull .ui.segment {
+  border: 1px solid var(--color-secondary);
+}
+.override .page-content .timeline-item .ui.attached.segment:not(.top) {
+  border-top: 1px solid var(--color-secondary);
+}
+.override .page-content.compare.pull .ui.attached:not(.message) + .ui.attached.segment:not(.top) {
+  border-top: 1px solid var(--color-secondary);
+} */

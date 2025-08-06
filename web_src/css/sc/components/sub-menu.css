@@ -1,0 +1,31 @@
+.sc-sub-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: 8px;
+}
+
+.sc-sub-menu__item {
+    flex-shrink: 1;
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sc-color-grey-dark);
+    font-size: 13px;
+    line-height: 17px;
+    font-family: var(--fonts-proportional);
+    font-weight: 400;
+    column-gap: 8px;
+    text-decoration: none;
+    text-transform: capitalize;
+    cursor: pointer;
+    min-height: 24px;
+}
+
+.sc-sub-menu__item:hover,
+.sc-sub-menu__item_active {
+    color: var(--sc-color-primary);
+    text-decoration: none;
+}

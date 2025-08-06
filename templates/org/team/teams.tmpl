@@ -1,0 +1,29 @@
+{{template "base/head" .}}
+<div
+	role="main"
+	aria-label="{{.Title}}"
+	class="page-content organization teams"
+>
+	<script>
+		window.config.pageData = {
+			newTeamLink: "{{.OrgLink}}/teams/new",
+			teams:{{.Teams}},
+			baseLink: {{.Link}},
+		};
+	</script>
+	{{template "org/header" .}}
+
+		<div class="container ui">
+			<div id="v-app-team-list">
+				<v-app-team-list
+					:teams="{{.Teams}}"
+					:org-link="'{{.OrgLink}}'"
+					:is-organization-owner="{{.IsOrganizationOwner}}"
+					:signed-user-id="{{.SignedUser.ID}}"
+					:context="{{.Context}}"
+					:locale-tr="function(key, params) { return localeTr(key, params); }"
+					:csrf-token-html="'{{.CsrfTokenHtml}}'"
+				></v-app-team-list>
+			</div>
+</div>
+{{template "base/footer" .}}

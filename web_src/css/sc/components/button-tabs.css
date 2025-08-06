@@ -1,0 +1,36 @@
+/* tabs */
+.sc-button-tabs {
+    display: flex;
+    column-gap: 2px;
+    background-color: var(--sc-color-fill);
+    border: 1px solid var(--sc-color-stroke);
+    padding: 2px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.sc-button-tabs__item {
+    display: inline-flex;
+    height: 26px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--sc-color-text-primary);
+    font-family: var(--fonts-proportional);
+    font-weight: 400;
+    font-size: 13px;
+    padding: 0 12px;
+    cursor: pointer;
+    border: none;
+}
+
+.sc-button-tabs__item_active {
+    background-color: #78909C;
+    color: #fff;
+}
+
+.sc-button-tabs__item:hover {
+    background-color: #D5D9DD;
+    color: var(--sc-color-black);
+}

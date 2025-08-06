@@ -1,0 +1,47 @@
+{{template "base/head" .}}
+<div role="main" aria-label="{{.Title}}" class="page-content explore users">
+	{{template "explore/navbar" .}}
+	<div class="ui container">
+		{{template "explore/search" .}}
+
+		<div class="sc-table-list">
+			{{range .Users}}
+				<div class="sc-table-list__item">
+					<div class="sc-user-card">
+						<div class="sc-user-card__image">
+							{{avatar $.Context . 48 48}}
+						</div>
+						<div class="sc-user-card-content">
+							<div class="sc-user-card-header">
+								<a class="sc-user-card__name" href="{{.HomeLink}}">{{.Name}}</a> 
+								<span class="sc-user-card__fullname">{{.FullName}}</span>
+							</div>
+							<div class="sc-user-card-description">
+								{{if .Location}}
+									<div class="sc-user-card__location">
+										{{svg "octicon-location"}} {{.Location}}
+									</div>
+								{{end}}
+								
+								{{if and $.ShowUserEmail .Email $.IsSigned (not .KeepEmailPrivate)}}
+									<div class="sc-user-card__email">
+										{{svg "octicon-mail"}}
+										<a href="mailto:{{.Email}}" rel="nofollow">{{.Email}}</a>
+									</div>
+								{{end}}
+								<div class="sc-user-card__created">
+									{{svg "octicon-clock"}} {{$.locale.Tr "user.joined_on" (DateTime "short" .CreatedUnix) | Safe}}
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			{{else}}
+				<div>{{$.locale.Tr "explore.user_no_results"}}</div>
+			{{end}}
+		</div>
+
+		{{template "base/paginate" .}}
+	</div>
+</div>
+{{template "base/footer" .}}

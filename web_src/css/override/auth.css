@@ -1,0 +1,7 @@
+.override .page-content.user.signin .ui.form .inline.field  {
+    align-items: center;
+}
+.override .page-content.user.signin .ui.form .inline.field label {
+    text-align: center;
+    margin: 0;
+}

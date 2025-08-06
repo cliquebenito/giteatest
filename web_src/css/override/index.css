@@ -1,0 +1,107 @@
+/* FONT - Inter */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../../fonts/Inter/regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../../fonts/Inter/medium.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../../fonts/Inter/bold.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(../../fonts/Inter/black.woff2) format('woff2');
+}
+
+/* FONT - JetBrains */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../../fonts/JetBrains/regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../../fonts/JetBrains/medium.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../../fonts/JetBrains/bold.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(../../fonts/JetBrains/extra-bold.woff2) format('woff2');
+}
+
+html {
+  font-size: 16px !important;
+}
+
+body.modal-view {
+  overflow: hidden;
+}
+
+.override body {
+  font-family: 'Inter', sans-serif;
+}
+
+.override .page-content .ui.container:not(.fluid) {
+  width: 1024px;
+}
+
+.override .page-content.user.profile .tabs.ui.container:not(.fluid) {
+  width: 100%;
+}
+
+.text.grey {
+  color: #737B8C !important;
+  /* color: var(--color-text-light) !important; */
+}
+
+.override .hidden {
+  display: none!important;
+}
+
+
+@import './variables.css';
+@import './common.css';
+@import './header.css';
+@import './repos.css';
+@import './profile.css';
+@import './user-list.css';
+@import './activity.css';
+@import './home-page.css';
+@import './org.css';
+@import './admin.css';
+@import './auth.css';
+@import './form.css';
+@import './pull.css';
+@import './cron.css';
+@import './sonar-cube-settings.css';
+@import './git-hook.css';
+@import './file-explorer.css';

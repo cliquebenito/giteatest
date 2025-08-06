@@ -1,0 +1,45 @@
+.ui.modal {
+    min-width: 550px;
+    border-radius: 16px;
+}
+
+.ui.modal .header {
+    padding: 24px;
+    border: none;
+    background-color: var(--sc-color-bg);
+    font-size: 22px!important;
+    font-weight: 600!important;
+    font-family: var(--fonts-proportional);
+    border-radius: 16px 16px 0 0!important;
+}
+.ui.modal .content {
+    padding: 0 24px!important;
+    border: none;
+    background-color: var(--sc-color-bg);
+}
+
+.ui.modal .content:last-child {
+    border-radius: 0 0 16px 16px!important;
+}
+
+.ui.modal .actions {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 24px;
+    padding: 24px!important;
+    background-color: var(--sc-color-bg)!important;
+    border-radius: 0 0 16px 16px!important;
+}
+
+.ui.modal .actions > button {
+    flex-grow: 1;
+    width: 100%;
+}
+
+#cherry-pick-modal .js-branch-tag-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

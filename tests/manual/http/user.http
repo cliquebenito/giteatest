@@ -1,0 +1,533 @@
+### Для тестирования режима Proof-Of-Work необходимо в запрос регистрации и аутентификации добавить заголовк Proof-Of-Work, а в тело добавить поле "payload"
+# Подробности тут: https://dzo.sw.sbc.space/wiki/display/GITRU/Proof-Of-Work
+### Sign up
+POST {{host}}/sbt/api/v1/signUp
+Content-Type: application/json
+Proof-Of-Work: 00000f7be7acdbd99ebfdc765024b75d74808174073b3069ffd67d29211f47fb
+
+{
+  "username": "{{username}}",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "payload": 1341922
+}
+
+### Sign in
+POST {{host}}/sbt/api/v1/signIn
+Content-Type: application/json
+
+{
+  "login": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Sign out
+POST {{host}}/sbt/api/v1/signOut
+Content-Type: application/json
+
+### User me
+GET {{host}}/sbt/api/v1/user
+Content-Type: application/json
+
+### User dashboard's heatmap
+GET {{host}}/sbt/api/v1/user/dashboard/heatmap
+Content-Type: application/json
+
+### User dashboard
+GET {{host}}/sbt/api/v1/user/dashboard?date=2023-07-20
+Content-Type: application/json
+
+### User info
+GET {{host}}/sbt/api/v1/users/{{username}}
+Content-Type: application/json
+
+### Get user settings
+GET {{host}}/sbt/api/v1/user/settings
+Content-Type: application/json
+
+### Update user settings
+PATCH {{host}}/sbt/api/v1/user/settings
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "full_name": "string",
+  "description": "string",
+  "location": "string",
+  "website": "http://hsdbck",
+  "visibility": "limited",
+  "hide_activity": true,
+  "hide_email": true
+}
+
+### Change user's password
+PUT {{host}}/sbt/api/v1/user/settings/password
+Content-Type: application/json
+
+{
+  "new_password": "{{new_password}}",
+  "old_password": "{{password}}"
+}
+
+### Delete user account
+DELETE {{host}}/sbt/api/v1/user/settings/account/delete
+Content-Type: application/json
+
+{
+  "password": "{{password}}"
+}
+
+### Create user ssh key
+POST {{host}}/sbt/api/v1/user/keys
+Content-Type: application/json
+
+{
+  "title": "Key",
+  "key": "{{keyContent}}"
+}
+
+### Get user's list of ssh key
+GET {{host}}/sbt/api/v1/user/keys
+Content-Type: application/json
+
+### Get user ssh key by id
+GET {{host}}/sbt/api/v1/user/keys/1
+Content-Type: application/json
+
+### Delete user ssh key by id
+DELETE {{host}}/sbt/api/v1/user/keys/2
+Content-Type: application/json
+
+### Get current user organization list
+GET {{host}}/sbt/api/v1/user/orgs?limit=10&page=1
+Content-Type: application/json
+
+### Create organization
+POST {{host}}/sbt/api/v1/orgs
+Content-Type: application/json
+
+{
+  "name": "fourth_organization",
+  "description" : "Это первая созданная организация",
+  "repo_admin_change_team_access": true,
+  "visibility": "private"
+}
+
+### Get organization by name
+GET {{host}}/sbt/api/v1/orgs/{{orgName}}
+Content-Type: application/json
+
+### Get organization's settings
+GET {{host}}/sbt/api/v1/orgs/{{orgName}}/settings
+Content-Type: application/json
+
+### Update organization's settings
+PATCH {{host}}/sbt/api/v1/orgs/{{orgName}}/settings
+Content-Type: application/json
+
+{
+  "name": "fourth_organization",
+  "full_name": "Moscow Government University",
+  "description": "MGU",
+  "location": "Moscow",
+  "website": "http://mgu",
+  "visibility": "limited",
+  "repo_admin_change_team_access": true,
+  "max_repo_creation": 5
+}
+
+### Create repo
+POST {{host}}/sbt/api/v1/repos
+Content-Type: application/json
+
+{
+  "name": "qwertyuio",
+   "org_id": 84
+}
+
+### List repos of user
+GET {{host}}/sbt/api/v1/users/{{username}}/repos
+Content-Type: application/json
+
+### Get repo by ownername and repo name
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}
+Content-Type: application/json
+
+### Delete repo
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}
+
+### Migrate repo
+POST {{host}}/sbt/api/v1/repos/migrate
+Content-Type: application/json
+
+{
+  "clone_addr": "https://github.com/go-gitea/gitea.git",
+  "repo_name": "migrate_gitea"
+}
+
+### Fork repo
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/forks
+Content-Type: application/json
+
+{
+  "name": "forkRepo"
+}
+
+### Create branch in repo
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/branches
+Content-Type: application/json
+
+{
+  "new_branch_name": "new_branch8",
+  "old_ref_name": "e8764e3ac7"
+}
+
+### Get list of branches in repo
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/branches?page=1&limit=10
+Content-Type: application/json
+
+### Get list of branches names in repo
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/branches_list
+Content-Type: application/json
+
+### Get repo branch
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/branches/{{mainBranchName}}
+Content-Type: application/json
+
+### Rename repo branch
+PUT {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/branches/rename
+Content-Type: application/json
+
+{
+  "oldBranchName": "main",
+  "newBranchName": "develop"
+}
+
+### Delete repo branch
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/branches/{{anotherBranchName}}
+Content-Type: application/json
+
+### Get list of commits in repo
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/commits?page=1&limit=10
+Content-Type: application/json
+
+### Get commit in repo by SHA
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/commits/{{commitSHA}}?files=true&stat=false
+Content-Type: application/json
+
+### Get diff of commit by SHA
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/commits/{{commitSHA}}/diff?file={{fileName}}
+Content-Type: application/json
+
+### Create file in repo
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/contents/{{fileName}}
+Content-Type: application/json
+
+{
+  "author": {
+    "email": "user@example.com",
+    "name": "user1"
+  },
+  "branch": "{{mainBranchName}}",
+  "committer": {
+    "email": "user@example.com",
+    "name": "string"
+  },
+  "content": "dGVzdCBjb250ZW50IG9mIGZpbGUK",
+  "dates": {
+    "author": "2023-06-15T04:53:53.151Z",
+    "committer": "2023-06-15T04:53:53.151Z"
+  },
+  "new_branch": "",
+  "signoff": true
+}
+
+### Get file info or list of file info if dir
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/contents/{{fileName}}?ref={{mainBranchName}}
+Content-Type: application/json
+
+### Get content of file by branch name
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/raw/branch/{{mainBranchName}}/{{fileName}}
+
+### Get repo archive
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/archive/{{mainBranchName}}.zip
+Content-Type: application/json
+
+### Get content of file by commit SHA
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/raw/commit/{{commitSHA}}/{{fileName}}
+
+### Get info list of root dir
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/contents?ref={{mainBranchName}}
+Content-Type: application/json
+
+### Update file
+PUT {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/contents/{{fileName}}
+Content-Type: application/json
+
+{
+  "author": {
+    "email": "user@example.com",
+    "name": "user1"
+  },
+  "branch": "{{mainBranchName}}",
+  "committer": {
+    "email": "user@example.com",
+    "name": "string"
+  },
+  "content": "bmV3IGNvbnRlbnQgb2YgZmlsZSAxCg==",
+  "sha": "3cc87c4ca57502cdf0d3ed38852fc79c8c9b1bf7",
+  "dates": {
+    "author": "2023-06-15T04:53:53.151Z",
+    "committer": "2023-06-15T04:53:53.151Z"
+  },
+  "from_path": "",
+  "message": "new msg 123",
+  "new_branch": "",
+  "signoff": true
+}
+
+### Delete file in repo
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/contents/{{fileName}}
+Content-Type: application/json
+
+{
+  "sha": "5f643138ec9b86561094ff1f6e5a7bad310a431a",
+  "branch": "{{mainBranchName}}"
+}
+
+###  Create pull request
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls
+Content-Type: application/json
+
+{
+  "head": "{{anotherBranchName}}",
+  "base": "{{mainBranchName}}",
+  "title": "Test PR",
+  "body": "Hello",
+  "assignees": ["{{username}}"]
+}
+
+### Get repo pull by number
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/1
+Content-Type: application/json
+
+### Get repo pulls list
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls?state=all&sort=oldest&page=1&limit=10
+Content-Type: application/json
+
+###  Close (or repopen) pull request
+PATCH {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/1/status
+Content-Type: application/json
+
+{
+  "comment": "My comment",
+  "status": "reopen"
+}
+
+### Add/remove reviewers to pull requests
+PATCH {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/23/reviewer
+Content-Type: application/json
+
+{
+  "reviewerId": 83,
+  "action": "attach"
+}
+
+### Get repo pull request's diff of file by pr's number
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/20/diff?file={{fileName}}
+Content-Type: application/json
+
+### Get repo pull request's commits by pr's number
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/20/commits?page=1&limit=2
+Content-Type: application/json
+
+### Get repo pull request's diff file list by pr's number
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/20/files
+Content-Type: application/json
+
+### Get diff of file between branches
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/compare/diff/{{mainBranchName}}...{{anotherBranchName}}?file={{fileName}}
+Content-Type: application/json
+
+### Get commits difference between branches
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/compare/commits/{{mainBranchName}}...{{anotherBranchName}}
+Content-Type: application/json
+
+### Get diff file list between branches
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/compare/files/{{mainBranchName}}...{{anotherBranchName}}
+Content-Type: application/json
+
+### Post merge
+POST  {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/1/merge
+Content-Type: application/json
+
+{
+  "do": "merge",
+  "merge_title_field": "sbt title of merge",
+  "merge_message_field": "sbt message of merge",
+  "delete_branch_after_merge": true
+}
+
+### Get repo pull request comments
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments
+Content-Type: application/json
+
+### Create repo pull request comment
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments
+Content-Type: application/json
+
+{
+  "content": "delete me",
+  "status": "reopen",
+  "files": ["73ab8fc9-6139-4e60-8d1a-cafd7131b2b9"]
+}
+
+### Delete repo pull request comment
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments/200/
+Content-Type: application/json
+
+### Update repo pull request comment
+PUT {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments/213/
+Content-Type: application/json
+
+{
+  "content": "update me1",
+  "files": ["774a77b0-3bba-42b4-aae1-4e53356668cf"]
+}
+
+### Get comment history list
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments/213/history
+Content-Type: application/json
+
+### Get comment history detail
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments/213/history/detail?history_id=6
+Content-Type: application/json
+
+### Delete comment history detail
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments/213/history/delete?history_id=5
+Content-Type: application/json
+
+
+### Post reaction (smile, emoji) into comment
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/comments/213/reactions/react
+Content-Type: application/json
+
+{
+  "content": "+1"
+}
+
+### Lock comments
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/lock
+Content-Type: application/json
+
+{
+  "reason": "Spam"
+}
+
+### Unlock comments
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/3/unlock
+Content-Type: application/json
+
+### Upload attachment
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/attachments
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="Form.pdf"
+
+< ./http-client.env.json
+--WebAppBoundary
+
+### Delete attachment
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/pulls/attachments/{{file-uuid}}/remove
+Content-Type: application/json
+
+
+### Update repo action
+PATCH {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/action/{{action}}
+Content-Type: application/json
+
+### Get User watching repo list
+GET {{host}}/sbt/api/v1/user/watching?q=JavaScript&topic=true
+Content-Type: application/json
+
+### Get Repo watchers list
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/watchers
+Content-Type: application/json
+
+### Get Repo stargazers list
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/stargazers?limit=1&page=2
+Content-Type: application/json
+
+### Repo settings - to update repository basic settings
+PATCH {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings
+Content-Type: application/json
+
+{
+  "name": "private",
+  "private": false,
+  "template": false,
+  "description": "new description",
+  "website": "https://yagaga.ru"
+}
+
+### Repo settings - to update repository pulls settings
+PATCH {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/pulls
+Content-Type: application/json
+
+{
+  "enablePulls": true,
+  "pullsAllowMerge": true,
+  "pullsDefaultMergeStyle": "squash"
+}
+
+### Repo settings - to archive repository
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/archive
+Content-Type: application/json
+
+### Repo settings - to unarchive repository
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/unarchive
+Content-Type: application/json
+
+### Repo transfer
+POST {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/transfer
+Content-Type: application/json
+
+{
+  "newOwnerName": "other"
+}
+
+### Repo settings - get collaboration
+GET {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/collaboration
+Content-Type: application/json
+
+### Repo settings - add collaboration
+POST  {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/collaboration/testUser1
+Content-Type: application/json
+
+
+### Repo settings - change collaboration
+PUT  {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/collaboration/testUser1/read
+Content-Type: application/json
+
+
+### Repo settings - delete collaboration
+DELETE {{host}}/sbt/api/v1/repos/{{username}}/{{repoName}}/settings/collaboration/testUser1
+Content-Type: application/json
+
+
+### Search repos
+GET {{host}}/sbt/api/v1/repos/search?q=&count_only=true&only_show_relevant=true
+Content-Type: application/json
+
+### Search users
+GET {{host}}/sbt/api/v1/users/search?sort=lastlogin&q=test&page=1&limit=2&active=1
+Content-Type: application/json
+
+### Search orgs
+GET {{host}}/sbt/api/v1/explore/orgs?sort=oldest&q=s&page=1&limit=2
+Content-Type: application/json
+
+### Download attachment
+GET {{host}}/sbt/api/v1/attachments/{{file-uuid}}
+Content-Type: application/json

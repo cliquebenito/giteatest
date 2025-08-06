@@ -1,0 +1,1143 @@
+{
+  "consumes": [
+    "application/json",
+    "text/plain"
+  ],
+  "produces": [
+    "application/json",
+    "text/html"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "This documentation describes the SourceControl API V3.",
+    "title": "SourceControl API.",
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+    "version": "{{AppVer | JSEscape | Safe}}"
+  },
+  "basePath": "{{AppSubUrl | JSEscape | Safe}}/api/v3",
+  "paths": {
+    "/repos/{tenant}/{project}/{repo}/review_settings": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Returns all review settings for repository",
+        "operationId": "GetReviewSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Tenant identifier",
+            "name": "tenant",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Project identifier",
+            "name": "project",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Repository identifier",
+            "name": "repo",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ReviewSettings"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates review settings for repository",
+        "operationId": "CreateReviewSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Tenant identifier",
+            "name": "tenant",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Project identifier",
+            "name": "project",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Repository identifier",
+            "name": "repo",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Параметры для создания правила ревью",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "branch_name",
+                "approval_settings",
+                "merge_restrictions",
+                "merge_settings",
+                "status_checks"
+              ],
+              "properties": {
+                "approval_settings": {
+                  "description": "Настройки ревью",
+                  "type": "object",
+                  "required": [
+                    "require_default_reviewers",
+                    "default_reviewers"
+                  ],
+                  "properties": {
+                    "default_reviewers": {
+                      "description": "Список наборов ревьюеров по умолчанию",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "default_reviewers_list",
+                          "required_approvals_count"
+                        ],
+                        "properties": {
+                          "default_reviewers_list": {
+                            "description": "Список ревьюеров по умолчанию",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "required_approvals_count": {
+                            "description": "Минимальное количество необходимых аппрувов",
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "require_default_reviewers": {
+                      "description": "Назначать ли ревьюеров по умолчанию",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "branch_name": {
+                  "description": "Название ветки, к которой применяются настройки (например, \"*\")",
+                  "type": "string"
+                },
+                "merge_restrictions": {
+                  "description": "Ограничения на слияние",
+                  "type": "object",
+                  "properties": {
+                    "block_on_official_review_requests": {
+                      "description": "Блокировать слияние, если есть запросы на официальное ревью",
+                      "type": "boolean"
+                    },
+                    "block_on_outdated_branch": {
+                      "description": "Блокировать слияние, если ветка отстаёт от основной",
+                      "type": "boolean"
+                    },
+                    "block_on_rejected_reviews": {
+                      "description": "Блокировать слияние при наличии отклонённых ревью",
+                      "type": "boolean"
+                    },
+                    "dismiss_stale_approvals": {
+                      "description": "Сбрасывать аппрувы при новых изменениях",
+                      "type": "boolean"
+                    },
+                    "require_sonarqube_quality_gate": {
+                      "description": "Требовать прохождения SonarQube Quality Gate",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "merge_settings": {
+                  "description": "Настройки слияния",
+                  "type": "object",
+                  "properties": {
+                    "merge_whitelist_usernames": {
+                      "description": "Список пользователей, которым разрешено слияние",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "require_merge_whitelist": {
+                      "description": "Требовать белый список на слияние",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "status_checks": {
+                  "description": "Проверки CI статусов",
+                  "type": "object",
+                  "properties": {
+                    "enable_status_check": {
+                      "description": "Включить проверку CI статусов",
+                      "type": "boolean"
+                    },
+                    "status_check_contexts": {
+                      "description": "Список обязательных CI проверок",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repos/{tenant}/{project}/{repo}/sonar": {
+          "post": {
+            "summary": "Create Sonar settings for the repository",
+            "operationId": "createSonarSettings",
+            "consumes": ["application/json"],
+            "produces": ["application/json"],
+            "tags": ["sonar"],
+            "parameters": [
+              {
+                "name": "tenant",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Tenant key"
+              },
+              {
+                "name": "project",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Project key"
+              },
+              {
+                "name": "repo",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Repository key"
+              },
+              {
+                "in": "body",
+                "name": "body",
+                "description": "Sonar settings to create",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/CreateOrUpdateSonarProjectRequest"
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Created"
+              },
+              "400": {
+                "$ref": "#/responses/validationError"
+              },
+              "404": {
+                "$ref": "#/responses/notFound"
+              },
+              "409": {
+                "$ref": "#/responses/conflict"
+              },
+              "500": {
+                "$ref": "#/responses/error"
+              }
+            }
+          },
+          "put": {
+            "summary": "Update Sonar settings for the repository",
+            "operationId": "updateSonarSettings",
+            "consumes": ["application/json"],
+            "produces": ["application/json"],
+            "tags": ["sonar"],
+            "parameters": [
+              {
+                "name": "tenant",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Tenant key"
+              },
+              {
+                "name": "project",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Project key"
+              },
+              {
+                "name": "repo",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Repository key"
+              },
+              {
+                "in": "body",
+                "name": "body",
+                "description": "Sonar settings to update",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/CreateOrUpdateSonarProjectRequest"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK"
+              },
+              "400": {
+                "$ref": "#/responses/validationError"
+              },
+              "404": {
+                "$ref": "#/responses/notFound"
+              },
+              "500": {
+                "$ref": "#/responses/error"
+              }
+            }
+          },
+          "get": {
+            "summary": "Get Sonar settings for the repository",
+            "operationId": "getSonarSettings",
+            "produces": ["application/json"],
+            "tags": ["sonar"],
+            "parameters": [
+              {
+                "name": "tenant",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "project",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "repo",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "$ref": "#/responses/sonarSettings"
+              },
+              "404": {
+                "$ref": "#/responses/notFound"
+              },
+              "500": {
+                "$ref": "#/responses/error"
+              }
+            }
+          },
+          "delete": {
+            "summary": "Delete Sonar settings for the repository",
+            "operationId": "deleteSonarSettings",
+            "produces": ["application/json"],
+            "tags": ["sonar"],
+            "parameters": [
+              {
+                "name": "tenant",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "project",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "repo",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Deleted"
+              },
+              "404": {
+                "$ref": "#/responses/notFound"
+              },
+              "500": {
+                "$ref": "#/responses/error"
+              }
+            }
+          }
+        },
+        "definitions": {
+            "CreateOrUpdateSonarProjectRequest": {
+              "type": "object",
+              "required": [
+                "sonar_server_url",
+                "sonar_project_key",
+                "sonar_token"
+              ],
+              "properties": {
+                "sonar_server_url": {
+                  "type": "string"
+                },
+                "sonar_project_key": {
+                  "type": "string"
+                },
+                "sonar_token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+    "/repos/{tenant}/{project}/{repo}/review_settings/{branch_name}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Returns branch review settings for repository",
+        "operationId": "GetBranchReviewSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Tenant identifier",
+            "name": "tenant",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Project identifier",
+            "name": "project",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Repository identifier",
+            "name": "repo",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Branch identifier",
+            "name": "branch_name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ReviewSettings"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Updates review settings for repository",
+        "operationId": "UpdateReviewSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Tenant identifier",
+            "name": "tenant",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Project identifier",
+            "name": "project",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Repository identifier",
+            "name": "repo",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Branch identifier",
+            "name": "branch_name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Параметры для создания правила ревью",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "branch_name",
+                "approval_settings",
+                "merge_restrictions",
+                "merge_settings",
+                "status_checks"
+              ],
+              "properties": {
+                "approval_settings": {
+                  "description": "Настройки ревью",
+                  "type": "object",
+                  "required": [
+                    "require_default_reviewers",
+                    "default_reviewers"
+                  ],
+                  "properties": {
+                    "default_reviewers": {
+                      "description": "Список наборов ревьюеров по умолчанию",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "default_reviewers_list",
+                          "required_approvals_count"
+                        ],
+                        "properties": {
+                          "default_reviewers_list": {
+                            "description": "Список ревьюеров по умолчанию",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "required_approvals_count": {
+                            "description": "Минимальное количество необходимых аппрувов",
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "require_default_reviewers": {
+                      "description": "Назначать ли ревьюеров по умолчанию",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "branch_name": {
+                  "description": "Название ветки, к которой применяются настройки (например, \"*\")",
+                  "type": "string"
+                },
+                "merge_restrictions": {
+                  "description": "Ограничения на слияние",
+                  "type": "object",
+                  "properties": {
+                    "block_on_official_review_requests": {
+                      "description": "Блокировать слияние, если есть запросы на официальное ревью",
+                      "type": "boolean"
+                    },
+                    "block_on_outdated_branch": {
+                      "description": "Блокировать слияние, если ветка отстаёт от основной",
+                      "type": "boolean"
+                    },
+                    "block_on_rejected_reviews": {
+                      "description": "Блокировать слияние при наличии отклонённых ревью",
+                      "type": "boolean"
+                    },
+                    "dismiss_stale_approvals": {
+                      "description": "Сбрасывать аппрувы при новых изменениях",
+                      "type": "boolean"
+                    },
+                    "require_sonarqube_quality_gate": {
+                      "description": "Требовать прохождения SonarQube Quality Gate",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "merge_settings": {
+                  "description": "Настройки слияния",
+                  "type": "object",
+                  "properties": {
+                    "merge_whitelist_usernames": {
+                      "description": "Список пользователей, которым разрешено слияние",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "require_merge_whitelist": {
+                      "description": "Требовать белый список на слияние",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "status_checks": {
+                  "description": "Проверки CI статусов",
+                  "type": "object",
+                  "properties": {
+                    "enable_status_check": {
+                      "description": "Включить проверку CI статусов",
+                      "type": "boolean"
+                    },
+                    "status_check_contexts": {
+                      "description": "Список обязательных CI проверок",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Deletes branch review settings",
+        "operationId": "DeleteReviewSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Tenant identifier",
+            "name": "tenant",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Project identifier",
+            "name": "project",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Repository identifier",
+            "name": "repo",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Branch identifier",
+            "name": "branch_name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "description": "List of error messages",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "message": {
+                  "description": "Error message",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Link to Swagger documentation",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ApprovalSettings": {
+      "description": "ApprovalSettings содержит информацию о необходимых ревью перед слиянием",
+      "type": "object",
+      "required": [
+        "require_default_reviewers",
+        "default_reviewers"
+      ],
+      "properties": {
+        "default_reviewers": {
+          "description": "Список наборов ревьюеров по умолчанию",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DefaultReviewerSet"
+          },
+          "x-go-name": "DefaultReviewers"
+        },
+        "require_default_reviewers": {
+          "description": "Назначать ли ревьюеров по умолчанию",
+          "type": "boolean",
+          "x-go-name": "RequireDefaultReviewers"
+        }
+      },
+      "x-go-package": "code.gitea.io/gitea/routers/api/v3/models"
+    },
+    "BranchReviewSetting": {
+      "description": "BranchReviewSetting описывает настройки ревью для конкретной ветки",
+      "type": "object",
+      "required": [
+        "branch_name",
+        "approval_settings",
+        "merge_restrictions",
+        "merge_settings",
+        "status_checks"
+      ],
+      "properties": {
+        "approval_settings": {
+          "$ref": "#/definitions/ApprovalSettings"
+        },
+        "branch_name": {
+          "description": "Название ветки, к которой применяются настройки (например, \"*\")",
+          "type": "string",
+          "x-go-name": "BranchName"
+        },
+        "merge_restrictions": {
+          "$ref": "#/definitions/MergeRestrictions"
+        },
+        "merge_settings": {
+          "$ref": "#/definitions/MergeSettings"
+        },
+        "status_checks": {
+          "$ref": "#/definitions/StatusChecks"
+        }
+      },
+      "x-go-package": "code.gitea.io/gitea/routers/api/v3/models"
+    },
+    "DefaultReviewerSet": {
+      "description": "DefaultReviewerSet описывает один набор ревьюеров и требуемое количество аппрувов",
+      "type": "object",
+      "required": [
+        "default_reviewers_list",
+        "required_approvals_count"
+      ],
+      "properties": {
+        "default_reviewers_list": {
+          "description": "Список ревьюеров по умолчанию",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "DefaultReviewersList"
+        },
+        "required_approvals_count": {
+          "description": "Минимальное количество необходимых аппрувов",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RequiredApprovalsCount"
+        }
+      },
+      "x-go-package": "code.gitea.io/gitea/routers/api/v3/models"
+    },
+    "MergeRestrictions": {
+      "description": "MergeRestrictions определяет, когда слияние должно быть заблокировано",
+      "type": "object",
+      "properties": {
+        "block_on_official_review_requests": {
+          "description": "Блокировать слияние, если есть запросы на официальное ревью",
+          "type": "boolean",
+          "x-go-name": "BlockOnOfficialReviewRequests"
+        },
+        "block_on_outdated_branch": {
+          "description": "Блокировать слияние, если ветка отстаёт от основной",
+          "type": "boolean",
+          "x-go-name": "BlockOnOutdatedBranch"
+        },
+        "block_on_rejected_reviews": {
+          "description": "Блокировать слияние при наличии отклонённых ревью",
+          "type": "boolean",
+          "x-go-name": "BlockOnRejectedReviews"
+        },
+        "dismiss_stale_approvals": {
+          "description": "Сбрасывать аппрувы при новых изменениях",
+          "type": "boolean",
+          "x-go-name": "DismissStaleApprovals"
+        },
+        "require_sonarqube_quality_gate": {
+          "description": "Требовать прохождения SonarQube Quality Gate",
+          "type": "boolean",
+          "x-go-name": "RequireSonarqubeQualityGate"
+        }
+      },
+      "x-go-package": "code.gitea.io/gitea/routers/api/v3/models"
+    },
+    "MergeSettings": {
+      "description": "MergeSettings определяет, кто может выполнять слияние",
+      "type": "object",
+      "properties": {
+        "merge_whitelist_usernames": {
+          "description": "Список пользователей, которым разрешено слияние",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "MergeWhitelistUsernames"
+        },
+        "require_merge_whitelist": {
+          "description": "Требовать белый список на слияние",
+          "type": "boolean",
+          "x-go-name": "RequireMergeWhitelist"
+        }
+      },
+      "x-go-package": "code.gitea.io/gitea/routers/api/v3/models"
+    },
+    "StatusChecks": {
+      "description": "StatusChecks описывает необходимые CI проверки перед слиянием",
+      "type": "object",
+      "properties": {
+        "enable_status_check": {
+          "description": "Включить проверку CI статусов",
+          "type": "boolean",
+          "x-go-name": "EnableStatusCheck"
+        },
+        "status_check_contexts": {
+          "description": "Список обязательных CI проверок",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "StatusCheckContexts"
+        }
+      },
+      "x-go-package": "code.gitea.io/gitea/routers/api/v3/models"
+    }
+  },
+  "responses": {
+    "ReviewSettings": {
+      "description": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/BranchReviewSetting"
+        }
+      }
+    }
+  },
+   "securityDefinitions": {
+      "AccessToken": {
+        "type": "apiKey",
+        "name": "access_token",
+        "in": "query"
+      },
+      "AuthorizationHeaderToken": {
+        "description": "API tokens must be prepended with \"token\" followed by a space.",
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      },
+      "BasicAuth": {
+        "type": "basic"
+      },
+      "SudoHeader": {
+        "description": "Sudo API request as the user provided as the key. Admin privileges are required.",
+        "type": "apiKey",
+        "name": "Sudo",
+        "in": "header"
+      },
+      "SudoParam": {
+        "description": "Sudo API request as the user provided as the key. Admin privileges are required.",
+        "type": "apiKey",
+        "name": "sudo",
+        "in": "query"
+      },
+      "TOTPHeader": {
+        "description": "Must be used in combination with BasicAuth if two-factor authentication is enabled.",
+        "type": "apiKey",
+        "name": "X-GITEA-OTP",
+        "in": "header"
+      },
+      "Token": {
+        "type": "apiKey",
+        "name": "token",
+        "in": "query"
+      }
+    },
+  "security": [
+      {
+        "BasicAuth": []
+      },
+      {
+        "Token": []
+      },
+      {
+        "AccessToken": []
+      },
+      {
+        "AuthorizationHeaderToken": []
+      },
+      {
+        "SudoParam": []
+      },
+      {
+        "SudoHeader": []
+      },
+      {
+        "TOTPHeader": []
+      }
+    ]
+
+}
